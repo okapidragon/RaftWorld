@@ -30,6 +30,8 @@ class Task:
         for resource, amount in self.cost.items():
             resource.remove(amount)
 
+        imp.time.sleep(self.time)
+
         for neededItem in self.neededItems:
             breaked = neededItem.tryBreak()
             if breaked:
@@ -52,9 +54,8 @@ fish = Task(
     name="Fishing",
     cost={},
     neededItems=[fishingRod],
-    time=10,
+    time=1,
     reward={1: {fish: 1}}
 )
 
-for i in range(100):
-    fish.execute()
+imp.threading.Thread(target=fish.execute).start()
