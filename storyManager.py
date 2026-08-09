@@ -8,7 +8,7 @@ print("Story starts")
 
 boat = bt.Boat(durability=100, size=(6, 6))
 
-inv.Resource("Wood", 0)
+wood = inv.Resource("Wood", 0)
 inv.Resource("Fish", 0)
 inv.Item("Fishing Rod", 1, breakable=True, breakChance=0.1)
 
@@ -17,7 +17,7 @@ print("You have a fishing rod and a small boat. You need to catch some fish to s
 fish = task.Task(
     name="Fishing",
     cost={},
-    neededItems=[inv.llookup("Fishing Rod")],
+    neededItems=[inv.lookup("Fishing Rod")],
     time=1,
     reward={1: {inv.lookup("Fish"): 1}}
 )
