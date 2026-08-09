@@ -44,8 +44,9 @@ class Task:
                     print(f"Received {rewardItem.name}: {amount} from task {self.name}.")
                 return True
 
-#Testing the Task class
 
+#Testing the Task class
+'''
 wood = inv.Resource("Wood", 100)
 fishingRod = inv.Item("Fishing Rod", 1, breakable=True, breakChance=0.1)
 fish = inv.Resource("Fish", 1)
@@ -59,3 +60,4 @@ fish = Task(
 )
 
 imp.threading.Thread(target=fish.execute).start()
+'''
