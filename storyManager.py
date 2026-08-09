@@ -2,7 +2,7 @@ import imports as imp
 import inventoryLogic as inv
 import taskLogic as task
 import boatLogic as bt
-from pyscript import document
+from pyscript import document  # pyright: ignore[reportMissingImports]
 
 print("Story starts")
 
