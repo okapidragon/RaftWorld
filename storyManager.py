@@ -22,11 +22,6 @@ fish = task.Task(
     reward={1: {inv.lookup("Fish"): 1}}
 )
 
-imp.threading.Thread(target=fish.execute).start()
-
-
-
-
 document.querySelector("#wood-count").textContent = str(wood.quantity)
 
 
