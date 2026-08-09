@@ -36,5 +36,9 @@ class Item(Resource):
                 return True
         return False
         
-
+def lookup(name) -> Resource:
+    for resource in Resource.all:
+        if resource.name == name:
+            return resource
+    return None
 
