@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "../../CodeProjects"
+		},
+		{
+			"name": "RaftWorld",
+			"path": "."
+		}
+	],
+	"settings": {
+		"python-envs.defaultEnvManager": "ms-python.python:system"
+	}
+}
