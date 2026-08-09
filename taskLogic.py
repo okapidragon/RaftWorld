@@ -2,14 +2,19 @@ import imports as imp
 import inventoryLogic as inv
 
 
-
 class Task:
     def __init__(self, name, cost, neededItems, time, reward):
         self.name = name
         self.cost = cost #self.cost should be a dictionary of {Resource: amount}
         self.neededItems = neededItems #List of Resource objects
         self.time = time #time in seconds
-        self.reward = reward #Dictionary of {Probability: {Resource: amount}}}
+        self.reward = reward #Dictionary of {Probability: {Resource: amount}}} or Function
+
+        if reward.isDict():
+            self.rewardType = "dict"
+
+        if reward.isFunction():
+            self.rewardType = "function"
 
     def able(self):
         for resource, amount in self.cost.items():
@@ -37,9 +42,14 @@ class Task:
             if breaked:
                 return False
 
-        for probability, rewardItems in self.reward.items():
-            if imp.random.random() < probability: 
-                for rewardItem, amount in rewardItems.items():
-                    rewardItem.add(amount) 
-                    print(f"Received {rewardItem.name}: {amount} from task {self.name}.")
-                return True
+        if self.rewardType == "dict":
+            for probability, rewardItems in self.reward.items():
+                if imp.random.random() < probability: 
+                    for rewardItem, amount in rewardItems.items():
+                        rewardItem.add(amount) 
+                        print(f"Received {rewardItem.name}: {amount} from task {self.name}.")
+                    return True
+        elif self.rewardType == "function":
+            self.reward()
+
+            return True
