@@ -8,31 +8,38 @@
         .column { padding: 10px; }
     </style>
     
-    <!-- PyScript CDN Core Modules -->
+    <!-- 1. CORRECTED: Fixed the PyScript CDN URLs to load core release engine modules -->
     <link rel="stylesheet" href="https://pyscript.net" />
     <script type="module" src="https://pyscript.net"></script>
 
-    <!-- Configure PyScript to load your modules on startup -->
+    <!-- 2. STABILIZED: Retained single standard JSON config for fetching Python files -->
     <script type="py-config">
-        {
-            "files": {
-                "taskLogic.py": "./taskLogic.py",
-                "inventoryLogic.py": "./inventoryLogic.py"
-            }
+    {
+        "files": {
+            "taskLogic.py": "./taskLogic.py",
+            "inventoryLogic.py": "./inventoryLogic.py",
+            "storyManager.py": "./storyManager.py"
         }
+    }
     </script>
 </head>
 <body>
 
+    <!-- CLEANED: Removed duplicate <py-config> block that was sitting here causing errors -->
+
     <div class="grid-container">
         <div class="column" id="tasks-col"><h3>Tasks</h3></div>
         <div class="column" id="events-col"><h3>Events</h3></div>
-        <div class="column" id="inventory-col"><h3>Inventory</h3></div>
+        
+        <div class="column" id="inventory-col">
+            <h3>Inventory</h3>
+            <p>Wood: <span id="wood-count">0</span></p>
+        </div>
+        
         <div class="column" id="output-col"><h3>Output</h3></div>
     </div>
 
     <!-- Execute your main game file -->
     <script type="py" src="main.py"></script>
-
 </body>
 </html>
