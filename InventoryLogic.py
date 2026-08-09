@@ -1,3 +1,5 @@
+import imports as imp
+
 class Resource:
     all = []
 
@@ -19,4 +21,20 @@ class Resource:
     def __str__(self):
         return f"{self.name}: {self.quantity}"
 
-    
+
+class Item(Resource):
+    def __init__(self, name, quantity, breakable=False, breakChance=0.0):
+        super().__init__(name, quantity)
+        self.breakable = breakable
+        self.breakChance = breakChance
+
+    def tryBreak(self):
+        if self.breakable:
+            if imp.random.random() < self.breakChance:
+                self.remove(1)
+                print(f"{self.name} broke!")
+                return True
+        return False
+        
+
+
