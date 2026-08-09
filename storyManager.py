@@ -8,7 +8,7 @@ print("Story starts")
 
 boat = bt.Boat(durability=100, size=(6, 6))
 
-wood = inv.Resource("Wood", 0)
+wood = inv.Resource("Wood", 20)
 inv.Resource("Fish", 0)
 inv.Item("Fishing Rod", 1, breakable=True, breakChance=0.1)
 
