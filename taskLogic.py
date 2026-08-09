@@ -10,10 +10,10 @@ class Task:
         self.time = time #time in seconds
         self.reward = reward #Dictionary of {Probability: {Resource: amount}}} or Function
 
-        if reward.isDict():
+        if isinstance(reward, dict):
             self.rewardType = "dict"
 
-        if reward.isFunction():
+        if callable(reward):
             self.rewardType = "function"
 
     def able(self):
