@@ -1,7 +1,10 @@
 class Resource:
+    all = []
+
     def __init__(self, name, quantity):
         self.name = name
         self.quantity = quantity
+        Resource.all.append(self)
 
     def add(self, amount):
         self.quantity += amount
