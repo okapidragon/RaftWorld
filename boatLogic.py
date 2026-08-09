@@ -1,7 +1,7 @@
 import inventoryLogic as inv
 
 class Boat:
-    def __init__(self, durability, size=(3,6)):
+    def __init__(self, durability, size):
         self.durability = durability
         self.size = size  # Size is a tuple (width, height)
 
@@ -23,6 +23,6 @@ class Boat:
             return False
 
         wood.remove(costWood)
-        
+
         self.size = newSize
         print(f"Boat expanded to size: {self.size}")
