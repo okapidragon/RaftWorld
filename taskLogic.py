@@ -31,19 +31,21 @@ class Task:
             resource.remove(amount)
 
         for neededItem in self.neededItems:
-            neededItem.tryBreak()
+            breaked = neededItem.tryBreak()
+            if breaked:
+                return False
 
         for probability, rewardItems in self.reward.items():
             if imp.random.random() < probability: 
                 for rewardItem, amount in rewardItems.items():
                     rewardItem.add(amount) 
-                print(f"Received {rewardItems} from task {self.name}.")
+                    print(f"Received {rewardItem.name}: {amount} from task {self.name}.")
                 return True
 
 #Testing the Task class
 
 wood = inv.Resource("Wood", 100)
-fishingRod = inv.Item("Fishing Rod", 0, breakable=True, breakChance=0.1)
+fishingRod = inv.Item("Fishing Rod", 1, breakable=True, breakChance=0.1)
 fish = inv.Resource("Fish", 1)
 
 fish = Task(
