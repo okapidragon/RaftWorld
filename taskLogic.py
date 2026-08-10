@@ -8,7 +8,7 @@ class Task:
         self.cost = cost #self.cost should be a dictionary of {Resource: amount}
         self.neededItems = neededItems #List of Resource objects
         self.time = time #time in seconds
-        self.reward = reward #Dictionary of {Probability: {Resource: amount}}} or Function
+        self.reward = reward #Dictionary of {Probability: ({Resource: amount}, dialogue)}} or Function
 
         if isinstance(reward, dict):
             self.rewardType = "dict"
@@ -45,9 +45,9 @@ class Task:
         if self.rewardType == "dict":
             for probability, rewardItems in self.reward.items():
                 if imp.random.random() < probability: 
-                    for rewardItem, amount in rewardItems.items():
+                    for rewardItem, amount in rewardItems[0].items():
                         rewardItem.add(amount) 
-                        imp.outputMessage.append(f"Received {rewardItem.name}: {amount} from task {self.name}.")
+                        imp.outputMessage.append(rewardItems[1])  # Display the dialogue associated with the reward
                     return True
         elif self.rewardType == "function":
             if imp.inspect.iscoroutinefunction(self.reward):
