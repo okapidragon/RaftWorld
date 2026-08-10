@@ -60,7 +60,7 @@ class Task:
                 if imp.random.random() < probability: 
                     for rewardItem, amount in rewardItems[0].items():
                         rewardItem.add(amount) 
-                        imp.outputMessage.append(rewardItems[1])  # Display the dialogue associated with the reward
+                    imp.outputMessage.append(rewardItems[1])  # Display the dialogue associated with the reward
                     return True
         elif self.rewardType == "function":
             if imp.inspect.iscoroutinefunction(self.reward):
