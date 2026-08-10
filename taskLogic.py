@@ -41,6 +41,7 @@ class Task:
 
         if not self.able():
             imp.outputMessage.append("Not enough resources to execute the task.")
+            player.task = None
             return False
 
         for resource, amount in self.cost.items():
