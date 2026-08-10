@@ -32,7 +32,7 @@ class Player:
     def hungerFrame(self):
         self.hunger -= 2
 
-        self.seat(inv.lookup("Fish"))
+        self.eat(inv.lookup("Fish"))
 
         if self.hunger <= -100:
             imp.outputMessage.append(f"{self.name} has starved!")

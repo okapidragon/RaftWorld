@@ -28,6 +28,6 @@ async def hungerLoop():
         imp.outputMessage.append(f"Hunger: {player.hunger}")
         await imp.asyncio.sleep(1)
 
-imp.asyncio.run(hungerLoop())
+imp.asyncio.create_task(hungerLoop())
 
 
