@@ -65,7 +65,7 @@ class Player:
 
         if self.hunger <= 0:
             for food in inv.Resource.allFood:
-                if food.quantity >= 0:
+                if food.quantity > 0:
                     self.eat(food)
                     return
 
