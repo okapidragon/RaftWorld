@@ -1,16 +1,73 @@
+import taskLogic as task
+import inventoryLogic as inv
+import imports as imp
+currentEvent = None
+
+
 class Popup:
-    def __init__(self, text, taskDicts):
+    def __init__(self, text, optionTasks, duration = 30):
         self.text = text #Text displayed at top of popup
 
-        self.taskDicts = taskDicts #Dictionary of {Task: Dialogue on it}
-        # (i.e. text = "string appears", taskDicts = {Paddle: Paddle Towards})
+        self.optionTasks = optionTasks #List of tasks
+
+        self.duration = duration
 
 class Event:
-    def __init__(self, name, difficulty, minCooldown, screenPopup):
+    all = []
+
+    def __init__(self, name, difficulty, minCooldown, screenPopup, cooldown):
         self.name = name
         self.difficulty = difficulty
         self.minCooldown = minCooldown
         self.screenPopup = screenPopup
+        self.cooldown = cooldown
+        all.append(self)
 
-def eventUpdate():
-    pass
+    def execute(self):
+        "Input Ezras Complicated Display Code Functions Here!"
+        pass
+
+
+def eventUpdate(dayNumber):
+    for event in Event.all:
+        event.cooldown += 1
+
+    if currentEvent is None:
+        return
+
+    eligibleEvents = []
+
+    for event in Event.all:
+        if event.difficulty <= dayNumber and event.cooldown >= event.minCooldown:
+            eligibleEvents.append(event)
+
+    if eligibleEvents is None:
+        return
+
+    probability = imp.random.random()
+
+    if probability < 0.01:
+        currentEvent = imp.random.choice(eligibleEvents)
+
+        currentEvent.execute()
+
+def stopEvent(event):
+    if event is not currentEvent:
+        return False
+
+    currentEvent = None
+
+#All events down here!
+declineTask = task.Task("Decline", {}, [], 0, {})
+
+#Wood floating by event!
+woodAcceptTask = task.Task("Paddle to it", {}, [inv.lookup("Paddle")], 0, {
+    0.3: ({inv.lookup("Wood"): 0}, "The wood floated away"),
+    1: ({inv.lookup("Wood"): 10}, "You managed to salvage ten wood")})
+
+woodPopUp = Popup('You see wood floating by. You may paddle towards it to add it to your inventory.',
+                  optionTasks=[woodAcceptTask, declineTask])
+
+woodFloatsBy = Event("Wood Floats By", difficulty=0, minCooldown=90, screenPopup=woodPopUp)
+
+#Another event
