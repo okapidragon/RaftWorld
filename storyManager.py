@@ -1,12 +1,12 @@
 import imports as imp
 import inventoryLogic as inv
 import taskLogic as task
-import boatLogic as bt
+import playerLogic as pl
 from pyscript import document  # pyright: ignore[reportMissingImports]
 
 imp.outputMessage.append("Input Story Start")
 
-boat = bt.Boat(durability=100, size=(6, 6))
+boat = pl.Boat(durability=100, size=(6, 6))
 
 wood = inv.Resource("Wood", 20)
 inv.Resource("Fish", 0)
