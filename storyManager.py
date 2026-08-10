@@ -31,4 +31,3 @@ for item in inv.Resource.all:
     resource_line.textContent = f"{item.name}: {item.quantity}"
     document.querySelector("#inventory-col").appendChild(resource_line)
 
-
