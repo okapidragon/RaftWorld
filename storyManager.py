@@ -3,10 +3,8 @@ import inventoryLogic as inv
 import taskLogic as task
 import boatLogic as bt
 from pyscript import document  # pyright: ignore[reportMissingImports]
-
-imp.outputMessage += "Input Story Start"
-
-
+ß
+imp.outputMessage.append("Input Story Start")
 
 boat = bt.Boat(durability=100, size=(6, 6))
 
@@ -14,7 +12,7 @@ wood = inv.Resource("Wood", 20)
 inv.Resource("Fish", 0)
 inv.Item("Fishing Rod", 1, breakable=True, breakChance=0.1)
 
-imp.outputMessage += "You have a fishing rod and a small boat. You need to catch some fish to survive. You also need to expand your boat to carry more resources."
+imp.outputMessage.append("You have a fishing rod and a small boat. You need to catch some fish to survive. You also need to expand your boat to carry more resources.")
 
 fish = task.Task(
     name="Fishing",

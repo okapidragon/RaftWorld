@@ -29,7 +29,7 @@ class Task:
 
     def execute(self):
         if not self.able():
-            imp.outputMessage += "Not enough resources to execute the task."
+            imp.outputMessage.append("Not enough resources to execute the task.")
             return False
 
         for resource, amount in self.cost.items():
@@ -47,7 +47,7 @@ class Task:
                 if imp.random.random() < probability: 
                     for rewardItem, amount in rewardItems.items():
                         rewardItem.add(amount) 
-                        imp.outputMessage += f"Received {rewardItem.name}: {amount} from task {self.name}."
+                        imp.outputMessage.append(f"Received {rewardItem.name}: {amount} from task {self.name}.")
                     return True
         elif self.rewardType == "function":
             self.reward()
