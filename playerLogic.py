@@ -66,13 +66,6 @@ class Player:
     def hungerFrame(self):
         self.hunger -= 2
 
-        #Testing Start
-        if self.task is not None:
-            imp.outputMessage.append(f"{self.task.name}")
-        else:
-            imp.outputMessage.append(f"{self.name} is not performing any task.")
-        #Testing End
-
         if self.hunger <= 0:
             self.eat(inv.lookup("Fish"))
         else:
