@@ -9,7 +9,7 @@ class Task:
         self.name = name
         self.cost = cost #self.cost should be a dictionary of {Resource: amount}
         self.neededItems = neededItems #List of Resource objects
-        Task.all.append(self)
+        
         self.time = time #time in seconds
         self.reward = reward #Dictionary of {Probability: ({Resource: amount}, dialogue)}} or Function
 
@@ -18,6 +18,8 @@ class Task:
 
         if callable(reward):
             self.rewardType = "function"
+
+        Task.all.append(self)
 
     def able(self):
         for resource, amount in self.cost.items():
