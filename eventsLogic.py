@@ -11,4 +11,6 @@ class Event:
         self.difficulty = difficulty
         self.minCooldown = minCooldown
         self.screenPopup = screenPopup
-    
+
+def eventUpdate():
+    pass

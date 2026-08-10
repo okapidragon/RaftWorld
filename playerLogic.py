@@ -38,6 +38,11 @@ class Boat:
             imp.outputMessage.append("New size must be smaller than current size.")
             return False
 
+        #Change minimum area to 25 size per person
+        if (newSize[0] < 5) or (newSize[1] < 5):
+            imp.outputMessage.append("The minimum size per side is 5 wood.")
+            return False
+
         self.size = newSize
         imp.outputMessage.append(f"Boat changed to size: {self.size}")
 

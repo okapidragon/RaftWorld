@@ -2,6 +2,7 @@ import imports as imp
 import inventoryLogic as inv
 import taskLogic as task
 import playerLogic as pl
+import eventsLogic as ev
 
 imp.outputMessage.append("Input Story Start")
 
@@ -13,6 +14,8 @@ gameTime = pl.gameTime()
 inv.Item("Fishing Rod", 1, breakable=True, breakChance=0.03)
 
 imp.outputMessage.append("You have a fishing rod and a small boat. You need to catch some fish to survive. You also need to expand your boat to carry more resources.")
+
+inv.Resource("Fish", 0, food = True, hungerScore=100)
 
 fish = task.Task(
     name="Fishing",
@@ -38,12 +41,20 @@ async def timeLoop():
 
         pl.displayTime(gameTime)
         await imp.asyncio.sleep(0.5)
-        
+
+async def eventLoop():
+    while True:
+        ev.eventUpdate(gameTime.days)
+
+        await imp.asyncio.sleep(1)
+
 
 imp.asyncio.create_task(hungerLoop())
 imp.asyncio.create_task(timeLoop())
+imp.asyncio.create_task(eventLoop())
 
 def displayBoatSize(boat):
     size_display = imp.document.querySelector("#boat-size")
     size_display.textContent = f"Boat size: {boat.size[0]} x {boat.size[1]}"
+
 displayBoatSize(boat)
