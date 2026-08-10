@@ -42,3 +42,8 @@ async def timeLoop():
 
 imp.asyncio.create_task(hungerLoop())
 imp.asyncio.create_task(timeLoop())
+
+def displayBoatSize(boat):
+    size_display = imp.document.querySelector("#boat-size")
+    size_display.textContent = f"Boat size: {boat.size[0]} x {boat.size[1]}"
+displayBoatSize(boat)
