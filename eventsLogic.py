@@ -1,7 +1,6 @@
 import taskLogic as task
 import inventoryLogic as inv
 import imports as imp
-currentEvent = None
 
 
 class Popup:
@@ -32,7 +31,7 @@ def eventUpdate(dayNumber):
     for event in Event.all:
         event.cooldown += 1
 
-    if currentEvent is None:
+    if imp.currentEvent is None:
         return
 
     eligibleEvents = []
@@ -47,16 +46,16 @@ def eventUpdate(dayNumber):
     probability = imp.random.random()
 
     if probability < 0.01:
-        currentEvent = imp.random.choice(eligibleEvents)
+        imp.currentEvent = imp.random.choice(eligibleEvents)
 
-        currentEvent.execute()
+        imp.currentEvent.execute()
 
 def stopEvent(event):
-    if event is not currentEvent:
+    if event is not imp.currentEvent:
         return False
 
     event.cooldown = 0
-    currentEvent = None
+    imp.currentEvent = None
 
     '''
 #All events down here!

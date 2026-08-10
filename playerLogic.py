@@ -1,5 +1,6 @@
 import inventoryLogic as inv
 import imports as imp
+import taskLogic as task
 
 def setBarProgress(value):
     value = max(-100, min(100, value))
@@ -22,21 +23,56 @@ def setBarProgress(value):
         wrapper.style.left = "50%"
         wrapper.style.width = "0%"
 
+def displayBoatSize(boat):
+    size_display = imp.document.querySelector("#boat-size")
+    size_display.textContent = f"Boat size: {boat.size[0]} x {boat.size[1]}"
+
+def resizeBoat(event=None):
+    width_input = imp.document.querySelector("#boat-width")
+    height_input = imp.document.querySelector("#boat-height")
+
+    width = int(width_input.value)
+    height = int(height_input.value)
+    newSize = (width, height)
+
+    if width == Boat.all[0].size[0] and height == Boat.all[0].size[0]:
+        imp.outputMessage.append("Boat is already that size")
+        return
+
+    boatSizeChange = task.Task(
+        name = "Change Boat Size",
+        cost = {},
+        neededItems=[],
+        time = 5,
+        reward = Boat.all[0].changeSize(newSize)
+    )
+
+    task.Task.all.remove(boatSizeChange)
+
+    imp.asyncio.create_task(boatSizeChange.execute(Player.all[0]))
+
+
+
+
+resize_button = imp.document.querySelector("#resize-boat-button")
+resize_button.onclick = resizeBoat
+
 class Boat:
+    all = []
+
     def __init__(self, durability, size):
         self.durability = durability
         self.size = size  # Size is a tuple (width, height)
+        Boat.all.append(self)
 
-    def changeSize(self, newSize, expand = True):
-        addedArea = (newSize[0] * newSize[1]) - (self.size[0] * self.size[1])
+    def changeSize(self, newSize):
+        try:
+            newSize = (int(newSize[0]), int(newSize[1]))
+        except ValueError:
+            imp.outputMessage.append("The side lengths must be integers")
+            return
 
-        if addedArea <= 0 and expand:
-            imp.outputMessage.append("New size must be larger than current size.")
-            return False
-
-        if addedArea >= 0 and not expand:
-            imp.outputMessage.append("New size must be smaller than current size.")
-            return False
+        addArea = (newSize[0] * newSize[1]) - (self.size[0] * self.size[1])
 
         #Change minimum area to 25 size per person
         if (newSize[0] < 5) or (newSize[1] < 5):
@@ -44,7 +80,13 @@ class Boat:
             return False
 
         self.size = newSize
-        imp.outputMessage.append(f"Boat changed to size: {self.size}")
+
+        sizeText = f"{self.size[0]}x{self.size[1]}"
+
+        if addArea > 0:
+            imp.outputMessage.append(f"Boat increased to size {sizeText}. Used {addArea} wood.")
+        elif addArea < 0:
+            imp.outputMessage.append(f"Boat decreased to size {sizeText}. Salvaged {-addArea} wood.") 
 
 class Player:
     all = []
