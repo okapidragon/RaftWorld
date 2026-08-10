@@ -106,12 +106,13 @@ def lookup(name) -> Task:
 
 async def runTask(selected_task, selected_button):
     selected_button.classList.add("in-progress")
+    selected_button.disabled = True
 
     try:
         await selected_task.execute(pl.Player.all[0])
     finally:
         selected_button.classList.remove("in-progress")
-
+        selected_button.disabled = False
 def taskButtonUpdate():
     tasks_col = imp.document.querySelector("#tasks-col")
     for task_button in tasks_col.querySelectorAll(".task-button"):
