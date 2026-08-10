@@ -76,6 +76,14 @@ def lookup(name) -> Task:
             return task
     return None
 
+async def runTask(selected_task, selected_button):
+    selected_button.classList.add("in-progress")
+
+    try:
+        await selected_task.execute(pl.Player.all[0])
+    finally:
+        selected_button.classList.remove("in-progress")
+
 def taskButtonUpdate():
     tasks_col = imp.document.querySelector("#tasks-col")
     for task in Task.all:
@@ -84,7 +92,10 @@ def taskButtonUpdate():
         task_button.id = f"{task_id}-button"
         task_button.className = "task-button"
         task_button.textContent = task.name
-        task_button.onclick = lambda event, selected_task=task: (
-            imp.asyncio.create_task(selected_task.execute(pl.Player.all[0]))
+        task_button.onclick = (
+            lambda event, selected_task=task, selected_button=task_button:
+            imp.asyncio.create_task(
+                runTask(selected_task, selected_button)
+            )
         )
         tasks_col.appendChild(task_button)
