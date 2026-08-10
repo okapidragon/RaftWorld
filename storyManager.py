@@ -27,6 +27,8 @@ fish = task.Task(
             }
 )
 
+task.taskButtonUpdate()
+
 async def hungerLoop():
     while True:
         player.hungerFrame()
