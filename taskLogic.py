@@ -68,7 +68,7 @@ class Task:
 
         await imp.asyncio.sleep(self.time)
 
-        if self.name == "Fishing" and not imp.fishUnlock:
+        if (not imp.fishUnlock) and self.name == "Fishing" :
             inv.Resource("Fish", 0, food = True, hungerScore=100)
             inv.inventoryUpdate()
             imp.fishUnlock = True
@@ -92,6 +92,7 @@ class Task:
                     for rewardItem, amount in rewardItems[0].items():
                         rewardItem.add(amount) 
                     imp.outputMessage.append(rewardItems[1])  # Display the dialogue associated with the reward
+                    inv.inventoryUpdate()
                     return True
         
         elif self.rewardType == "function":
