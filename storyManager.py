@@ -2,7 +2,6 @@ import imports as imp
 import inventoryLogic as inv
 import taskLogic as task
 import playerLogic as pl
-import eventsLogic as ev
 
 imp.outputMessage.append("Input Story Start")
 
@@ -11,12 +10,14 @@ player = pl.Player(name="Player", hunger=100)
 gameTime = pl.gameTime()
 
 
-inv.Item("Fishing Rod", 1, breakable=True, breakChance=0.03)
+imp.displayedResources.append(inv.Item("Fishing Rod", 1, breakable=True, breakChance=0.03))
 
 imp.outputMessage.append("You have a fishing rod and a small boat. You need to catch some fish to survive. You also need to expand your boat to carry more resources.")
 
 inv.Resource("Fish", 0, food = True, hungerScore=100)
 inv.Resource("Wood", 0)
+
+import eventsLogic as ev
 
 fish = task.Task(
     name="Fishing",

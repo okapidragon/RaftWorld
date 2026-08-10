@@ -5,7 +5,7 @@ def inventoryUpdate():
     for resource_line in inventory_col.querySelectorAll(".inventory-resource"):
         resource_line.remove()
 
-    for item in Resource.all:
+    for item in imp.displayedResources:
         item_id = item.name.lower().replace(" ", "-")
         resource_line = imp.document.createElement("p")
         resource_line.style.textAlign = "center"
