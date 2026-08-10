@@ -55,7 +55,7 @@ class Item(Resource):
         if self.breakable:
             if imp.random.random() < self.breakChance:
                 self.remove(1)
-                imp.outputMessage.append(f"{self.name} broke!")
+                imp.outputMessage.append(f"Oh No! {self.name} broke")
 
                 return True
         return False
