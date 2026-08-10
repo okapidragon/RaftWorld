@@ -65,3 +65,16 @@ def lookup(name) -> Task:
         if task.name == name:
             return task
     return None
+
+def taskButtonUpdate():
+    tasks_col = imp.document.querySelector("#tasks-col")
+    for task in Task.all:
+        task_id = task.name.lower().replace(" ", "-")
+        task_button = imp.document.createElement("button")
+        task_button.id = f"{task_id}-button"
+        task_button.className = "task-button"
+        task_button.textContent = task.name
+        task_button.onclick = lambda event, selected_task=task: (
+            imp.asyncio.create_task(selected_task.execute())
+        )
+        tasks_col.appendChild(task_button)

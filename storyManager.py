@@ -26,6 +26,7 @@ fish = task.Task(
             1.0: ( {inv.lookup("Fish"): 5}, "You caught a tuna")
             }
 )
+task.taskButtonUpdate()
 
 async def hungerLoop():
     while True:
@@ -39,6 +40,8 @@ async def timeLoop():
         timeText = f"{gameTime.hours:02d}:{gameTime.minutes:02d}"
         imp.outputMessage.append(f"Time: {timeText}")
         await imp.asyncio.sleep(0.5)
+
+
 
 imp.asyncio.create_task(hungerLoop())
 imp.asyncio.create_task(timeLoop())
