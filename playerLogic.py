@@ -62,6 +62,7 @@ class Player:
 
     def hungerFrame(self):
         if not imp.fishUnlock():
+            setBarProgress(self.hunger)
             return
 
         self.hunger -= 2
