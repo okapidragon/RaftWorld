@@ -24,7 +24,7 @@ class Resource:
         Resource.all.append(self)
         inventoryUpdate()
 
-        if self.food:
+        if food:
             Resource.allFood.append(self)
             self.hungerScore = hungerScore
 
