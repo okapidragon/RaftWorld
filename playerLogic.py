@@ -1,6 +1,27 @@
 import inventoryLogic as inv
 import imports as imp
 
+def setBarProgress(value):
+    value = max(-100, min(100, value))
+    wrapper = imp.document.querySelector("#balance-wrapper")
+    bar = imp.document.querySelector("#balance-bar")
+    width_percentage = abs(value) / 2
+    bar.classList.remove("fill-negative", "fill-positive")
+    if value < 0:
+        # Move start anchor backward, then expand width forward to the center
+        wrapper.style.left = f"{50 - width_percentage}%"
+        wrapper.style.width = f"{width_percentage}%"
+        bar.classList.add("fill-negative")
+    elif value > 0:
+        # Lock anchor at the center and expand width rightward
+        wrapper.style.left = "50%"
+        wrapper.style.width = f"{width_percentage}%"
+        bar.classList.add("fill-positive")
+    else:
+        # Neutral zero point state
+        wrapper.style.left = "50%"
+        wrapper.style.width = "0%"
+
 class Boat:
     def __init__(self, durability, size):
         self.durability = durability
@@ -25,15 +46,17 @@ class Player:
         if foodResource.quantity > 0:
             foodResource.remove(1)
             self.hunger = min(self.hunger + 100, 100)  # Increase hunger but not above 100
-            imp.outputMessage.append(f"{self.name} ate {foodResource.name}. Hunger is now {self.hunger}.")
+            setBarProgress(self.hunger)
         else:
-            imp.outputMessage.append(f"No {foodResource.name} left to eat.")
+            setBarProgress(self.hunger)
 
     def hungerFrame(self):
         self.hunger -= 2
 
         if self.hunger <= 0:
             self.eat(inv.lookup("Fish"))
+        else:
+            setBarProgress(self.hunger)
 
         if self.hunger <= -100:
             imp.outputMessage.append(f"{self.name} has starved!")
