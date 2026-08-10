@@ -28,7 +28,6 @@ def displayBoatSize(boat):
     size_display.textContent = f"Boat size: {boat.size[0]} x {boat.size[1]}"
 
 def resizeBoat(event=None):
-
     width_input = imp.document.querySelector("#boat-width")
     height_input = imp.document.querySelector("#boat-height")
 
@@ -58,8 +57,8 @@ def resizeBoat(event=None):
         cost = {},
         neededItems=[],
         time = 5,
-        reward = Boat.all[0].changeSize(newSize)
-    )
+        reward = Boat.all[0].changeSize,
+        inputs = newSize)
 
     task.Task.all.remove(boatSizeChange)
 
