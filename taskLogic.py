@@ -132,3 +132,4 @@ def taskButtonUpdate():
         )
         tasks_col.appendChild(task_button)
         tasks_col.appendChild(task_button)
+        tasks_col.appendChild(imp.document.createElement("br"))
