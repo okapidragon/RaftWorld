@@ -6,6 +6,7 @@ import playerLogic as pl
 imp.outputMessage.append("Input Story Start")
 
 boat = pl.Boat(durability=100, size=(6, 6))
+player = pl.Player(name="Player", hunger=100)
 
 wood = inv.Resource("Wood", 20)
 inv.Resource("Fish", 0)
@@ -21,5 +22,13 @@ fish = task.Task(
     reward={1: {inv.lookup("Fish"): 1}}
 )
 
+async def hungerLoop():
+    while True:
+        player.hungerFrame()
+        #For testing purposes, print the player's hunger level to the console
+        print(f"Hunger: {player.hunger}")
+        await imp.asyncio.sleep(1)
+
+imp.asyncio.run(hungerLoop())
 
 

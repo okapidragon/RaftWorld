@@ -28,3 +28,11 @@ class Player:
             imp.outputMessage.append(f"{self.name} ate {foodResource.name}. Hunger is now {self.hunger}.")
         else:
             imp.outputMessage.append(f"No {foodResource.name} left to eat.")
+
+    def hungerFrame(self):
+        self.hunger -= 2
+
+        self.seat(inv.lookup("Fish"))
+
+        if self.hunger <= -100:
+            imp.outputMessage.append(f"{self.name} has starved!")
