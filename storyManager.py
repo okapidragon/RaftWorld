@@ -29,5 +29,3 @@ async def hungerLoop():
         await imp.asyncio.sleep(1)
 
 imp.asyncio.create_task(hungerLoop())
-
-imp.outputMessage.append("This code tests if code after hunger loop can run.")
