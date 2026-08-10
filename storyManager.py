@@ -46,7 +46,7 @@ async def eventLoop():
     while True:
         ev.eventUpdate(gameTime.days)
 
-        await imp.asyncio.sleep(0.5)
+        await imp.asyncio.sleep(1)
 
 
 imp.asyncio.create_task(hungerLoop())
