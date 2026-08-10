@@ -70,6 +70,7 @@ class Task:
 
         if (not imp.fishUnlock) and self.name == "Fishing" :
             imp.fishUnlock = True
+            imp.displayedResources.append(inv.lookup("Fish"))
 
         for neededItem in self.neededItems:
             breaked = neededItem.tryBreak()

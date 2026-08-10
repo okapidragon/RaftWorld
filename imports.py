@@ -28,4 +28,6 @@ outputMessage = OutputMessage()
 fishUnlock = False
 seaweedUnlock = False
 
+displayedResources = []
+
 
