@@ -33,7 +33,7 @@ class Task:
         return True
 
     async def execute(self, player):
-        if player.task is None:
+        if player.task is not None:
             imp.outputMessage.append(f"Player is already performing a {player.task.name} task.")
             return False
 
