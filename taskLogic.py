@@ -3,10 +3,13 @@ import inventoryLogic as inv
 
 
 class Task:
+    all = []
+
     def __init__(self, name, cost, neededItems, time, reward):
         self.name = name
         self.cost = cost #self.cost should be a dictionary of {Resource: amount}
         self.neededItems = neededItems #List of Resource objects
+        Task.all.append(self)
         self.time = time #time in seconds
         self.reward = reward #Dictionary of {Probability: ({Resource: amount}, dialogue)}} or Function
 
@@ -56,3 +59,9 @@ class Task:
                 self.reward()
 
             return True
+
+def lookup(name) -> Task:
+    for task in Task.all:
+        if task.name == name:
+            return task
+    return None
