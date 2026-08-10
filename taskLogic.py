@@ -69,8 +69,6 @@ class Task:
         await imp.asyncio.sleep(self.time)
 
         if (not imp.fishUnlock) and self.name == "Fishing" :
-            imp.outputMessage.append('You unlocked fish!')
-            inv.inventoryUpdate()
             imp.fishUnlock = True
 
         for neededItem in self.neededItems:
