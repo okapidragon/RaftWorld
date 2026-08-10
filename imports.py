@@ -2,4 +2,4 @@ import random
 import threading
 import time
 
-outputMessages = []
+outputMessage = []
