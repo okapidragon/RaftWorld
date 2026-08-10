@@ -1,5 +1,5 @@
 import random
-import threading
+import asyncio
 import time
 from pyscript import document  # pyright: ignore[reportMissingImports]
 
