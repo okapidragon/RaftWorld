@@ -36,7 +36,7 @@ def resizeBoat(event=None):
     newSize = (width, height)
 
     ogWidth = Boat.all[0].size[0]
-    ogHeight = Boat.all[0].size[0]
+    ogHeight = Boat.all[0].size[1]
 
     if width == ogWidth and height == ogHeight:
         imp.outputMessage.append("Boat is already that size")
