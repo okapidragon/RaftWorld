@@ -25,5 +25,7 @@ class OutputMessage:
 outputMessage = OutputMessage()
 
 #Progression Variables
+fishUnlock = False
 seaweedUnlock = False
+
 
