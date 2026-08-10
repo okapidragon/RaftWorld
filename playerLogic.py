@@ -61,7 +61,7 @@ class Player:
             inv.inventoryUpdate()
 
     def hungerFrame(self):
-        if not imp.fishUnlock():
+        if not imp.fishUnlock:
             setBarProgress(self.hunger)
             return
 
