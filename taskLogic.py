@@ -1,6 +1,6 @@
 import imports as imp
 import inventoryLogic as inv
-
+import playerLogic as pl
 
 class Task:
     all = []
@@ -32,7 +32,13 @@ class Task:
         
         return True
 
-    async def execute(self):
+    async def execute(self, player):
+        if player.task is None:
+            imp.outputMessage.append(f"Player is already performing a {player.task.name} task.")
+            return False
+
+        player.task = self
+
         if not self.able():
             imp.outputMessage.append("Not enough resources to execute the task.")
             return False
@@ -46,6 +52,8 @@ class Task:
             breaked = neededItem.tryBreak()
             if breaked:
                 return False
+
+        player.task = None
 
         if self.rewardType == "dict":
             for probability, rewardItems in self.reward.items():
@@ -77,6 +85,6 @@ def taskButtonUpdate():
         task_button.className = "task-button"
         task_button.textContent = task.name
         task_button.onclick = lambda event, selected_task=task: (
-            imp.asyncio.create_task(selected_task.execute())
+            imp.asyncio.create_task(selected_task.execute(pl.Player.all[0]))
         )
         tasks_col.appendChild(task_button)

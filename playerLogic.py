@@ -38,10 +38,13 @@ class Boat:
         imp.outputMessage.append(f"Boat expanded to size: {self.size}")
 
 class Player:
+    all = []
+
     def __init__(self, name, hunger = 100, task = None):
         self.name = name
         self.hunger = hunger
         self.task = task
+        Player.all.append(self)
         self.noFoodMessageDelay = 0
 
     def eat(self, foodResource):
