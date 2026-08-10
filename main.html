@@ -12,6 +12,12 @@
 .column {
   padding: 10px;
 }
+.hunger-label {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 0 0 10px;
+}
 /* --- Zero-Centered Progress Bar Styles --- */
 .bi-directional-container {
   position: relative;
@@ -48,6 +54,12 @@
 .fill-positive {
   background-color: #4caf50;
 }
+.bar-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  width: 100%;
+}
 </style>
 <link rel="stylesheet" href="https://pyscript.net/releases/2025.2.2/core.css" />
 <script type="module" src="https://pyscript.net/releases/2025.2.2/core.js"></script>
@@ -65,11 +77,17 @@
   </div>
   <div class="column" id="needs-col">
     <h3>Basic Needs</h3>
+    <p class="hunger-label">Hunger level</p>
     <div class="bi-directional-container">
       <div class="center-line"></div>
       <div class="bi-bar-wrapper" id="balance-wrapper">
         <div class="bi-bar" id="balance-bar"></div>
       </div>
+    </div>
+    <div class="bar-labels">
+        <span>-100</span>
+        <span>0</span>
+        <span>100</span>
     </div>
 </div>
     <div class="column" id="events-col">
