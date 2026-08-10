@@ -2,7 +2,6 @@ import imports as imp
 import inventoryLogic as inv
 import taskLogic as task
 import playerLogic as pl
-from pyscript import document  # pyright: ignore[reportMissingImports]
 
 imp.outputMessage.append("Input Story Start")
 
@@ -24,8 +23,8 @@ fish = task.Task(
 
 for item in inv.Resource.all:
     item_id = item.name.lower().replace(" ", "-")
-    resource_line = document.createElement("p")
+    resource_line = imp.document.createElement("p")
     resource_line.id = f"{item_id}-count"
     resource_line.textContent = f"{item.name}: {item.quantity}"
-    document.querySelector("#inventory-col").appendChild(resource_line)
+    imp.document.querySelector("#inventory-col").appendChild(resource_line)
 
