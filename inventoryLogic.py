@@ -16,7 +16,7 @@ class Resource:
             self.quantity -= amount
             return True
         else:
-            raise ValueError(f"Not enough {self.name} in inventory to remove {amount}. Current quantity: {self.quantity}")
+            imp.outputMessage.append(f"Not enough {self.name} in inventory to remove {amount}. Current quantity: {self.quantity}")
 
     def __str__(self):
         return f"{self.name}: {self.quantity}"
@@ -32,7 +32,7 @@ class Item(Resource):
         if self.breakable:
             if imp.random.random() < self.breakChance:
                 self.remove(1)
-                imp.outputMessage += f"{self.name} broke!"
+                imp.outputMessage.append(f"{self.name} broke!")
                 return True
         return False
         
