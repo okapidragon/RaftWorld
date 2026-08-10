@@ -27,15 +27,19 @@ class Boat:
         self.durability = durability
         self.size = size  # Size is a tuple (width, height)
 
-    def expand(self, newSize):
+    def changeSize(self, newSize, expand = True):
         addedArea = (newSize[0] * newSize[1]) - (self.size[0] * self.size[1])
 
-        if addedArea <= 0:
+        if addedArea <= 0 and expand:
             imp.outputMessage.append("New size must be larger than current size.")
             return False
 
+        if addedArea >= 0 and not expand:
+            imp.outputMessage.append("New size must be smaller than current size.")
+            return False
+
         self.size = newSize
-        imp.outputMessage.append(f"Boat expanded to size: {self.size}")
+        imp.outputMessage.append(f"Boat changed to size: {self.size}")
 
 class Player:
     all = []
