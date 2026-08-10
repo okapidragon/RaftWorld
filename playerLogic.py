@@ -74,6 +74,12 @@ class Player:
         if self.hunger <= -100:
             imp.outputMessage.append(f"{self.name} has starved!")
 
+
+def displayTime(current_time):
+    timeText = f"{current_time.hours:02d}:{current_time.minutes:02d}"
+    time_line = imp.document.querySelector("#time-display")
+    time_line.textContent = f"Time: {timeText}"
+
 class gameTime:
     all = []
 

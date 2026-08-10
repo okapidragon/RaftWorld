@@ -38,8 +38,9 @@ async def timeLoop():
     while True:
         gameTime.advance(3)
 
-        timeText = f"{gameTime.hours:02d}:{gameTime.minutes:02d}"
+        pl.displayTime(gameTime)
         await imp.asyncio.sleep(0.5)
+        
 
 imp.asyncio.create_task(hungerLoop())
 imp.asyncio.create_task(timeLoop())
