@@ -6,6 +6,8 @@ from pyscript import document  # pyright: ignore[reportMissingImports]
 
 print("Story starts")
 
+
+
 boat = bt.Boat(durability=100, size=(6, 6))
 
 wood = inv.Resource("Wood", 20)
