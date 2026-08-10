@@ -61,6 +61,9 @@ class Player:
             inv.inventoryUpdate()
 
     def hungerFrame(self):
+        if not imp.fishUnlock():
+            return
+
         self.hunger -= 2
 
         if self.hunger <= 0:

@@ -68,6 +68,11 @@ class Task:
 
         await imp.asyncio.sleep(self.time)
 
+        if self.name == "Fishing" and not imp.fishUnlock:
+            inv.Resource("Fish", 0, food = True, hungerScore=100)
+            inv.inventoryUpdate()
+            imp.fishUnlock = True
+
         for neededItem in self.neededItems:
             breaked = neededItem.tryBreak()
             if breaked:
@@ -113,6 +118,7 @@ async def runTask(selected_task, selected_button):
     finally:
         selected_button.classList.remove("in-progress")
         selected_button.disabled = False
+
 def taskButtonUpdate():
     tasks_col = imp.document.querySelector("#tasks-col")
     for task_button in tasks_col.querySelectorAll(".task-button"):
