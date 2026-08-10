@@ -57,6 +57,8 @@ class Player:
             foodResource.remove(1)
             self.hunger = min(self.hunger + foodResource.hungerScore, 100)  # Increase hunger but not above 100
             setBarProgress(self.hunger)
+            imp.outputMessage.append(f"{foodResource.name} was eaten.")
+            inv.inventoryUpdate()
 
     def hungerFrame(self):
         self.hunger -= 2
