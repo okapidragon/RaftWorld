@@ -20,8 +20,8 @@ fish = task.Task(
     cost={},
     neededItems=[inv.lookup("Fishing Rod")],
     time=1,
-    reward= {0.7: ( {}, "You could not catch a fish!"),
-            0.85: ( {inv.lookup("Fish"): 1}, "You caught a sardine"),
+    reward= {0.75: ( {}, "You could not catch a fish!"),
+            0.9: ( {inv.lookup("Fish"): 1}, "You caught a sardine"),
             0.97: ( {inv.lookup("Fish"): 2}, "You caught a salmon"),
             1.0: ( {inv.lookup("Fish"): 5}, "You caught a tuna")
             }
