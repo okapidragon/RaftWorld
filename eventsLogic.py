@@ -15,7 +15,7 @@ class Popup:
 class Event:
     all = []
 
-    def __init__(self, name, difficulty, minCooldown, screenPopup, cooldown):
+    def __init__(self, name, difficulty, minCooldown, screenPopup, cooldown = 1000):
         self.name = name
         self.difficulty = difficulty
         self.minCooldown = minCooldown
@@ -55,6 +55,7 @@ def stopEvent(event):
     if event is not currentEvent:
         return False
 
+    event.cooldown = 0
     currentEvent = None
 
 #All events down here!
