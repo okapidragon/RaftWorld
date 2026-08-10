@@ -106,19 +106,20 @@ button {
         <span>100%</span>
     </div>
     <br><br><br><br><br><br>
-    <h3 style="text-align: center;">Boat</h3> 
-    <p style="font-size: large; font-weight: 400; text-align: center;" id="boat-size"></p>
-    <p style="text-align: center;">With more wood, you can make your boat larger. You can also make your boat smaller to gather wood. Enter the width and height you would like to grow it to in the text spaces below.</p>
-    <div style="justify-self: center;">
-    <input type="number" id="boat-width" value="6" min="5" style="width:90px">
-    <span>x</span>
-    <input type="number" id="boat-height" value="6" min="5" style="width:90px">
+    <div id="boat-col" style="display: none;">
+      <h3 style="text-align: center;">Boat</h3> 
+      <p style="font-size: large; font-weight: 400; text-align: center;" id="boat-size"></p>
+      <p style="text-align: center;">With more wood, you can make your boat larger. You can also make your boat smaller to gather wood. Enter the width and height you would like to grow it to in the text spaces below.</p>
+      <div style="justify-self: center;">
+        <input type="number" id="boat-width" value="6" min="5" style="width:90px">
+        <span>x</span>
+        <input type="number" id="boat-height" value="6" min="5" style="width:90px">
+      </div>
+      <br>
+      <p id="wood-needed" style="text-align: center;"></p>
+      <br>
+      <button id="resize-boat-button" style="display: block;margin-left: auto; margin-right: auto;">Change boat size</button>
     </div>
-    <br>
-    <p id="wood-needed" style="text-align: center;"></p>
-    <br>
-    <button id="resize-boat-button" style="display: block;margin-left: auto; margin-right: auto;">Change boat size</button>
-</div>
     <div class="column" id="events-col">
       <h3 style="text-align: center;">Events</h3>
     </div>

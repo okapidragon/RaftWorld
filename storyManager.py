@@ -36,6 +36,10 @@ fish = task.Task(
 
 task.taskButtonUpdate()
 
+def showSomething(div_id):
+    boat_column = imp.document.querySelector(div_id)
+    boat_column.style.display = "block"
+
 async def hungerLoop():
     while True:
         player.hungerFrame()
