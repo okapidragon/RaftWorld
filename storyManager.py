@@ -2,6 +2,7 @@ import imports as imp
 import inventoryLogic as inv
 import taskLogic as task
 import playerLogic as pl
+import eventsLogic as ev
 
 imp.outputMessage.append("Input Story Start")
 
@@ -40,10 +41,17 @@ async def timeLoop():
 
         pl.displayTime(gameTime)
         await imp.asyncio.sleep(0.5)
-        
+
+async def eventLoop():
+    while True:
+        ev.eventUpdate(gameTime.days)
+
+        await imp.asyncio.sleep(0.5)
+
 
 imp.asyncio.create_task(hungerLoop())
 imp.asyncio.create_task(timeLoop())
+imp.asyncio.create_task(eventLoop())
 
 def displayBoatSize(boat):
     size_display = imp.document.querySelector("#boat-size")
