@@ -36,6 +36,10 @@ fish = task.Task(
 
 task.taskButtonUpdate()
 
+def showSomething(div_id):
+    boat_column = imp.document.querySelector(div_id)
+    boat_column.style.display = "block"
+
 async def hungerLoop():
     while True:
         player.hungerFrame()
@@ -57,4 +61,84 @@ async def eventLoop():
 
 imp.asyncio.create_task(hungerLoop())
 imp.asyncio.create_task(timeLoop())
+<<<<<<< HEAD
 imp.asyncio.create_task(eventLoop())
+=======
+imp.asyncio.create_task(eventLoop())
+
+def displayBoatSize(boat):
+    size_display = imp.document.querySelector("#boat-size")
+    size_display.textContent = f"Boat size: {boat.size[0]} x {boat.size[1]}"
+
+displayBoatSize(boat)
+
+def resizeBoat(event=None):
+    width_input = imp.document.querySelector("#boat-width")
+    height_input = imp.document.querySelector("#boat-height")
+
+    width = int(width_input.value)
+    height = int(height_input.value)
+    new_size = (width, height)
+
+    try:
+        old_area = boat.size[0] * boat.size[1]
+        new_area = width * height
+
+        if new_area > old_area:
+            wood_needed = new_area - old_area
+            if inv.lookup("Wood").quantity >= wood_needed:
+                inv.lookup("Wood").remove(wood_needed)
+                boat.size = new_size
+                imp.outputMessage.append(f"Boat size changed to {boat.size[0]} x {boat.size[1]}, You used {wood_needed} wood.")
+                displayBoatSize(boat)
+                displayWoodNeeded()
+            else:
+                imp.outputMessage.append(f"Not enough wood to resize the boat. You need {wood_needed - inv.lookup('Wood').quantity} more wood.")
+        if new_area < old_area:
+            if new_area < 5 * 5:
+                imp.outputMessage.append("Boat size cannot be smaller than 5 x 5.")
+                return
+            else: 
+                wood_receiving = old_area - new_area
+                inv.lookup("Wood").add(wood_receiving)
+                boat.size = new_size
+                imp.outputMessage.append(f"Boat size changed to {boat.size[0]} x {boat.size[1]}. You received {wood_receiving} wood.")
+                displayBoatSize(boat)
+                displayWoodNeeded()
+    except ValueError:
+        imp.outputMessage.append("Invalid input for boat size. Please enter valid integers.")
+
+def displayWoodNeeded(event=None):
+    try:
+        width = int(imp.document.querySelector("#boat-width").value)
+        height = int(imp.document.querySelector("#boat-height").value)
+
+        current_area = boat.size[0] * boat.size[1]
+        new_area = width * height
+        area_difference = new_area - current_area
+        wood_display = imp.document.querySelector("#wood-needed")
+
+        if area_difference > 0:
+            wood_display.textContent = f"Wood needed to change to this size: {area_difference}"
+        elif area_difference < 0:
+            if new_area < 5 * 5:
+                wood_display.textContent = "Boat size cannot be smaller than 5 x 5."
+            else:
+                wood_display.textContent = f"Wood gained from changing to this size: {-area_difference}"
+        else:
+            wood_display.textContent = ""
+    except ValueError:
+        if imp.document.querySelector("#boat-width").value == "" or imp.document.querySelector("#boat-height").value == "":
+            imp.document.querySelector("#wood-needed").textContent = ""
+        else:
+            imp.document.querySelector("#wood-needed").textContent = "Enter valid sizes"
+
+width_input = imp.document.querySelector("#boat-width")
+height_input = imp.document.querySelector("#boat-height")
+width_input.oninput = displayWoodNeeded
+height_input.oninput = displayWoodNeeded
+displayWoodNeeded()
+
+resize_button = imp.document.querySelector("#resize-boat-button")
+resize_button.onclick = resizeBoat
+>>>>>>> refs/remotes/origin/main
