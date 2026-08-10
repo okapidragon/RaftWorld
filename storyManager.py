@@ -7,6 +7,7 @@ imp.outputMessage.append("Input Story Start")
 
 boat = pl.Boat(durability=100, size=(6, 6))
 player = pl.Player(name="Player", hunger=100)
+gameTime = pl.gameTime()
 
 wood = inv.Resource("Wood", 20)
 inv.Resource("Fish", 0)
@@ -28,4 +29,11 @@ async def hungerLoop():
         imp.outputMessage.append(f"Hunger: {player.hunger}")
         await imp.asyncio.sleep(1)
 
+async def timeLoop():
+    while True:
+        gameTime.advance(3)
+        imp.outputMessage.append(f"Time: {gameTime.hours}h {gameTime.minutes}m")
+        await imp.asyncio.sleep(0.5)
+
 imp.asyncio.create_task(hungerLoop())
+imp.asyncio.create_task(timeLoop())
