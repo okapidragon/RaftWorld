@@ -25,8 +25,7 @@ fish = task.Task(
 async def hungerLoop():
     while True:
         player.hungerFrame()
-        #For testing purposes, print the player's hunger level to the console
-        print(f"Hunger: {player.hunger}")
+        imp.outputMessage.append(f"Hunger: {player.hunger}")
         await imp.asyncio.sleep(1)
 
 imp.asyncio.run(hungerLoop())
