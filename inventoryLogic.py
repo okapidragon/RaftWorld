@@ -1,7 +1,7 @@
 import imports as imp
 
 def inventoryUpdate():
-    for item in inv.Resource.all:
+    for item in Resource.all:
         item_id = item.name.lower().replace(" ", "-")
         resource_line = imp.document.createElement("p")
         resource_line.id = f"{item_id}-count"
