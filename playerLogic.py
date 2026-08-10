@@ -48,6 +48,7 @@ class Player:
             self.hunger = min(self.hunger + 100, 100)  # Increase hunger but not above 100
             setBarProgress(self.hunger)
         else:
+            imp.outputMessage.append(f"{self.name} does not have any {foodResource.name} to eat!")
             setBarProgress(self.hunger)
 
     def hungerFrame(self):
