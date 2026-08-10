@@ -80,6 +80,7 @@ def resizeBoat(event=None):
                 boat.size = new_size
                 imp.outputMessage.append(f"Boat size changed to {boat.size[0]} x {boat.size[1]}, You used {wood_needed} wood.")
                 displayBoatSize(boat)
+                displayWoodNeeded()
             else:
                 imp.outputMessage.append(f"Not enough wood to resize the boat. You need {wood_needed - inv.lookup('Wood').quantity} more wood.")
         if new_area < old_area:
@@ -92,7 +93,37 @@ def resizeBoat(event=None):
                 boat.size = new_size
                 imp.outputMessage.append(f"Boat size changed to {boat.size[0]} x {boat.size[1]}. You received {wood_receiving} wood.")
                 displayBoatSize(boat)
+                displayWoodNeeded()
     except ValueError:
         imp.outputMessage.append("Invalid input for boat size. Please enter valid integers.")
+
+def displayWoodNeeded(event=None):
+    try:
+        width = int(imp.document.querySelector("#boat-width").value)
+        height = int(imp.document.querySelector("#boat-height").value)
+
+        current_area = boat.size[0] * boat.size[1]
+        new_area = width * height
+        area_difference = new_area - current_area
+        wood_display = imp.document.querySelector("#wood-needed")
+
+        if area_difference > 0:
+            wood_display.textContent = f"Wood needed to change to this size: {area_difference}"
+        elif area_difference < 0:
+            wood_display.textContent = f"Wood gained from changing to this size: {-area_difference}"
+        else:
+            wood_display.textContent = ""
+    except ValueError:
+        if imp.document.querySelector("#boat-width").value == "" or imp.document.querySelector("#boat-height").value == "":
+            imp.document.querySelector("#wood-needed").textContent = ""
+        else:
+            imp.document.querySelector("#wood-needed").textContent = "Enter valid sizes"
+
+width_input = imp.document.querySelector("#boat-width")
+height_input = imp.document.querySelector("#boat-height")
+width_input.oninput = displayWoodNeeded
+height_input.oninput = displayWoodNeeded
+displayWoodNeeded()
+
 resize_button = imp.document.querySelector("#resize-boat-button")
 resize_button.onclick = resizeBoat
