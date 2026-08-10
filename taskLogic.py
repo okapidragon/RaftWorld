@@ -111,6 +111,9 @@ async def runTask(selected_task, selected_button):
 
 def taskButtonUpdate():
     tasks_col = imp.document.querySelector("#tasks-col")
+    for task_button in tasks_col.querySelectorAll(".task-button"):
+        task_button.remove()
+
     for task in Task.all:
         task_id = task.name.lower().replace(" ", "-")
         task_button = imp.document.createElement("button")
@@ -123,4 +126,5 @@ def taskButtonUpdate():
                 runTask(selected_task, selected_button)
             )
         )
+        tasks_col.appendChild(task_button)
         tasks_col.appendChild(task_button)
