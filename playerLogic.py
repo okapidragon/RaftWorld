@@ -65,6 +65,7 @@ class Player:
 
     def hungerFrame(self):
         self.hunger -= 2
+        imp.outputMessage.append(f"{self.task.name}")
 
         if self.hunger <= 0:
             self.eat(inv.lookup("Fish"))
@@ -77,7 +78,7 @@ class Player:
 class gameTime:
     def __init__(self):
         self.hours = 0
-        self.minutes = 0  # Time in hours, minutes
+        self.minutes = 0
 
     def advance(self, increment):
         self.minutes += increment
