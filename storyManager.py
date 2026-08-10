@@ -32,7 +32,9 @@ async def hungerLoop():
 async def timeLoop():
     while True:
         gameTime.advance(3)
-        imp.outputMessage.append(f"{gameTime.hours}:{gameTime.minutes}")
+
+        timeText = f"{gameTime.hours:02d}:{gameTime.minutes:02d}"
+        imp.outputMessage.append(f"Time: {timeText}")
         await imp.asyncio.sleep(0.5)
 
 imp.asyncio.create_task(hungerLoop())
