@@ -82,18 +82,18 @@ button {
 <body>
 <div class="grid-container">
   <div class="column" id="inventory-col">
-    <h3>Inventory</h3>
+    <h3 style="text-align: center;">Inventory</h3>
   </div>
   <div class="column" id="tasks-col">
-    <h3>Tasks</h3>
+    <h3 style="text-align: center;">Tasks</h3>
   </div>
   <div class="column" id="output-col">
-    <h3>Output</h3>
+    <h3 style="text-align: center;">Output</h3>
   </div>
   <div class="column" id="needs-col">
-    <h3>Stats</h3>
-    <p id="time-display">Time: 00:00</p>
-    <p class="hunger-label">Hunger level</p>
+    <h3 style="text-align: center;">Stats</h3>
+    <p id="time-display" style="text-align: center;">Time: 00:00</p>
+    <p class="hunger-label" style="text-align: center;">Hunger level</p>
     <div class="bi-directional-container">
       <div class="center-line"></div>
       <div class="bi-bar-wrapper" id="balance-wrapper">
@@ -106,11 +106,16 @@ button {
         <span>100%</span>
     </div>
     <br><br><br><br><br><br><br><br>
-    <h3>Boat</h3> 
-    <p id="boat-size"></p>
+    <h3 style="text-align: center;">Boat</h3> 
+    <p style="font-size: large; font-weight: 400; text-align: center;" id="boat-size"></p>
+    <p style="text-align: center;">With more wood, you can make your boat larger. You can also make your boat smaller to gather wood. Enter the width and height you would like to grow it to in the text spaces below.</p>
+    <div style="justify-self: center;">
+    <input type="text" id="boat-width" placeholder="Width" style="width:100px">
+    <input type="text" id="boat-height" placeholder="Height" style="width:100px">
+    </div>
 </div>
     <div class="column" id="events-col">
-      <h3>Events</h3>
+      <h3 style="text-align: center;">Events</h3>
     </div>
   </div>
 </div>
