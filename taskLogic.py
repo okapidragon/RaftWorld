@@ -4,7 +4,7 @@ import playerLogic as pl
 
 
 def initializeSeaweed():
-    inv.Resource("Seaweed", 0, food = True, hungerScore = 5)
+    inv.Resource("Seaweed", 0, food = True, hungerScore = 8)
 
     Task(name = "Gather Seaweed",
         cost = {},
