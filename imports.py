@@ -10,10 +10,11 @@ def displayOutput():
 
     output_column.innerHTML = "<h3>Output</h3>"
 
-    for message in reversed(outputMessage.messages[-4:]):
+    for message in reversed(outputMessage.messages[-10:]):
         message_line = document.createElement("p")
         message_line.textContent = message
         output_column.appendChild(message_line)
+
 class OutputMessage:
     def __init__(self):
         self.messages = []
@@ -21,5 +22,6 @@ class OutputMessage:
     def append(self, message):
         self.messages.append(message)
         displayOutput()
+
 outputMessage = OutputMessage()
 
