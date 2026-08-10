@@ -1,37 +1,82 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Raft World</title>
-    <style>
-        .grid-container { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
-        .column { padding: 10px; }
-    </style>
-    
-    <link rel="stylesheet" href="https://pyscript.net/releases/2025.2.2/core.css" />
-    <script type="module" src="https://pyscript.net/releases/2025.2.2/core.js"></script>
-
+<meta charset="UTF-8">
+<title>Raft World</title>
+<style>
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+.column {
+  padding: 10px;
+}
+/* --- Zero-Centered Progress Bar Styles --- */
+.bi-directional-container {
+  position: relative;
+  width: 100%;
+  height: 24px;
+  background-color: #e0e0e0;
+  border-radius: 12px;
+  margin-top: 10px;
+  overflow: hidden;
+}
+.center-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background-color: #888;
+  z-index: 2;
+}
+.bi-bar-wrapper {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 0%;
+  transition: left 0.3s ease, width 0.3s ease;
+}
+.bi-bar {
+  width: 100%;
+  height: 100%;
+}
+.fill-negative {
+  background-color: #f44336;
+}
+.fill-positive {
+  background-color: #4caf50;
+}
+</style>
+<link rel="stylesheet" href="https://pyscript.net/releases/2025.2.2/core.css" />
+<script type="module" src="https://pyscript.net/releases/2025.2.2/core.js"></script>
 </head>
 <body>
-
-    <div class="grid-container">
-        <div class="column" id="inventory-col">
-            <h3>Inventory</h3>
-        </div>
-        <div class="column" id="tasks-col"><h3>Tasks</h3></div>
-        
-        
-        
-        <div class="column" id="output-col"><h3>Output</h3></div>
-        <div class="column" id="events-col"><h3>Basic Needs</h3></div>
-        <div class="column" id="events-col"><h3>Events</h3></div>
-
+<div class="grid-container">
+  <div class="column" id="inventory-col">
+    <h3>Inventory</h3>
+  </div>
+  <div class="column" id="tasks-col">
+    <h3>Tasks</h3>
+  </div>
+  <div class="column" id="output-col">
+    <h3>Output</h3>
+  </div>
+  <div class="column" id="needs-col">
+    <h3>Basic Needs</h3>
+    <div class="bi-directional-container">
+      <div class="center-line"></div>
+      <div class="bi-bar-wrapper" id="balance-wrapper">
+        <div class="bi-bar" id="balance-bar"></div>
+      </div>
     </div>
-
-    <script
-        type="py"
-        src="storyManager.py"
-        config='{"files":{"./imports.py":"imports.py","./playerLogic.py":"playerLogic.py","./inventoryLogic.py":"inventoryLogic.py","./taskLogic.py":"taskLogic.py","./storyManager.py":"storyManager.py"}}'
-    ></script>
+</div>
+    <div class="column" id="events-col">
+      <h3>Events</h3>
+    </div>
+  </div>
+</div>
+<script type="py" src="storyManager.py" config='{"files":{"./imports.py":"imports.py","./playerLogic.py":"playerLogic.py","./inventoryLogic.py":"inventoryLogic.py","./taskLogic.py":"taskLogic.py","./storyManager.py":"storyManager.py"}}' ></script>
 </body>
 </html>
