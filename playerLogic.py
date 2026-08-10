@@ -75,9 +75,12 @@ class Player:
             imp.outputMessage.append(f"{self.name} has starved!")
 
 class gameTime:
+    all = []
+
     def __init__(self):
         self.hours = 0
         self.minutes = 0
+        gameTime.all.append(self)
 
     def advance(self, increment):
         self.minutes += increment
