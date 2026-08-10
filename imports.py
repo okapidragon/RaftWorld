@@ -7,7 +7,7 @@ from pyscript import document  # pyright: ignore[reportMissingImports]
 def displayOutput():
     output_column = document.querySelector("#output-col")
 
-    output_column.innerHTML = "<h3>Output</h3>"
+    output_column.innerHTML = "<h3 style=\"text-align: center;\">Output</h3>"
 
     for message in reversed(outputMessage.messages[-15:]):
         message_line = document.createElement("p")

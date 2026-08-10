@@ -8,6 +8,7 @@ def inventoryUpdate():
     for item in Resource.all:
         item_id = item.name.lower().replace(" ", "-")
         resource_line = imp.document.createElement("p")
+        resource_line.style.textAlign = "center"
         resource_line.id = f"{item_id}-count"
         resource_line.className = "inventory-resource"
         resource_line.textContent = f"{item.name}: {item.quantity}"

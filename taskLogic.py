@@ -127,6 +127,8 @@ def taskButtonUpdate():
     for task in Task.all:
         task_id = task.name.lower().replace(" ", "-")
         task_button = imp.document.createElement("button")
+        task_button.style.display = "block"
+        task_button.style.margin = "0 auto 20px"
         task_button.id = f"{task_id}-button"
         task_button.className = "task-button"
         task_button.textContent = task.name
