@@ -84,7 +84,7 @@ class Player:
 
 
 def displayTime(current_time):
-    timeText = f"Day {current_time.days} {current_time.hours:02d}:{current_time.minutes:02d}"
+    timeText = f"{current_time.hours:02d}:{current_time.minutes:02d}, Day {current_time.days}"
     time_line = imp.document.querySelector("#time-display")
     time_line.textContent = f"Time: {timeText}"
 
