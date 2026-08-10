@@ -2,6 +2,7 @@ import imports as imp
 import inventoryLogic as inv
 import taskLogic as task
 import playerLogic as pl
+import eventsLogic as ev
 
 imp.outputMessage.append("Input Story Start")
 
@@ -17,7 +18,9 @@ imp.outputMessage.append("You have a fishing rod and a small boat. You need to c
 inv.Resource("Fish", 0, food = True, hungerScore=100)
 imp.displayedResources.append(inv.Resource("Wood", 0))
 
-import eventsLogic as ev
+inv.inventoryUpdate()
+
+
 
 fish = task.Task(
     name="Fishing",

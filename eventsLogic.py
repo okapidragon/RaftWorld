@@ -58,7 +58,7 @@ def stopEvent(event):
     event.cooldown = 0
     currentEvent = None
 
-'''
+    '''
 #All events down here!
 declineTask = task.Task("Decline", {}, [], 0, {})
 
