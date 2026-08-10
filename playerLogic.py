@@ -92,6 +92,9 @@ class Boat:
 
         sizeText = f"{self.size[0]}x{self.size[1]}"
 
+
+        displayBoatSize(Boat.all[0])
+
         if addArea > 0:
             inv.lookup("Wood").remove(addArea)
             imp.outputMessage.append(f"Boat increased to size {sizeText}. Used {addArea} wood.")
