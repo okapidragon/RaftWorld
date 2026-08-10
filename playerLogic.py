@@ -28,12 +28,17 @@ def displayBoatSize(boat):
     size_display.textContent = f"Boat size: {boat.size[0]} x {boat.size[1]}"
 
 def resizeBoat(event=None):
+
     width_input = imp.document.querySelector("#boat-width")
     height_input = imp.document.querySelector("#boat-height")
 
     width = int(width_input.value)
     height = int(height_input.value)
     newSize = (width, height)
+
+    if Player.all[0].task is not None:
+        imp.outputMessage.append(f"Player is already doing {Player.all[0].task}.")
+        return
 
     ogWidth = Boat.all[0].size[0]
     ogHeight = Boat.all[0].size[1]
