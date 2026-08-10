@@ -21,7 +21,7 @@ class Event:
         self.minCooldown = minCooldown
         self.screenPopup = screenPopup
         self.cooldown = cooldown
-        all.append(self)
+        Event.all.append(self)
 
     def execute(self):
         "Input Ezras Complicated Display Code Functions Here!"
