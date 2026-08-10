@@ -38,17 +38,26 @@ class Boat:
         imp.outputMessage.append(f"Boat expanded to size: {self.size}")
 
 class Player:
-    def __init__(self, name, hunger = 100):
+    def __init__(self, name, hunger = 100, task = None):
         self.name = name
         self.hunger = hunger
+        self.task = task
+        self.noFoodMessageDelay = 0
 
     def eat(self, foodResource):
         if foodResource.quantity > 0:
+            self.noFoodMessageDelay = 0 
             foodResource.remove(1)
             self.hunger = min(self.hunger + 100, 100)  # Increase hunger but not above 100
             setBarProgress(self.hunger)
         else:
-            imp.outputMessage.append(f"{self.name} does not have any {foodResource.name} to eat!")
+
+            if self.noFoodMessageDelay <= 0:
+                imp.outputMessage.append(f"{self.name} does not have any {foodResource.name} to eat!")
+                self.noFoodMessageDelay = 5
+            else:
+                self.noFoodMessageDelay -= 1
+            
             setBarProgress(self.hunger)
 
     def hungerFrame(self):

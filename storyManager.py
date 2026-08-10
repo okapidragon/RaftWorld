@@ -11,7 +11,7 @@ gameTime = pl.gameTime()
 
 wood = inv.Resource("Wood", 20)
 inv.Resource("Fish", 0)
-inv.Item("Fishing Rod", 1, breakable=True, breakChance=0.1)
+inv.Item("Fishing Rod", 1, breakable=True, breakChance=0.01)
 
 imp.outputMessage.append("You have a fishing rod and a small boat. You need to catch some fish to survive. You also need to expand your boat to carry more resources.")
 
@@ -19,9 +19,9 @@ fish = task.Task(
     name="Fishing",
     cost={},
     neededItems=[inv.lookup("Fishing Rod")],
-    time=1,
-    reward= {0.7: ( {}, "You could not catch a fish!"),
-            0.85: ( {inv.lookup("Fish"): 1}, "You caught a sardine"),
+    time=5,
+    reward= {0.75: ( {}, "You could not catch a fish!"),
+            0.9: ( {inv.lookup("Fish"): 1}, "You caught a sardine"),
             0.97: ( {inv.lookup("Fish"): 2}, "You caught a salmon"),
             1.0: ( {inv.lookup("Fish"): 5}, "You caught a tuna")
             }
