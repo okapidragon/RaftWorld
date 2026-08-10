@@ -50,6 +50,7 @@ class Item(Resource):
             if imp.random.random() < self.breakChance:
                 self.remove(1)
                 imp.outputMessage.append(f"{self.name} broke!")
+                
                 return True
         return False
         
