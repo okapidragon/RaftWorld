@@ -69,11 +69,12 @@ class Task:
                     taskButtonUpdate()
                     inv.inventoryUpdate()
 
+                    player.task = None
                     return False
 
                 imp.outputMessage.append(f"Oh No! {neededItem.name} broke")
 
-
+                player.task = None
                 return False
 
         player.task = None
