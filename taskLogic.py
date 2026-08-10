@@ -27,7 +27,7 @@ class Task:
         
         return True
 
-    def execute(self):
+    async def execute(self):
         if not self.able():
             imp.outputMessage.append("Not enough resources to execute the task.")
             return False
@@ -35,7 +35,7 @@ class Task:
         for resource, amount in self.cost.items():
             resource.remove(amount)
 
-        imp.time.sleep(self.time)
+        await imp.asyncio.sleep(self.time)
 
         for neededItem in self.neededItems:
             breaked = neededItem.tryBreak()
@@ -50,6 +50,9 @@ class Task:
                         imp.outputMessage.append(f"Received {rewardItem.name}: {amount} from task {self.name}.")
                     return True
         elif self.rewardType == "function":
-            self.reward()
+            if imp.inspect.iscoroutinefunction(self.reward):
+                await self.reward()
+            else:
+                self.reward()
 
             return True
