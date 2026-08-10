@@ -3,7 +3,7 @@ import inventoryLogic as inv
 import taskLogic as task
 import boatLogic as bt
 from pyscript import document  # pyright: ignore[reportMissingImports]
-ß
+
 imp.outputMessage.append("Input Story Start")
 
 boat = bt.Boat(durability=100, size=(6, 6))
