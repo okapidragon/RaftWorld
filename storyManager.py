@@ -11,7 +11,7 @@ gameTime = pl.gameTime()
 
 wood = inv.Resource("Wood", 20)
 inv.Resource("Fish", 0)
-inv.Item("Fishing Rod", 1, breakable=True, breakChance=0.01)
+inv.Item("Fishing Rod", 1, breakable=True, breakChance=0.5)
 
 imp.outputMessage.append("You have a fishing rod and a small boat. You need to catch some fish to survive. You also need to expand your boat to carry more resources.")
 

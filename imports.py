@@ -4,7 +4,6 @@ import threading
 import time
 from pyscript import document  # pyright: ignore[reportMissingImports]
 
-
 def displayOutput():
     output_column = document.querySelector("#output-col")
 
@@ -24,4 +23,7 @@ class OutputMessage:
         displayOutput()
 
 outputMessage = OutputMessage()
+
+#Progression Variables
+seaweedUnlock = False
 
