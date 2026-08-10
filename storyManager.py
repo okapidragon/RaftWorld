@@ -110,7 +110,10 @@ def displayWoodNeeded(event=None):
         if area_difference > 0:
             wood_display.textContent = f"Wood needed to change to this size: {area_difference}"
         elif area_difference < 0:
-            wood_display.textContent = f"Wood gained from changing to this size: {-area_difference}"
+            if new_area < 5 * 5:
+                wood_display.textContent = "Boat size cannot be smaller than 5 x 5."
+            else:
+                wood_display.textContent = f"Wood gained from changing to this size: {-area_difference}"
         else:
             wood_display.textContent = ""
     except ValueError:
