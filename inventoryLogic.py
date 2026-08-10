@@ -1,12 +1,17 @@
 import imports as imp
 
 def inventoryUpdate():
+    inventory_col = imp.document.querySelector("#inventory-col")
+    for resource_line in inventory_col.querySelectorAll(".inventory-resource"):
+        resource_line.remove()
+
     for item in Resource.all:
         item_id = item.name.lower().replace(" ", "-")
         resource_line = imp.document.createElement("p")
         resource_line.id = f"{item_id}-count"
+        resource_line.className = "inventory-resource"
         resource_line.textContent = f"{item.name}: {item.quantity}"
-        imp.document.querySelector("#inventory-col").appendChild(resource_line)
+        inventory_col.appendChild(resource_line)
 
 
 class Resource:
@@ -15,15 +20,17 @@ class Resource:
     def __init__(self, name, quantity):
         self.name = name
         self.quantity = quantity
-        inventoryUpdate()
         Resource.all.append(self)
+        inventoryUpdate()
 
     def add(self, amount):
         self.quantity += amount
+        inventoryUpdate()
 
     def remove(self, amount):
         if amount <= self.quantity:
             self.quantity -= amount
+            inventoryUpdate()
             return True
         else:
             imp.outputMessage.append(f"Not enough {self.name} in inventory to remove {amount}. Current quantity: {self.quantity}")
