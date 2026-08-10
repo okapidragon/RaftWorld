@@ -82,7 +82,7 @@ class Player:
 
 
 def displayTime(current_time):
-    timeText = f"{current_time.hours:02d}:{current_time.minutes:02d}"
+    timeText = f"{current_time.days:02d}:{current_time.hours:02d}:{current_time.minutes:02d}"
     time_line = imp.document.querySelector("#time-display")
     time_line.textContent = f"Time: {timeText}"
 
@@ -92,6 +92,7 @@ class gameTime:
     def __init__(self):
         self.hours = 0
         self.minutes = 0
+        self.days = 0
         gameTime.all.append(self)
 
     def advance(self, increment):
@@ -100,3 +101,7 @@ class gameTime:
         if self.minutes >= 60:
             self.hours += self.minutes // 60
             self.minutes = self.minutes % 60
+
+        if self.hours >= 24:
+            self.days += self.hours // 24
+            self.hours = self.hours % 24
