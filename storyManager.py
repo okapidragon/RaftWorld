@@ -16,6 +16,7 @@ inv.Item("Fishing Rod", 1, breakable=True, breakChance=0.03)
 imp.outputMessage.append("You have a fishing rod and a small boat. You need to catch some fish to survive. You also need to expand your boat to carry more resources.")
 
 inv.Resource("Fish", 0, food = True, hungerScore=100)
+inv.Resource("Wood", 0)
 
 fish = task.Task(
     name="Fishing",
@@ -58,3 +59,39 @@ def displayBoatSize(boat):
     size_display.textContent = f"Boat size: {boat.size[0]} x {boat.size[1]}"
 
 displayBoatSize(boat)
+
+def resizeBoat(event=None):
+    width_input = imp.document.querySelector("#boat-width")
+    height_input = imp.document.querySelector("#boat-height")
+
+    width = int(width_input.value)
+    height = int(height_input.value)
+    new_size = (width, height)
+
+    try:
+        old_area = boat.size[0] * boat.size[1]
+        new_area = width * height
+
+        if new_area > old_area:
+            wood_needed = new_area - old_area
+            if inv.lookup("Wood").quantity >= wood_needed:
+                inv.lookup("Wood").remove(wood_needed)
+                boat.size = new_size
+                imp.outputMessage.append(f"Boat size changed to {boat.size[0]} x {boat.size[1]}, You used {wood_needed} wood.")
+                displayBoatSize(boat)
+            else:
+                imp.outputMessage.append(f"Not enough wood to resize the boat. You need {wood_needed - inv.lookup('Wood').quantity} more wood.")
+        if new_area < old_area:
+            if new_area < 5 * 5:
+                imp.outputMessage.append("Boat size cannot be smaller than 5 x 5.")
+                return
+            else: 
+                wood_receiving = old_area - new_area
+                inv.lookup("Wood").add(wood_receiving)
+                boat.size = new_size
+                imp.outputMessage.append(f"Boat size changed to {boat.size[0]} x {boat.size[1]}. You received {wood_receiving} wood.")
+                displayBoatSize(boat)
+    except ValueError:
+        imp.outputMessage.append("Invalid input for boat size. Please enter valid integers.")
+resize_button = imp.document.querySelector("#resize-boat-button")
+resize_button.onclick = resizeBoat
