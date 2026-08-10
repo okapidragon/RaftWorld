@@ -10,7 +10,7 @@ def displayOutput():
 
     output_column.innerHTML = "<h3>Output</h3>"
 
-    for message in reversed(outputMessage.messages[-10:]):
+    for message in reversed(outputMessage.messages[-15:]):
         message_line = document.createElement("p")
         message_line.textContent = message
         output_column.appendChild(message_line)
