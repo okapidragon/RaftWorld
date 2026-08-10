@@ -37,7 +37,7 @@ def resizeBoat(event=None):
     newSize = (width, height)
 
     if Player.all[0].task is not None:
-        imp.outputMessage.append(f"Player is already doing {Player.all[0].task}.")
+        imp.outputMessage.append(f"Player is already doing {Player.all[0].task.name}.")
         return
 
     ogWidth = Boat.all[0].size[0]
