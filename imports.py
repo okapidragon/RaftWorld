@@ -4,7 +4,15 @@ import time
 from pyscript import document  # pyright: ignore[reportMissingImports]
 
 
+def displayOutput():
+    output_column = document.querySelector("#output-col")
 
+    output_column.innerHTML = "<h3>Output</h3>"
+
+    for message in outputMessage.messages[-4:]:
+        message_line = document.createElement("p")
+        message_line.textContent = message
+        output_column.appendChild(message_line)
 class OutputMessage:
     def __init__(self):
         self.messages = []
@@ -14,10 +22,3 @@ class OutputMessage:
         displayOutput()
 outputMessage = OutputMessage()
 
-def displayOutput():
-    output_column = document.querySelector("#output-col")
-
-    for message in outputMessage[-4:]:
-        message_line = document.createElement("p")
-        message_line.textContent = message
-        output_column.appendChild(message_line)
