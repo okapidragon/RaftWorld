@@ -30,7 +30,6 @@ fish = task.Task(
 async def hungerLoop():
     while True:
         player.hungerFrame()
-        imp.outputMessage.append(f"Hunger: {player.hunger}")
         await imp.asyncio.sleep(1)
 
 async def timeLoop():
