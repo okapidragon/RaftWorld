@@ -16,12 +16,17 @@ def inventoryUpdate():
 
 class Resource:
     all = []
-
-    def __init__(self, name, quantity):
+    allFood = []
+    
+    def __init__(self, name, quantity, food = False, hungerScore = 100):
         self.name = name
         self.quantity = quantity
         Resource.all.append(self)
         inventoryUpdate()
+
+        if self.food:
+            Resource.allFood.append(self)
+            self.hungerScore = hungerScore
 
     def add(self, amount):
         self.quantity += amount
@@ -50,7 +55,7 @@ class Item(Resource):
             if imp.random.random() < self.breakChance:
                 self.remove(1)
                 imp.outputMessage.append(f"{self.name} broke!")
-                
+
                 return True
         return False
         

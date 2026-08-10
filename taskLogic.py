@@ -2,6 +2,25 @@ import imports as imp
 import inventoryLogic as inv
 import playerLogic as pl
 
+
+def initializeSeaweed():
+    inv.Resource("Seaweed", 0, food = True, hungerScore = 5)
+
+    Task(name = "Gather Seaweed",
+        cost = {},
+        neededItems=[],
+        time = 2,
+        reward = {0.4: ({inv.lookup("Seaweed"): 0}, "You failed to gather seaweed"),
+            0.7: ({inv.lookup("Seaweed"): 1}, "You found one piece of seaweed"),
+            0.95: ({inv.lookup("Seaweed"): 3}, "You found a large blob of seaweed"),
+            1: ({inv.lookup("Seaweed"): 6}, "You found piles of seaweed")
+        })
+
+    imp.outputMessage.append("Oh No! Your fishing rod broke. While urgently looking for other food sources, you discover seaweed in the water.")
+
+    taskButtonUpdate()
+    inv.inventoryUpdate()
+
 class Task:
     all = []
 
@@ -53,28 +72,11 @@ class Task:
             breaked = neededItem.tryBreak()
             if breaked:
                 if neededItem.name == "Fishing Rod" and not imp.seaweedUnlock:
-                    inv.Resource("Seaweed", 0)
-
-                    Task(name = "Gather Seaweed",
-                        cost = {},
-                        neededItems=[],
-                        time = 2,
-                        reward = {0.4: ({inv.lookup("Seaweed"): 0}, "You failed to gather seaweed"),
-                            0.7: ({inv.lookup("Seaweed"): 1}, "You found 1 piece of seaweed"),
-                            0.95: ({inv.lookup("Seaweed"): 3}, "You found a large blob of seaweed"),
-                            1: ({inv.lookup("Seaweed"): 6}, "You found piles of seaweed")
-                        })
-
-                    imp.outputMessage.append("Oh No! Your fishing rod broke. While urgently looking for other food sources, you discover seaweed in the water.")
-
-                    taskButtonUpdate()
-                    inv.inventoryUpdate()
-
                     player.task = None
+                    initializeSeaweed()
                     return False
 
                 imp.outputMessage.append(f"Oh No! {neededItem.name} broke")
-
                 player.task = None
                 return False
 
