@@ -21,10 +21,5 @@ fish = task.Task(
     reward={1: {inv.lookup("Fish"): 1}}
 )
 
-for item in inv.Resource.all:
-    item_id = item.name.lower().replace(" ", "-")
-    resource_line = imp.document.createElement("p")
-    resource_line.id = f"{item_id}-count"
-    resource_line.textContent = f"{item.name}: {item.quantity}"
-    imp.document.querySelector("#inventory-col").appendChild(resource_line)
+
 
