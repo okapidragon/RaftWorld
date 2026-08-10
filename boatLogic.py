@@ -1,4 +1,5 @@
 import inventoryLogic as inv
+import imports as imp
 
 class Boat:
     def __init__(self, durability, size):
@@ -9,8 +10,8 @@ class Boat:
         addedArea = (newSize[0] * newSize[1]) - (self.size[0] * self.size[1])
 
         if addedArea <= 0:
-            print("New size must be larger than current size.")
+            imp.outputMessage += "New size must be larger than current size."
             return False
 
         self.size = newSize
-        print(f"Boat expanded to size: {self.size}")
+        imp.outputMessage += f"Boat expanded to size: {self.size}"

@@ -4,7 +4,7 @@ import taskLogic as task
 import boatLogic as bt
 from pyscript import document  # pyright: ignore[reportMissingImports]
 
-print("Story starts")
+imp.outputMessage += "Input Story Start"
 
 
 
@@ -14,7 +14,7 @@ wood = inv.Resource("Wood", 20)
 inv.Resource("Fish", 0)
 inv.Item("Fishing Rod", 1, breakable=True, breakChance=0.1)
 
-print("You have a fishing rod and a small boat. You need to catch some fish to survive. You also need to expand your boat to carry more resources.")
+imp.outputMessage += "You have a fishing rod and a small boat. You need to catch some fish to survive. You also need to expand your boat to carry more resources."
 
 fish = task.Task(
     name="Fishing",
