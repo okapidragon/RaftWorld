@@ -37,12 +37,13 @@ task.Task(name = "Gather Seaweed",
         1: ({inv.lookup("Seaweed"): 6}, "You found piles of seaweed") })
 
 #Crafts Here!
+imp.displayedCrafts.append(
 task.Task(name = "Craft Paddle",
     cost = {inv.lookup("Wood"): 5},
     neededItems=[],
     time = 2,
-    reward = {1: ({inv.lookup("Paddle"): 1}, "Succesful paddle craft!")})
-
+    reward = {1: ({inv.lookup("Paddle"): 1}, "Succesful paddle craft!")}, craft=True)
+)
 
 
 #All events down here!

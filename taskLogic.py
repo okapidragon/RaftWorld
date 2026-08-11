@@ -6,15 +6,16 @@ def initializeSeaweed():
     imp.displayedResources.append(inv.lookup("Seaweed"))
     imp.displayedTasks.append(lookup("Gather Seaweed"))
 
-    imp.outputMessage.append("While urgently looking for other food sources, you discover seaweed in the water.")
+    imp.outputMessage.append("While urgently looking for other food sources, you discover seaweed in the water.", color = "#50C878")
 
     taskButtonUpdate()
     inv.inventoryUpdate()
 
 class Task:
     all = []
+    allCraft = []
 
-    def __init__(self, name, cost, neededItems, time, reward, inputs = None):
+    def __init__(self, name, cost, neededItems, time, reward, inputs = None, craft = False):
         self.name = name
         self.cost = cost #self.cost should be a dictionary of {Resource: amount}
         self.neededItems = neededItems #List of Resource objects
@@ -28,6 +29,9 @@ class Task:
 
         if callable(reward):
             self.rewardType = "function"
+
+        if craft:
+            Task.allCraft.append(self)
 
         Task.all.append(self)
 

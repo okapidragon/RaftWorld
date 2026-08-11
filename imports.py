@@ -37,5 +37,6 @@ boatUnlock = False
 
 displayedResources = []
 displayedTasks = []
+displayedCrafts = []
 
 
