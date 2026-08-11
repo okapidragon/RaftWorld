@@ -4,7 +4,7 @@ import inventoryLogic as inv
 
 def initializeSeaweed():
     imp.displayedResources.append(inv.lookup("Seaweed"))
-    imp.displayedTasks.append(inv.lookup("Gather Seaweed"))
+    imp.displayedTasks.append(lookup("Gather Seaweed"))
 
     imp.outputMessage.append("Oh No! Your fishing rod broke. While urgently looking for other food sources, you discover seaweed in the water.")
 
