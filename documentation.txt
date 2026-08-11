@@ -77,6 +77,7 @@ taskLogic.py as task
 
 setBarProgress(value) -> sets the hunger bar to a hunger value
 displayBoatSize(boat) -> displays the boat size of a boat instance
+displayTime(current_time): -> displays the current time
 
 async resizeBoat() -> called by button and handles everything to do with resizing boat in two seconds. Creates a task instance but deletes from all tasks
 
@@ -86,3 +87,13 @@ class Boat (durability, size)
     __init__
     changeSize(newSize) -> handles the reward function for the class
 
+class Player (name, hunger = 100, task = None)
+    __init__
+    eat(foodResource)
+    hungerFrame()
+
+class gameTime()
+    all = []
+
+    __init__
+    advance(increment) -> advances the time in hours and minutes and days based on a minute increment.
