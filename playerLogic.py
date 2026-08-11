@@ -183,7 +183,7 @@ class Player:
 
         if self.hunger <= -100:
             imp.outputMessage.append(f"{self.name} has starved!", color = "Red")
-            self.health -= 3
+            self.health -= 2.5
             setHealthBarProgress(self.health)
 
 
