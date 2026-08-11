@@ -158,7 +158,7 @@ def craftButtonUpdate():
         craft_button.style.margin = "0 auto 20px"
         craft_button.id = f"{craft_id}-button"
         craft_button.className = "craft-button"
-        craft_button.innerHTML = f"Craft {craft.name}"
+        craft_button.innerHTML = f"{craft.name}"
         craft_cost = imp.document.createElement("p")
         craft_cost.style.textAlign = "center"
         craft_cost.innerHTML = f"Resources needed: {', '.join([f'{amount} {resource.name}' for resource, amount in craft.cost.items()])}"
