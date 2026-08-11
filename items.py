@@ -10,7 +10,7 @@ inv.Item("Paddle", 0, breakable=True, breakChance=0.01)
 
 #Resources
 inv.Resource("Fish", 0, food = True, hungerScore=100)
-inv.Resource("Seaweed", 0, food = True, hungerScore = 8)
+inv.Resource("Seaweed", 0, food = True, hungerScore = 8, eatQuantity = 5)
 imp.displayedResources.append(inv.Resource("Wood", 0))
 
 

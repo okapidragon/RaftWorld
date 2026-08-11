@@ -19,7 +19,7 @@ class Resource:
     all = []
     allFood = []
     
-    def __init__(self, name, quantity, food = False, hungerScore = 100):
+    def __init__(self, name, quantity, food = False, hungerScore = 100, eatQuantity = 1):
         self.name = name
         self.quantity = quantity
         Resource.all.append(self)
