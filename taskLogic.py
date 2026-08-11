@@ -174,3 +174,7 @@ def craftButtonUpdate():
         craft_col.appendChild(craft_button)
         craft_col.appendChild(craft_cost)
         craft_col.appendChild(imp.document.createElement("br"))
+
+def locationUpdate(place):
+    location_col = imp.document.querySelector("#location")
+    location_col.innerHTML = f"<p style=\"text-align: center;\">Location: {place}</p>"
