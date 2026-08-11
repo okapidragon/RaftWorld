@@ -49,7 +49,7 @@ task.Task(name = "Gather Seaweed",
 task.taskButtonUpdate()
 
 
-imp.asyncio.showSomething("#boat-col")
+imp.showSomething("#boat-col")
 
 async def hungerLoop():
     while True:
