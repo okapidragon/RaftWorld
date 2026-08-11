@@ -41,7 +41,7 @@ class Event:
             task_button.className = "event-button"
             task_button.textContent = taskItem.name
             task_button.onclick = (
-                lambda event, selected_task=task, selected_button=task_button:
+                lambda event, selected_task=taskItem, selected_button=task_button:
                 imp.asyncio.create_task(
                     task.runTask(selected_task, selected_button)
                 )
@@ -82,7 +82,7 @@ def stopEvent(event):
 
 
 #All events down here!
-declineTask = task.Task("Decline", {}, [], 0, {})
+declineTask = task.Task("Decline", {}, [], 0, {1: ({}, "Declined Paddling")})
 
 
 #Wood floating by event!
