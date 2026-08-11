@@ -16,7 +16,7 @@ imp.outputMessage.append("You are stranded in the middle of a freshwater ocean w
 inv.inventoryUpdate()
 
 task.taskButtonUpdate()
-
+imp.showSomething("#crafts-col")
 
 
 async def hungerLoop():
