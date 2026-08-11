@@ -22,6 +22,10 @@ class OutputMessage:
         self.messages.append(message)
         displayOutput()
 
+def showSomething(div_id):
+    boat_column = document.querySelector(div_id)
+    boat_column.style.display = "block"
+
 outputMessage = OutputMessage()
 
 currentEvent = None
