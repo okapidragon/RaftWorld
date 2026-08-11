@@ -11,6 +11,7 @@ inv.Item("Paddle", 0, breakable=True, breakChance=0.01)
 #Resources
 inv.Resource("Fish", 0, food = True, hungerScore=100)
 inv.Resource("Seaweed", 0, food = True, hungerScore = 8, eatQuantity = 5)
+inv.Resource("Fishing Reel", 0)
 imp.displayedResources.append(inv.Resource("Wood", 0))
 
 
@@ -44,7 +45,12 @@ task.Task(name = "Craft Paddle",
     time = 2,
     reward = {1: ({inv.lookup("Paddle"): 1}, "Succesful paddle craft!")}, craft=True)
 )
-
+task.Task(name = "Craft Fishing Rod",
+    cost = {inv.lookup("Wood"): 4, inv.lookup("Fishing Reel"): 1},
+    neededItems=[],
+    time = 3,
+    reward = {1: ({inv.lookup("Fishing Rod"): 1}, "Succesful fishing rod craft!")}, craft=True
+)
 
 #All events down here!
 declineTask = task.Task("Decline", {}, [], 0, {1: ({}, "Declined Event")})
@@ -59,3 +65,12 @@ woodPopUp = ev.Popup('You see wood floating by. You may paddle towards it to add
 optionTasks=[woodAcceptTask, declineTask])
 
 ev.Event("Wood Floats By", difficulty=0, minCooldown=90, screenPopup=woodPopUp)
+
+stringAcceptTask = task.Task("Paddle to it", {}, [inv.lookup("Paddle")], 1, { 
+    0.3: ({inv.lookup("Fishing Reel"): 0}, "The fishing reel floated away"),
+    1: ({inv.lookup("Fishing Reel"): 1}, "You managed to salvage one fishing reel")})
+
+stringPopUp = ev.Popup('You see a fishing reel floating by. You may paddle towards it to add it to your inventory.',
+optionTasks=[stringAcceptTask, declineTask])
+
+ev.Event("String Floats By", difficulty=0, minCooldown=90, screenPopup=stringPopUp)
