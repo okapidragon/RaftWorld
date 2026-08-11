@@ -103,3 +103,13 @@ inventoryLogic.py as inv
 taskLogic.py as task
 
 class Popup (text, optionTask, duration = 30)
+    __init__
+
+class Event (name, difficulty, minCooldown, screenPopup, cooldown = 60)
+    __init__
+    async execute() -> displays popup for duration
+
+eventUpdate(dayNumber) -> Function called every second to figure out eligible events. Decide if want to play one and pick one randomly.
+stopEvent(event)
+    if event not the current one, return False
+    reset cooldown and delete as current event.
