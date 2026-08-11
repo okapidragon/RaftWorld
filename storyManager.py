@@ -4,7 +4,6 @@ import taskLogic as task
 import playerLogic as pl
 import eventsLogic as ev
 
-imp.outputMessage.append("Input Story Start")
 
 boat = pl.Boat(durability=100, size=(6, 6))
 player = pl.Player(name="Player", hunger=100)
