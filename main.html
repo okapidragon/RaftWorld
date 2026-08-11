@@ -24,7 +24,7 @@ button {
   padding: 10px;
   position: relative;
 }
-.hunger-label {
+.bar-title {
   display: flex;
   justify-content: center;
   width: 100%;
@@ -110,17 +110,26 @@ button {
   <div class="column" id="needs-col" style="height:100vh">
     <h3 style="text-align: center;">Stats</h3>
     <p id="time-display" style="text-align: center;">Time: 00:00</p>
-    <p class="hunger-label" style="text-align: center;">Hunger level</p>
+    <p id="hunger-title" class="bar-title" style="text-align: center;">Hunger level</p>
     <div class="bi-directional-container">
       <div class="center-line"></div>
       <div class="bi-bar-wrapper" id="balance-wrapper">
         <div class="bi-bar" id="balance-bar"></div>
       </div>
     </div>
-    <div class="bar-labels">
+    <div class="bar-labels" id="hunger-bar-labels">
         <span>-100%</span>
         <span>0%</span>
         <span>100%</span>
+    </div>
+    <br>
+    <p id="health-title" class="bar-title" style="text-align: center;">Health level</p>
+    <div id="health-bar-container" style="margin-top: 10px; width: 100%; height: 24px; background-color: #e0e0e0; border-radius: 12px;">
+      <div id="health-bar" style="width: 100%; height: 100%; background-color: #9b2525; border-radius: 12px;"></div>
+    </div>
+    <div class="bar-labels" id="health-bar-labels">
+      <span>0%</span>
+      <span>100%</span>
     </div>
     <div id="boat-col" class="center-abs" style="display: none;">
       <h3>Boat</h3>

@@ -3,7 +3,7 @@ import imports as imp
 import taskLogic as task
 import items as item
 
-def setBarProgress(value):
+def setHungerBarProgress(value):
     value = max(-100, min(100, value))
     wrapper = imp.document.querySelector("#balance-wrapper")
     bar = imp.document.querySelector("#balance-bar")
@@ -23,6 +23,12 @@ def setBarProgress(value):
         # Neutral zero point state
         wrapper.style.left = "50%"
         wrapper.style.width = "0%"
+
+def setHealthBarProgress(value):
+    value = min(100, max(0, value))
+    health_bar = imp.document.querySelector("#health-bar")
+    health_bar.style.width = f"{value}%"
+    
 
 def displayBoatSize(boat):
     size_display = imp.document.querySelector("#boat-size")
@@ -143,7 +149,7 @@ class Player:
 
         foodResource.remove(quantity)
         self.hunger = min(self.hunger + foodResource.hungerScore * quantity, 100)  # Increase hunger but not above 100
-        setBarProgress(self.hunger)
+        setHungerBarProgress(self.hunger)
 
         if quantity == 1:
             imp.outputMessage.append(f"A {foodResource.name} was eaten.")
@@ -153,7 +159,7 @@ class Player:
 
     def hungerFrame(self):
         if not (inv.lookup("Fish") in imp.displayedResources):
-            setBarProgress(self.hunger)
+            setHungerBarProgress(self.hunger)
             return
 
         self.hunger -= 2
@@ -170,9 +176,9 @@ class Player:
             else:
                 self.noFoodMessageDelay -= 1
             
-            setBarProgress(self.hunger)
+            setHungerBarProgress(self.hunger)
         else:
-            setBarProgress(self.hunger)
+            setHungerBarProgress(self.hunger)
 
         if self.hunger <= -100:
             imp.outputMessage.append(f"{self.name} has starved!", color = "Red")
