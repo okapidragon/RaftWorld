@@ -23,9 +23,9 @@ class Event:
         Event.all.append(self)
 
     async def execute(self):
-        events_column = imp.document.querySelector("#output-col")
+        events_column = imp.document.querySelector("#events-col")
         
-        message_line = imp.createElement("p")
+        message_line = imp.document.createElement("p")
         message_line.style.textAlign = "center"
         message_line.textContent = self.screenPopup.text
         events_column.appendChild(message_line)
@@ -52,7 +52,7 @@ def eventUpdate(dayNumber):
     for event in Event.all:
         event.cooldown += 1
 
-    if imp.currentEvent is None:
+    if imp.currentEvent is not None:
         return
 
     eligibleEvents = []
@@ -94,3 +94,5 @@ woodPopUp = Popup('You see wood floating by. You may paddle towards it to add it
 woodFloatsBy = Event("Wood Floats By", difficulty=0, minCooldown=90, screenPopup=woodPopUp)
 
 #Another event
+
+imp.asyncio.create_task(woodFloatsBy.execute())
