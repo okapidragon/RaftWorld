@@ -31,6 +31,8 @@ outputMessage = OutputMessage()
 
 currentEvent = None
 
+timeSinceEvent = 0
+
 #Progression Variables
 seaweedUnlock = False
 boatUnlock = False

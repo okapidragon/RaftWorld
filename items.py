@@ -64,7 +64,7 @@ woodAcceptTask = task.Task("Paddle to it", {}, [inv.lookup("Paddle")], 1, {
 woodPopUp = ev.Popup('You see wood floating by. You may paddle towards it to add it to your inventory.', 
 optionTasks=[woodAcceptTask, declineTask])
 
-ev.Event("Wood Floats By", difficulty=0, minCooldown=90, screenPopup=woodPopUp, cooldown = 60)
+ev.Event("Wood Floats By", difficulty=0, minCooldown=90, screenPopup=woodPopUp, weigth = 2)
 
 stringAcceptTask = task.Task("Paddle to it", {}, [inv.lookup("Paddle")], 1, { 
     0.3: ({inv.lookup("Fishing Reel"): 0}, "The fishing reel floated away"),
@@ -73,4 +73,6 @@ stringAcceptTask = task.Task("Paddle to it", {}, [inv.lookup("Paddle")], 1, {
 stringPopUp = ev.Popup('You see a fishing reel floating by. You may paddle towards it to add it to your inventory.',
 optionTasks=[stringAcceptTask, declineTask])
 
-ev.Event("String Floats By", difficulty=1, minCooldown=90, screenPopup=stringPopUp)
+ev.Event("String Floats By", difficulty=1, minCooldown=120, screenPopup=stringPopUp, weight = 1)
+
+
