@@ -1,6 +1,7 @@
 import inventoryLogic as inv
 import imports as imp
 import taskLogic as task
+import items as item
 
 def setBarProgress(value):
     value = max(-100, min(100, value))
