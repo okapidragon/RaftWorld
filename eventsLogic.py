@@ -88,7 +88,7 @@ def eventUpdate(dayNumber):
         if event.difficulty <= dayNumber and event.cooldown >= event.minCooldown:
             eligibleEvents.append(event)
 
-    if eligibleEvents is None:
+    if not eligibleEvents:
         return
 
     probability = imp.random.random()
