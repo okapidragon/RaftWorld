@@ -146,20 +146,28 @@ def taskButtonUpdate():
         tasks_col.appendChild(task_button)
         tasks_col.appendChild(imp.document.createElement("br"))
 
-for craft in imp.displayedCrafts:
+def craftButtonUpdate():
     craft_col = imp.document.querySelector("#crafts-col")
-    craft_id = craft.name.lower().replace(" ", "-")
-    craft_button = imp.document.createElement("button")
-    craft_button.style.display = "block"
-    craft_button.style.margin = "0 auto 20px"
-    craft_button.id = f"{craft_id}-button"
-    craft_button.className = "craft-button"
-    craft_button.textContent = f"{craft.name}<br>Materials needed: {craft.cost}"
-    craft_button.onclick = (
-        lambda event, selected_task=craft, selected_button=craft_button:
-        imp.asyncio.create_task(
-            runTask(selected_task, selected_button)
+    for craft_button in craft_col.querySelectorAll(".craft-button"):
+        craft_button.remove()
+
+    for craft in imp.displayedCrafts:
+        craft_id = craft.name.lower().replace(" ", "-")
+        craft_button = imp.document.createElement("button")
+        craft_button.style.display = "block"
+        craft_button.style.margin = "0 auto 20px"
+        craft_button.id = f"{craft_id}-button"
+        craft_button.className = "craft-button"
+        craft_button.innerHTML = f"Craft {craft.name}"
+        craft_cost = imp.document.createElement("p")
+        craft_cost.style.textAlign = "center"
+        craft_cost.innerHTML = f"Resources needed: {', '.join([f'{amount} {resource.name}' for resource, amount in craft.cost.items()])}"
+        craft_button.onclick = (
+            lambda event, selected_task=craft, selected_button=craft_button:
+            imp.asyncio.create_task(
+                runTask(selected_task, selected_button)
+            )
         )
-    )
-    craft_col.appendChild(craft_button)
-    craft_col.appendChild(imp.document.createElement("br"))
+        craft_col.appendChild(craft_button)
+        craft_col.appendChild(craft_cost)
+        craft_col.appendChild(imp.document.createElement("br"))
