@@ -54,7 +54,7 @@ class Item(Resource):
     def tryBreak(self):
         if (self.breakable) and (imp.random.random() < self.breakChance):
             self.remove(1)
-            imp.outputMessage.append(f"Oh No! {self.name} broke")
+            imp.outputMessage.append(f"Oh No! {self.name} broke.")
 
             return True
         return False
