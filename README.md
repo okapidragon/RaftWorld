@@ -1,4 +1,6 @@
 # RaftWorld
+open in vscode for readability!!!
+
 
 circular dependency of playerLogic, taskLogic?
 
