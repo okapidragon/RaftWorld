@@ -32,6 +32,8 @@ class Event:
         message_line.textContent = self.screenPopup.text
         events_column.appendChild(message_line)
 
+        self.timerTask = imp.asyncio.create_task(self.eventTimer())
+
         for taskItem in self.screenPopup.optionTasks:
             task_id = taskItem.name.lower().replace(" ", "-")
             task_button = imp.document.createElement("button")
@@ -43,11 +45,33 @@ class Event:
             task_button.onclick = (
                 lambda event, selected_task=taskItem, selected_button=task_button:
                 imp.asyncio.create_task(
-                    task.runTask(selected_task, selected_button)
-                )
+                self.chooseOption(selected_task, selected_button)
+            )
             )
             events_column.appendChild(task_button)
-            
+
+        await imp.asyncio.sleep(self.screenPopup.duration)
+        stopEvent(self)
+        return
+
+    async def eventTimer(self):
+        await imp.asyncio.sleep(self.screenPopup.duration)
+
+        # Time ran out
+        if imp.currentEvent is self:
+            imp.outputMessage.append("You could not reach it in time.")
+            stopEvent(self)
+
+    async def chooseOption(self, selected_task, selected_button):
+    # Make sure the event hasn't already timed out
+        if imp.currentEvent is not self:
+            return
+        
+        self.timerTask.cancel()
+
+        stopEvent(self)
+
+        await task.runTask(selected_task, selected_button)
 
 
 def eventUpdate(dayNumber):
