@@ -17,7 +17,7 @@ def defaultCondition():
 class Event:
     all = []
 
-    def __init__(self, name, difficulty, minCooldown, screenPopup, weight, condition = defaultCondition, cooldown = 60):
+    def __init__(self, name, difficulty, minCooldown, screenPopup, weight, condition = defaultCondition, cooldown = 60, automaticFunc = None):
         self.name = name
         self.difficulty = difficulty
         self.minCooldown = minCooldown
@@ -26,10 +26,12 @@ class Event:
         self.condition = condition
         self.weight = weight
         Event.all.append(self)
-
+        self.automaticTask = automaticFunc #Cannot wait during!
+    
     async def execute(self):
         imp.currentEvent = self
-
+        if self.automaticTask is not None:
+            self.automaticTask()
         events_column = imp.document.querySelector("#events-col")
         
         message_line = imp.document.createElement("p")
