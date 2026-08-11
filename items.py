@@ -3,9 +3,11 @@ import inventoryLogic as inv
 import taskLogic as task
 
 if __name__ == "__storyManager__":
+    #Items
     imp.displayedResources.append(inv.Item("Fishing Rod", 1, breakable=True, breakChance=0.03))
     inv.Item("Paddle", 0, breakable=True, breakChance=0.01)
 
+    #Resources
     inv.Resource("Fish", 0, food = True, hungerScore=100)
     inv.Resource("Seaweed", 0, food = True, hungerScore = 8)
     imp.displayedResources.append(inv.Resource("Wood", 0))
