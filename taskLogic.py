@@ -103,6 +103,8 @@ def lookup(name) -> Task:
     return None
 
 async def runTask(selected_task, selected_button):
+    import playerLogic as pl
+
     selected_button.classList.add("in-progress")
     selected_button.disabled = True
 

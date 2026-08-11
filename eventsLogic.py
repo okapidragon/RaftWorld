@@ -23,6 +23,8 @@ class Event:
         Event.all.append(self)
 
     async def execute(self):
+        imp.currentEvent = self
+
         events_column = imp.document.querySelector("#events-col")
         
         message_line = imp.document.createElement("p")
