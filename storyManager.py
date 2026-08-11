@@ -17,7 +17,6 @@ inv.inventoryUpdate()
 
 task.taskButtonUpdate()
 task.craftButtonUpdate()
-imp.showSomething("#crafts-col")
 
 
 async def hungerLoop():
