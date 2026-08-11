@@ -76,13 +76,14 @@ def eventUpdate(dayNumber):
 def stopEvent(event):
     if event is not imp.currentEvent:
         return False
+    
 
     event.cooldown = 0
     imp.currentEvent = None
 
 
 #All events down here!
-declineTask = task.Task("Decline", {}, [], 0, {1: ({}, "Declined Paddling")})
+declineTask = task.Task("Decline", {}, [], 0, {1: ({}, "Declined Event")})
 
 
 #Wood floating by event!
