@@ -5,7 +5,7 @@ import taskLogic as task
 
 #Items
 imp.displayedResources.append(inv.Item("Fishing Rod", 1, breakable=True, breakChance=0.03))
-inv.Item("Paddle", 0, breakable=True, breakChance=0.01)
+inv.Item("Paddle", 1, breakable=True, breakChance=0.01)
 
 #Resources
 inv.Resource("Fish", 0, food = True, hungerScore=100)

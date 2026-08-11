@@ -89,12 +89,14 @@ class Task:
             if self.inputs is not None:
                 self.reward(self.inputs)
 
-            if imp.inspect.iscoroutinefunction(self.reward):
+            elif imp.inspect.iscoroutinefunction(self.reward):
                 await self.reward()
             else:
                 self.reward()
 
             return True
+
+        return True
 
 def lookup(name) -> Task:
     for task in Task.all:
@@ -109,10 +111,11 @@ async def runTask(selected_task, selected_button):
     selected_button.disabled = True
 
     try:
-        await selected_task.execute(pl.Player.all[0])
+        happened = await selected_task.execute(pl.Player.all[0])
     finally:
         selected_button.classList.remove("in-progress")
         selected_button.disabled = False
+    return happened
 
 def taskButtonUpdate():
     tasks_col = imp.document.querySelector("#tasks-col")

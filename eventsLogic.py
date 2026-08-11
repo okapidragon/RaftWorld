@@ -51,10 +51,6 @@ class Event:
             )
             events_column.appendChild(task_button)
 
-        await imp.asyncio.sleep(self.screenPopup.duration)
-        stopEvent(self)
-        return
-
     async def eventTimer(self):
         await imp.asyncio.sleep(self.screenPopup.duration)
 
@@ -70,9 +66,12 @@ class Event:
         
         self.timerTask.cancel()
 
-        stopEvent(self)
+        happened = await task.runTask(selected_task, selected_button)
 
-        await task.runTask(selected_task, selected_button)
+        if happened:
+            stopEvent(self)
+
+        
 
 
 def eventUpdate(dayNumber):
@@ -88,7 +87,7 @@ def eventUpdate(dayNumber):
         if event.difficulty <= dayNumber and event.cooldown >= event.minCooldown:
             eligibleEvents.append(event)
 
-    if eligibleEvents is None:
+    if len(eligibleEvents) == 0:
         return
 
     probability = imp.random.random()
@@ -118,7 +117,7 @@ declineTask = task.Task("Decline", {}, [], 0, {1: ({}, "Declined Event")})
 
 
 #Wood floating by event!
-woodAcceptTask = task.Task("Paddle to it", {}, [inv.lookup("Paddle")], 0, {
+woodAcceptTask = task.Task("Paddle to it", {}, [inv.lookup("Paddle")], 1, {
     0.3: ({inv.lookup("Wood"): 0}, "The wood floated away"),
     1: ({inv.lookup("Wood"): 10}, "You managed to salvage ten wood")})
 
@@ -126,7 +125,3 @@ woodPopUp = Popup('You see wood floating by. You may paddle towards it to add it
                   optionTasks=[woodAcceptTask, declineTask])
 
 woodFloatsBy = Event("Wood Floats By", difficulty=0, minCooldown=90, screenPopup=woodPopUp)
-
-#Another event
-
-imp.asyncio.create_task(woodFloatsBy.execute())
