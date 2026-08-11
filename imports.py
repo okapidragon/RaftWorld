@@ -12,15 +12,15 @@ def displayOutput():
     for message in reversed(outputMessage.messages[-15:]):
         message_line = document.createElement("p")
         message_line.style.textAlign = "center"
-        message_line.textContent = message
+        message_line.innerHTML = message
         output_column.appendChild(message_line)
 
 class OutputMessage:
     def __init__(self):
         self.messages = []
 
-    def append(self, message):
-        self.messages.append(message)
+    def append(self, message, color = "black"):
+        self.messages.append(f"<span style=\"color: {color};\">{message}</span>")
         displayOutput()
 
 def showSomething(div_id):
