@@ -77,12 +77,11 @@ class Event:
     # Make sure the event hasn't already timed out
         if imp.currentEvent is not self:
             return
-        
-        self.timerTask.cancel()
 
         happened = await task.runTask(selected_task, selected_button)
 
         if happened:
+            self.timerTask.cancel()
             stopEvent(self)
 
         
@@ -132,17 +131,3 @@ def stopEvent(event):
         imp.showSomething("#boat-col")
         imp.outputMessage.append("While pondering a way to get a paddle. You notice that you can take apart your raft, your only life supply. Be Careful!")
         imp.boatUnlock = True
-
-#All events down here!
-declineTask = task.Task("Decline", {}, [], 0, {1: ({}, "Declined Event")})
-
-
-#Wood floating by event!
-woodAcceptTask = task.Task("Paddle to it", {}, [inv.lookup("Paddle")], 1, {
-    0.3: ({inv.lookup("Wood"): 0}, "The wood floated away"),
-    1: ({inv.lookup("Wood"): 10}, "You managed to salvage ten wood")})
-
-woodPopUp = Popup('You see wood floating by. You may paddle towards it to add it to your inventory.',
-                  optionTasks=[woodAcceptTask, declineTask])
-
-woodFloatsBy = Event("Wood Floats By", difficulty=0, minCooldown=90, screenPopup=woodPopUp)

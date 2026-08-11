@@ -59,10 +59,6 @@ class Task:
 
         await imp.asyncio.sleep(self.time)
 
-        if (not imp.fishUnlock) and self.name == "Fishing" :
-            imp.fishUnlock = True
-            imp.displayedResources.append(inv.lookup("Fish"))
-
         for neededItem in self.neededItems:
             breaked = neededItem.tryBreak()
             if breaked:
@@ -81,6 +77,9 @@ class Task:
                 if imp.random.random() < probability: 
                     for rewardItem, amount in rewardItems[0].items():
                         rewardItem.add(amount) 
+                        if not (inv.lookup(rewardItem) in imp.displayedResources):
+                            imp.displayedResources.append(inv.lookup(rewardItem))
+
                     imp.outputMessage.append(rewardItems[1])  # Display the dialogue associated with the reward
                     inv.inventoryUpdate()
                     return True

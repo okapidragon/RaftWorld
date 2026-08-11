@@ -32,7 +32,6 @@ outputMessage = OutputMessage()
 currentEvent = None
 
 #Progression Variables
-fishUnlock = False
 seaweedUnlock = False
 boatUnlock = False
 
