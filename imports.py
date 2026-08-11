@@ -11,6 +11,7 @@ def displayOutput():
 
     for message in reversed(outputMessage.messages[-15:]):
         message_line = document.createElement("p")
+        message_line.style.textAlign = "center"
         message_line.textContent = message
         output_column.appendChild(message_line)
 
