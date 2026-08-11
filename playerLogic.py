@@ -38,8 +38,21 @@ def resizeBoat(event=None):
     height = int(height_input.value)
     newSize = (width, height)
 
-    if width == Boat.all[0].size[0] and height == Boat.all[0].size[0]:
+    if Player.all[0].task is not None:
+        imp.outputMessage.append(f"Player is already doing {Player.all[0].task.name}.")
+        return
+
+    ogWidth = Boat.all[0].size[0]
+    ogHeight = Boat.all[0].size[1]
+
+    if width == ogWidth and height == ogHeight:
         imp.outputMessage.append("Boat is already that size")
+        return
+
+    addedArea = width * height - ogHeight * ogWidth
+
+    if addedArea > inv.lookup("Wood").quantity:
+        imp.outputMessage.append("Not enough wood")
         return
 
     boatSizeChange = task.Task(
@@ -47,8 +60,8 @@ def resizeBoat(event=None):
         cost = {},
         neededItems=[],
         time = 5,
-        reward = Boat.all[0].changeSize(newSize)
-    )
+        reward = Boat.all[0].changeSize,
+        inputs = newSize)
 
     task.Task.all.remove(boatSizeChange)
 
@@ -91,9 +104,13 @@ class Boat:
 
         sizeText = f"{self.size[0]}x{self.size[1]}"
 
+        displayBoatSize(Boat.all[0])
+
         if addArea > 0:
+            inv.lookup("Wood").remove(addArea)
             imp.outputMessage.append(f"Boat increased to size {sizeText}. Used {addArea} wood.")
         elif addArea < 0:
+            inv.lookup("Wood").add(-addArea)
             imp.outputMessage.append(f"Boat decreased to size {sizeText}. Salvaged {-addArea} wood.") 
 
 class Player:

@@ -24,13 +24,14 @@ def initializeSeaweed():
 class Task:
     all = []
 
-    def __init__(self, name, cost, neededItems, time, reward):
+    def __init__(self, name, cost, neededItems, time, reward, inputs = None):
         self.name = name
         self.cost = cost #self.cost should be a dictionary of {Resource: amount}
         self.neededItems = neededItems #List of Resource objects
         
         self.time = time #time in seconds
         self.reward = reward #Dictionary of {Probability: ({Resource: amount}, dialogue)}} or Function
+        self.inputs = inputs
 
         if isinstance(reward, dict):
             self.rewardType = "dict"
@@ -95,6 +96,9 @@ class Task:
                     return True
         
         elif self.rewardType == "function":
+            if self.inputs is not None:
+                self.reward(self.inputs)
+
             if imp.inspect.iscoroutinefunction(self.reward):
                 await self.reward()
             else:

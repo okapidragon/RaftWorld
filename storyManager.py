@@ -10,6 +10,7 @@ boat = pl.Boat(durability=100, size=(6, 6))
 player = pl.Player(name="Player", hunger=100)
 gameTime = pl.gameTime()
 
+pl.displayBoatSize(boat)
 
 imp.displayedResources.append(inv.Item("Fishing Rod", 1, breakable=True, breakChance=0.03))
 
