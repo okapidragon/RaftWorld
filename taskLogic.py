@@ -113,6 +113,22 @@ async def runTask(selected_task, selected_button):
     finally:
         selected_button.classList.remove("in-progress")
         selected_button.disabled = False
+        stopTask(selected_button)
+
+def stopTask(selected_button):
+    if not selected_button.classList.contains("event-button"):
+        return
+
+    events_column = imp.document.querySelector("#events-col")
+    for event_button in events_column.querySelectorAll(".event-button"):
+        event_button.remove()
+
+    for event_message in events_column.querySelectorAll(".event-message"):
+        event_message.remove()
+
+    if imp.currentEvent is not None:
+        imp.currentEvent.cooldown = 0
+        imp.currentEvent = None
 
 def taskButtonUpdate():
     tasks_col = imp.document.querySelector("#tasks-col")
