@@ -70,7 +70,7 @@ class Event:
 
         # Time ran out
         if imp.currentEvent is self:
-            imp.outputMessage.append("You could not reach it in time.")
+            imp.outputMessage.append("You could not reach it in time.", color = "Red")
             stopEvent(self)
 
     async def chooseOption(self, selected_task, selected_button):
@@ -129,5 +129,5 @@ def stopEvent(event):
 
     if not imp.boatUnlock and event.name == "Wood Floats By":
         imp.showSomething("#boat-col")
-        imp.outputMessage.append("While pondering a way to get a paddle. You notice that you can take apart your raft, your only life supply. Be Careful!")
+        imp.outputMessage.append("While pondering a way to get a paddle. You notice that you can take apart your raft, your only life supply. Be Careful!", color = "#50C878")
         imp.boatUnlock = True

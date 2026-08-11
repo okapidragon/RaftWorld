@@ -159,7 +159,7 @@ class Player:
                     return
 
             if self.noFoodMessageDelay <= 0:
-                imp.outputMessage.append(f"{self.name} has no food to eat")
+                imp.outputMessage.append(f"{self.name} has no food to eat", color = "Red")
                 self.noFoodMessageDelay = 5
             else:
                 self.noFoodMessageDelay -= 1
@@ -169,7 +169,7 @@ class Player:
             setBarProgress(self.hunger)
 
         if self.hunger <= -100:
-            imp.outputMessage.append(f"{self.name} has starved!")
+            imp.outputMessage.append(f"{self.name} has starved!", color = "Red")
 
 class gameTime:
     all = []
