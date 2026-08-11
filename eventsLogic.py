@@ -57,7 +57,7 @@ def stopEvent(event):
     event.cooldown = 0
     imp.currentEvent = None
 
-    '''
+
 #All events down here!
 declineTask = task.Task("Decline", {}, [], 0, {})
 
@@ -73,4 +73,3 @@ woodPopUp = Popup('You see wood floating by. You may paddle towards it to add it
 woodFloatsBy = Event("Wood Floats By", difficulty=0, minCooldown=90, screenPopup=woodPopUp)
 
 #Another event
-'''
