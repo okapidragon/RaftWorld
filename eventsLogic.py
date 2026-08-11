@@ -28,6 +28,7 @@ class Event:
         events_column = imp.document.querySelector("#events-col")
         
         message_line = imp.document.createElement("p")
+        message_line.className = "event-message"
         message_line.style.textAlign = "center"
         message_line.textContent = self.screenPopup.text
         events_column.appendChild(message_line)
