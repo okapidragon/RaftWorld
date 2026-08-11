@@ -156,7 +156,7 @@ class Player:
             setBarProgress(self.hunger)
             return
 
-        self.hunger -= 10
+        self.hunger -= 2
 
         if self.hunger <= 0:
             for food in inv.Resource.allFood:
