@@ -11,15 +11,20 @@ class Popup:
 
         self.duration = duration
 
+def defaultCondition():
+    return True
+
 class Event:
     all = []
 
-    def __init__(self, name, difficulty, minCooldown, screenPopup, cooldown = 60):
+    def __init__(self, name, difficulty, minCooldown, screenPopup, weight, condition = defaultCondition, cooldown = 60):
         self.name = name
         self.difficulty = difficulty
         self.minCooldown = minCooldown
         self.screenPopup = screenPopup
         self.cooldown = cooldown
+        self.condition = condition
+        self.weight = weight
         Event.all.append(self)
 
     async def execute(self):
@@ -94,10 +99,12 @@ def eventUpdate(dayNumber):
     if imp.currentEvent is not None:
         return
 
+    imp.timeSinceEvent += 1
+
     eligibleEvents = []
 
     for event in Event.all:
-        if event.difficulty <= dayNumber and event.cooldown >= event.minCooldown:
+        if event.difficulty <= dayNumber and event.cooldown >= event.minCooldown and event.condition():
             eligibleEvents.append(event)
 
     if len(eligibleEvents) == 0:
@@ -105,8 +112,10 @@ def eventUpdate(dayNumber):
 
     probability = imp.random.random()
 
-    if probability < 0.02:
+    if probability < imp.timeSinceEvent * 0.0008:
         imp.currentEvent = imp.random.choice(eligibleEvents)
+
+        imp.timeSinceEvent = 0
 
         imp.asyncio.create_task(imp.currentEvent.execute())
 
@@ -130,6 +139,5 @@ def stopEvent(event):
     if not imp.boatUnlock:
         imp.showSomething("#boat-col")
         imp.showSomething("#crafts-col")
-        imp.showSomething("#events-col")
         imp.outputMessage.append("While pondering a way to get a paddle. You notice that you can take apart your raft, your only life supply. Be Careful!", color = "#50C878")
         imp.boatUnlock = True
