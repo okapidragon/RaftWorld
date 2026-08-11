@@ -5,7 +5,7 @@ import eventsLogic as ev
 
 
 #Items
-imp.displayedResources.append(inv.Item("Fishing Rod", 1, breakable=True, breakChance=0.03))
+imp.displayedResources.append(inv.Item("Fishing Rod", 1, breakable=True, breakChance=0.07))
 inv.Item("Paddle", 0, breakable=True, breakChance=0.01)
 
 #Resources
@@ -66,6 +66,7 @@ optionTasks=[woodAcceptTask, declineTask])
 
 ev.Event("Wood Floats By", difficulty=0, minCooldown=90, screenPopup=woodPopUp, weight = 2)
 
+#String Floats By
 stringAcceptTask = task.Task("Paddle to it", {}, [inv.lookup("Paddle")], 1, { 
     0.3: ({inv.lookup("Fishing Reel"): 0}, "The fishing reel floated away"),
     1: ({inv.lookup("Fishing Reel"): 1}, "You managed to salvage one fishing reel")})
@@ -74,5 +75,8 @@ stringPopUp = ev.Popup('You see a fishing reel floating by. You may paddle towar
 optionTasks=[stringAcceptTask, declineTask])
 
 ev.Event("String Floats By", difficulty=1, minCooldown=120, screenPopup=stringPopUp, weight = 1)
+
+#Fishing cut yourself
+
 
 

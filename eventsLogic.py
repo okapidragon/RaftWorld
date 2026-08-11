@@ -112,8 +112,11 @@ def eventUpdate(dayNumber):
 
     probability = imp.random.random()
 
-    if probability < imp.timeSinceEvent * 0.0008:
-        imp.currentEvent = imp.random.choice(eligibleEvents)
+    if probability < imp.timeSinceEvent * 0.0015:
+        eligibleEventsWeighted = []
+        for event in eligibleEvents:
+            eligibleEventsWeighted.extend([event] * event.weight)
+        imp.currentEvent = imp.random.choice(eligibleEventsWeighted)
 
         imp.timeSinceEvent = 0
 
