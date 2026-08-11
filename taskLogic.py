@@ -1,6 +1,5 @@
 import imports as imp
 import inventoryLogic as inv
-import playerLogic as pl
 
 
 def initializeSeaweed():
