@@ -52,12 +52,11 @@ class Item(Resource):
         self.breakChance = breakChance
 
     def tryBreak(self):
-        if self.breakable:
-            if imp.random.random() < self.breakChance:
-                self.remove(1)
-                imp.outputMessage.append(f"Oh No! {self.name} broke")
+        if (self.breakable) and (imp.random.random() < self.breakChance):
+            self.remove(1)
+            imp.outputMessage.append(f"Oh No! {self.name} broke")
 
-                return True
+            return True
         return False
         
 def lookup(name) -> Resource:
