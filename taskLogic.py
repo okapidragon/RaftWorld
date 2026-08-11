@@ -8,6 +8,9 @@ def initializeSeaweed():
 
     imp.outputMessage.append("While urgently looking for other food sources, you discover seaweed in the water.", color = "#50C878")
 
+    if not (inv.lookup("Fish") in imp.displayedResources):
+        imp.displayedResources.append(inv.lookup("Fish"))
+
     taskButtonUpdate()
     inv.inventoryUpdate()
 

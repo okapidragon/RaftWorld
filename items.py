@@ -5,7 +5,7 @@ import eventsLogic as ev
 
 
 #Items
-imp.displayedResources.append(inv.Item("Fishing Rod", 1, breakable=True, breakChance=0.03))
+imp.displayedResources.append(inv.Item("Fishing Rod", 1, breakable=True, breakChance=1))
 inv.Item("Paddle", 0, breakable=True, breakChance=0.01)
 
 #Resources
