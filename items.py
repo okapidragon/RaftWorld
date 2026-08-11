@@ -87,7 +87,7 @@ def cutCondition():
 
 stringPopUp = ev.Popup('You cut yourself on the fishing rod and lost 25 health',[], duration = 15)
 
-ev.Event("Fishing Cut", difficulty = 1, minCooldown = 40, screenPopup=stringPopUp, condition=cutCondition, automaticFunc=cut)
+ev.Event("Fishing Cut", difficulty = 1, minCooldown = 40, screenPopup=stringPopUp, condition=cutCondition, automaticFunc=cut, weight = 1)
 
 
 
