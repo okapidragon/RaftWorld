@@ -10,15 +10,32 @@
   gap: 20px;
 }
 button {  
-    border-radius: 100px;
-    width: 50%;
-    min-height: 2.5rem; 
-    height: auto;
-    background-color: rgb(176, 255, 244);
-    border-color: rgb(0, 115, 247);
-    font-size: 100%;
-    margin-bottom: 20px
+  border-radius: 100px;
+  width: 50%;
+  min-height: 2.5rem; 
+  height: auto;
+  background-color: rgb(176, 255, 244);
+  border-color: rgb(0, 115, 247);
+  font-size: 100%;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  white-space: nowrap;
+  transition: background-color 0.12s ease, transform 0.06s ease;
 
+button:focus {
+  outline: none;
+}
+button:active {
+  transform: translateY(0);
+}
+button:disabled {
+  opacity: 0.7;
+  cursor: progress;
+}
+.in-progress {
+  background-color: rgb(0, 255, 0);
+  color: rgb(0, 0, 0);
+}
 }
 .column {
   padding: 10px;
