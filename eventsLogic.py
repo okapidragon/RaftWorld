@@ -111,6 +111,10 @@ def stopEvent(event):
     event.cooldown = 0
     imp.currentEvent = None
 
+    if not imp.boatUnlock and event.name == "Wood Floats By":
+        #Input FUnction Here for revealing boat
+        boatUnlock = True
+
 
 #All events down here!
 declineTask = task.Task("Decline", {}, [], 0, {1: ({}, "Declined Event")})
