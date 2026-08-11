@@ -19,7 +19,7 @@ imp.displayedTasks.append(task.Task(
 name="Fishing",
 cost={},
 neededItems=[inv.lookup("Fishing Rod")],
-time=6,
+time=7,
 reward= {0.8: ( {inv.lookup("Fish"): 0}, "You could not catch a fish!"),
         0.95: ( {inv.lookup("Fish"): 1}, "You caught a sardine"),
         0.99: ( {inv.lookup("Fish"): 2}, "You caught a salmon"),
