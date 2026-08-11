@@ -105,7 +105,7 @@ def eventUpdate(dayNumber):
 
     probability = imp.random.random()
 
-    if probability < 0.01:
+    if probability < 0.02:
         imp.currentEvent = imp.random.choice(eligibleEvents)
 
         imp.asyncio.create_task(imp.currentEvent.execute())
@@ -127,7 +127,7 @@ def stopEvent(event):
     event.cooldown = 0
     imp.currentEvent = None
 
-    if not imp.boatUnlock and event.name == "Wood Floats By":
+    if not imp.boatUnlock:
         imp.showSomething("#boat-col")
         imp.showSomething("#crafts-col")
         imp.outputMessage.append("While pondering a way to get a paddle. You notice that you can take apart your raft, your only life supply. Be Careful!", color = "#50C878")
