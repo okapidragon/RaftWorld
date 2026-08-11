@@ -69,7 +69,7 @@ def eventUpdate(dayNumber):
     if probability < 0.01:
         imp.currentEvent = imp.random.choice(eligibleEvents)
 
-        imp.currentEvent.execute()
+        imp.asyncio.create_task(imp.currentEvent.execute())
 
 def stopEvent(event):
     if event is not imp.currentEvent:
