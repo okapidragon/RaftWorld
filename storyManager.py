@@ -48,10 +48,8 @@ task.Task(name = "Gather Seaweed",
 
 task.taskButtonUpdate()
 
-def showSomething(div_id):
-    boat_column = imp.document.querySelector(div_id)
-    boat_column.style.display = "block"
-showSomething("#boat-col")
+
+imp.asyncio.showSomething("#boat-col")
 
 async def hungerLoop():
     while True:
