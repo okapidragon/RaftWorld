@@ -94,6 +94,12 @@ class Player (name, hunger = 100, task = None)
 
 class gameTime()
     all = []
-
     __init__
     advance(increment) -> advances the time in hours and minutes and days based on a minute increment.
+
+-------------------------------------(eventsLogic.py)-------------------------------------
+imports.py as imp
+inventoryLogic.py as inv
+taskLogic.py as task
+
+class Popup (text, optionTask, duration = 30)

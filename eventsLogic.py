@@ -14,7 +14,7 @@ class Popup:
 class Event:
     all = []
 
-    def __init__(self, name, difficulty, minCooldown, screenPopup, cooldown = 1000):
+    def __init__(self, name, difficulty, minCooldown, screenPopup, cooldown = 60):
         self.name = name
         self.difficulty = difficulty
         self.minCooldown = minCooldown
@@ -22,8 +22,12 @@ class Event:
         self.cooldown = cooldown
         Event.all.append(self)
 
-    def execute(self):
+    async def execute(self):
+        #Tasks are in self.screenPopup.optionTaks
+        #Text in self.screenPopup.text
+        #Duration is in self.screenPopup.duration
         "Input Ezras Complicated Display Code Functions Here!"
+        stopEvent(self)
         pass
 
 
