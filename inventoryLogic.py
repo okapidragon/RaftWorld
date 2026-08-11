@@ -19,7 +19,7 @@ class Resource:
     all = []
     allFood = []
     
-    def __init__(self, name, quantity, food = False, hungerScore = 100):
+    def __init__(self, name, quantity, food = False, hungerScore = 100, eatQuantity = 1):
         self.name = name
         self.quantity = quantity
         Resource.all.append(self)
@@ -54,7 +54,7 @@ class Item(Resource):
     def tryBreak(self):
         if (self.breakable) and (imp.random.random() < self.breakChance):
             self.remove(1)
-            imp.outputMessage.append(f"Oh No! {self.name} broke.")
+            imp.outputMessage.append(f"Oh No! {self.name} broke.", color = "Red")
 
             return True
         return False

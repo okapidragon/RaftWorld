@@ -8,6 +8,9 @@ def initializeSeaweed():
 
     imp.outputMessage.append("While urgently looking for other food sources, you discover seaweed in the water.", color = "#50C878")
 
+    if not (inv.lookup("Fish") in imp.displayedResources):
+        imp.displayedResources.append(inv.lookup("Fish"))
+
     taskButtonUpdate()
     inv.inventoryUpdate()
 
@@ -81,8 +84,8 @@ class Task:
                 if imp.random.random() < probability: 
                     for rewardItem, amount in rewardItems[0].items():
                         rewardItem.add(amount) 
-                        if not (inv.lookup(rewardItem) in imp.displayedResources):
-                            imp.displayedResources.append(inv.lookup(rewardItem))
+                        if not (rewardItem in imp.displayedResources):
+                            imp.displayedResources.append(rewardItem)
 
                     imp.outputMessage.append(rewardItems[1])  # Display the dialogue associated with the reward
                     inv.inventoryUpdate()

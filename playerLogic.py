@@ -139,10 +139,17 @@ class Player:
     def eat(self, foodResource):
         if foodResource.quantity > 0:
             self.noFoodMessageDelay = 0 
-            foodResource.remove(1)
-            self.hunger = min(self.hunger + foodResource.hungerScore, 100)  # Increase hunger but not above 100
+
+            quantity = min(foodResource.eatQuantity, foodResource.quantity)
+
+            foodResource.remove(quantity)
+            self.hunger = min(self.hunger + foodResource.hungerScore * quantity, 100)  # Increase hunger but not above 100
             setBarProgress(self.hunger)
-            imp.outputMessage.append(f"{foodResource.name} was eaten.")
+
+            if quantity == 1:
+                imp.outputMessage.append(f"A {foodResource.name} was eaten.")
+            else:
+                imp.outputMessage.append(f"{quantity} {foodResource.name} were eaten.")
             inv.inventoryUpdate()
 
     def hungerFrame(self):
@@ -159,7 +166,7 @@ class Player:
                     return
 
             if self.noFoodMessageDelay <= 0:
-                imp.outputMessage.append(f"{self.name} has no food to eat")
+                imp.outputMessage.append(f"{self.name} has no food to eat", color = "Red")
                 self.noFoodMessageDelay = 5
             else:
                 self.noFoodMessageDelay -= 1
@@ -169,7 +176,7 @@ class Player:
             setBarProgress(self.hunger)
 
         if self.hunger <= -100:
-            imp.outputMessage.append(f"{self.name} has starved!")
+            imp.outputMessage.append(f"{self.name} has starved!", color = "Red")
 
 class gameTime:
     all = []
