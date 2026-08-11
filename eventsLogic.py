@@ -46,7 +46,6 @@ class Event:
             task_button.onclick = (
                 lambda event, selected_task=taskItem, selected_button=task_button:
                 imp.asyncio.create_task(
-<<<<<<< HEAD
                 self.chooseOption(selected_task, selected_button)
             )
             )
@@ -74,17 +73,6 @@ class Event:
         stopEvent(self)
 
         await task.runTask(selected_task, selected_button)
-=======
-                    stopTask(selected_task, selected_button)
-                )
-            )
-            events_column.appendChild(task_button)
-
-async def stopTask(selected_task, selected_button):
-    await task.runTask(selected_task, selected_button)
-    stopEvent(imp.currentEvent)
-            
->>>>>>> c1eacc1fccd13cccd615fc32172e6b8e214d3b8e
 
 
 def eventUpdate(dayNumber):
@@ -113,7 +101,7 @@ def eventUpdate(dayNumber):
 def stopEvent(event):
     if event is not imp.currentEvent:
         return False
-
+    
     events_column = imp.document.querySelector("#events-col")
     for event_button in events_column.querySelectorAll(".event-button"):
         event_button.remove()
