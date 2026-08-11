@@ -71,6 +71,20 @@ lookup(name) -> finds the task with the given name
 async runTask(task, button) -> Runs the task and handles changing the color of the button
 taskButtonUpdate() -> displays and updates all tasks in displayed tasks
 
+-------------------------------------(playerLogic.py)-------------------------------------
+imports.py as imp
+inventoryLogic.py as inv
+taskLogic.py as task
 
+setBarProgress(value) -> sets the hunger bar to a hunger value
+displayBoatSize(boat) -> displays the boat size of a boat instance
+
+async resizeBoat() -> called by button and handles everything to do with resizing boat in two seconds. Creates a task instance but deletes from all tasks
+
+
+class Boat (durability, size)
+    all = []
+    __init__
+    changeSize(newSize) -> handles the reward function for the class
 
 

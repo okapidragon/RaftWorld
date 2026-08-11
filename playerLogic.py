@@ -31,8 +31,17 @@ async def resizeBoat(event=None):
     width_input = imp.document.querySelector("#boat-width")
     height_input = imp.document.querySelector("#boat-height")
 
-    width = int(width_input.value)
-    height = int(height_input.value)
+    width = (width_input.value)
+    height = (height_input.value)
+
+    try:
+        width = int(width)
+        height = int(height)
+    except ValueError:
+        imp.outputMessage.append("The side lengths must be integers")
+        return
+    
+
     newSize = (width, height)
 
     if Player.all[0].task is not None:
@@ -50,6 +59,10 @@ async def resizeBoat(event=None):
 
     if addedArea > inv.lookup("Wood").quantity:
         imp.outputMessage.append("Not enough wood")
+        return
+
+    if width < 5 or height < 5:
+        imp.outputMessage.append("Minimum side of 5 wood")
         return
 
     
@@ -90,18 +103,9 @@ class Boat:
         Boat.all.append(self)
 
     def changeSize(self, newSize):
-        try:
-            newSize = (int(newSize[0]), int(newSize[1]))
-        except ValueError:
-            imp.outputMessage.append("The side lengths must be integers")
-            return
-
+        newSize = (int(newSize[0]), int(newSize[1]))
+        
         addArea = (newSize[0] * newSize[1]) - (self.size[0] * self.size[1])
-
-        #Change minimum area to 25 size per person
-        if (newSize[0] < 5) or (newSize[1] < 5):
-            imp.outputMessage.append("The minimum size per side is 5 wood.")
-            return False
 
         self.size = newSize
 
