@@ -22,6 +22,7 @@ button {
 }
 .column {
   padding: 10px;
+  position: relative;
 }
 .hunger-label {
   display: flex;
@@ -75,22 +76,38 @@ button {
   background-color: rgb(0, 255, 0);
   color: rgb(0, 0, 0);
 }
+/* Absolute centering helper for sections within a fixed-height column */
+.center-abs {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
 </style>
 <link rel="stylesheet" href="https://pyscript.net/releases/2025.2.2/core.css" />
 <script type="module" src="https://pyscript.net/releases/2025.2.2/core.js"></script>
 </head>
 <body>
-<div class="grid-container">
+<div class="grid-container" style="height: 100vh;">
   <div class="column" id="inventory-col">
     <h3 style="text-align: center;">Inventory</h3>
   </div>
-  <div class="column" id="tasks-col">
+  <div class="column" id="tasks-col" style="height:100vh">
     <h3 style="text-align: center;">Tasks</h3>
+    <div id="tasks-area"></div>
+    <div id="crafts-col" class="center-abs" style="display: none;">
+      <h3>Crafting</h3>
+    </div>
   </div>
   <div class="column" id="output-col">
     <h3 style="text-align: center;">Output</h3>
   </div>
-  <div class="column" id="needs-col">
+  <div class="column" id="needs-col" style="height:100vh">
     <h3 style="text-align: center;">Stats</h3>
     <p id="time-display" style="text-align: center;">Time: 00:00</p>
     <p class="hunger-label" style="text-align: center;">Hunger level</p>
@@ -105,12 +122,11 @@ button {
         <span>0%</span>
         <span>100%</span>
     </div>
-    <br><br><br><br><br><br>
-    <div id="boat-col" style="display: none;">
-      <h3 style="text-align: center;">Boat</h3> 
-      <p style="font-size: large; font-weight: 400; text-align: center;" id="boat-size"></p>
-      <p style="text-align: center;">With more wood, you can make your boat larger. You can also make your boat smaller to gather wood. Enter the width and height you would like to grow it to in the text spaces below.</p>
-      <div style="justify-self: center;">
+    <div id="boat-col" class="center-abs" style="display: none;">
+      <h3>Boat</h3>
+      <p style="font-size: large; font-weight: 400;" id="boat-size"></p>
+      <p>With more wood, you can make your boat larger. You can also make your boat smaller to gather wood. Enter the width and height you would like to grow it to in the text spaces below.</p>
+      <div style="display:flex; gap:8px; align-items:center; justify-content:center;">
         <input type="number" id="boat-width" value="6" min="5" style="width:90px">
         <span>x</span>
         <input type="number" id="boat-height" value="6" min="5" style="width:90px">
