@@ -28,8 +28,7 @@ class Resource:
         if food:
             Resource.allFood.append(self)
             self.hungerScore = hungerScore
-
-        self.eatQuantity = eatQuantity
+            self.eatQuantity = eatQuantity
 
     def add(self, amount):
         self.quantity += amount
