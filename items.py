@@ -73,4 +73,4 @@ stringAcceptTask = task.Task("Paddle to it", {}, [inv.lookup("Paddle")], 1, {
 stringPopUp = ev.Popup('You see a fishing reel floating by. You may paddle towards it to add it to your inventory.',
 optionTasks=[stringAcceptTask, declineTask])
 
-ev.Event("String Floats By", difficulty=0, minCooldown=90, screenPopup=stringPopUp)
+ev.Event("String Floats By", difficulty=1, minCooldown=90, screenPopup=stringPopUp)

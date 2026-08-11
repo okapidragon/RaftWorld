@@ -11,6 +11,9 @@ def initializeSeaweed():
     if not (inv.lookup("Fish") in imp.displayedResources):
         imp.displayedResources.append(inv.lookup("Fish"))
 
+    imp.outputMessage.append("You may now craft a fishing rod", color = "#50C878")
+    imp.displayedCrafts.append(lookup("Craft Fishing Rod"))
+
     taskButtonUpdate()
     inv.inventoryUpdate()
 
