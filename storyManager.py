@@ -11,7 +11,7 @@ gameTime = pl.gameTime()
 
 pl.displayBoatSize(boat)
 
-imp.outputMessage.append("You are stranded in the middle of a freshwater ocean with only a fishing rod and wooden raft to your name. You need to battle starvation (when the hunger bar reaches -100) by fishing and getting food.", color="green")
+imp.outputMessage.append("You are stranded in the middle of a freshwater ocean with only a fishing rod and wooden raft to your name. You need to battle starvation by fishing and getting food.")
 
 inv.inventoryUpdate()
 
@@ -38,6 +38,7 @@ async def eventLoop():
         await imp.asyncio.sleep(1)
 
 
+#Main game loop
 imp.asyncio.create_task(hungerLoop())
 imp.asyncio.create_task(timeLoop())
 imp.asyncio.create_task(eventLoop())
