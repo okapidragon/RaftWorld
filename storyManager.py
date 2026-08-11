@@ -11,7 +11,7 @@ gameTime = pl.gameTime()
 
 pl.displayBoatSize(boat)
 
-imp.outputMessage.append("You are stranded in the middle of a freshwater ocean with only a fishing rod and wooden raft to your name. You need to battle starvation (when the hunger bar reaches -100) by fishing and getting food.")
+imp.outputMessage.append("You are stranded in the middle of a freshwater ocean with only a fishing rod and wooden raft to your name. You need to battle starvation (when the hunger bar reaches -100) by fishing and getting food.", color="green")
 
 inv.inventoryUpdate()
 
