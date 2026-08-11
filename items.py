@@ -2,6 +2,7 @@ import imports as imp
 import inventoryLogic as inv
 import taskLogic as task
 import eventsLogic as ev
+import playerLogic as pl
 
 
 #Items
@@ -64,7 +65,7 @@ woodAcceptTask = task.Task("Paddle to it", {}, [inv.lookup("Paddle")], 1, {
 woodPopUp = ev.Popup('You see wood floating by. You may paddle towards it to add it to your inventory.', 
 optionTasks=[woodAcceptTask, declineTask])
 
-ev.Event("Wood Floats By", difficulty=0, minCooldown=90, screenPopup=woodPopUp, weight = 2)
+ev.Event("Wood Floats By", difficulty=0, minCooldown=20, screenPopup=woodPopUp, weight = 4)
 
 #String Floats By
 stringAcceptTask = task.Task("Paddle to it", {}, [inv.lookup("Paddle")], 1, { 
@@ -74,9 +75,19 @@ stringAcceptTask = task.Task("Paddle to it", {}, [inv.lookup("Paddle")], 1, {
 stringPopUp = ev.Popup('You see a fishing reel floating by. You may paddle towards it to add it to your inventory.',
 optionTasks=[stringAcceptTask, declineTask])
 
-ev.Event("String Floats By", difficulty=1, minCooldown=120, screenPopup=stringPopUp, weight = 1)
+ev.Event("String Floats By", difficulty=1, minCooldown=20, screenPopup=stringPopUp, weight = 2)
 
 #Fishing cut yourself
+def cut():
+    pl.Player.all[0].health -= 25
+    imp.outputMessage.append("You cut yourself on the fishing rod and lost 25 health.", color = "Red")
+
+def cutCondition():
+    return (inv.lookup("Fishing Rod").quantity > 0)
+
+stringPopUp = ev.Popup('You cut yourself on the fishing rod and lost 25 health',[], duration = 15)
+
+ev.Event("Fishing Cut", difficulty = 1, minCooldown = 40, screenPopup=stringPopUp, condition=cutCondition, automaticFunc=cut())
 
 
 
