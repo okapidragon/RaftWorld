@@ -28,6 +28,9 @@ def displayBoatSize(boat):
     size_display.textContent = f"Boat size: {boat.size[0]} x {boat.size[1]}"
 
 def resizeBoat(event=None):
+    resize_button.classList.add("in-progress")
+    resize_button.disabled = True
+    
     width_input = imp.document.querySelector("#boat-width")
     height_input = imp.document.querySelector("#boat-height")
 
@@ -49,8 +52,13 @@ def resizeBoat(event=None):
 
     task.Task.all.remove(boatSizeChange)
 
+    
+
     imp.asyncio.create_task(boatSizeChange.execute(Player.all[0]))
 
+
+    resize_button.classList.remove("in-progress")
+    resize_button.disabled = False
 
 
 
