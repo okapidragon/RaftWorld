@@ -5,16 +5,7 @@ import playerLogic as pl
 
 def initializeSeaweed():
     imp.displayedResources.append(inv.lookup("Seaweed"))
-
-    Task(name = "Gather Seaweed",
-        cost = {},
-        neededItems=[],
-        time = 2,
-        reward = {0.4: ({inv.lookup("Seaweed"): 0}, "You failed to gather seaweed"),
-            0.7: ({inv.lookup("Seaweed"): 1}, "You found one piece of seaweed"),
-            0.95: ({inv.lookup("Seaweed"): 3}, "You found a large blob of seaweed"),
-            1: ({inv.lookup("Seaweed"): 6}, "You found piles of seaweed")
-        })
+    imp.displayedTasks.append(inv.lookup("Gather Seaweed"))
 
     imp.outputMessage.append("Oh No! Your fishing rod broke. While urgently looking for other food sources, you discover seaweed in the water.")
 
@@ -127,7 +118,7 @@ def taskButtonUpdate():
     for task_button in tasks_col.querySelectorAll(".task-button"):
         task_button.remove()
 
-    for task in Task.all:
+    for task in imp.displayedTasks:
         task_id = task.name.lower().replace(" ", "-")
         task_button = imp.document.createElement("button")
         task_button.style.display = "block"

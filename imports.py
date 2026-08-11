@@ -31,5 +31,6 @@ fishUnlock = False
 seaweedUnlock = False
 
 displayedResources = []
+displayedTasks = []
 
 
