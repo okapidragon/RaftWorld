@@ -135,10 +135,11 @@ class Boat:
 class Player:
     all = []
 
-    def __init__(self, name, hunger = 100, task = None):
+    def __init__(self, name, hunger = 100, task = None, health = 100):
         self.name = name
         self.hunger = hunger
         self.task = task
+        self.health = health
         Player.all.append(self)
         self.noFoodMessageDelay = 0
 
@@ -182,6 +183,9 @@ class Player:
 
         if self.hunger <= -100:
             imp.outputMessage.append(f"{self.name} has starved!", color = "Red")
+            self.health -= 3
+            setHealthBarProgress(self.health)
+
 
 class gameTime:
     all = []
