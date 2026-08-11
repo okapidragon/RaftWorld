@@ -13,7 +13,7 @@ pl.displayBoatSize(boat)
 
 imp.displayedResources.append(inv.Item("Fishing Rod", 1, breakable=True, breakChance=0.03))
 
-imp.outputMessage.append("You have a fishing rod and a small boat. You need to catch some fish to survive. You also need to expand your boat to carry more resources.")
+imp.outputMessage.append("You are stranded in the middle of a freshwater ocean with only a fishing rod and wooden raft to your name. You need to battle starvation (when the hunger bar reaches -100) by fishing and getting food.")
 
 inv.Resource("Fish", 0, food = True, hungerScore=100)
 inv.Resource("Seaweed", 0, food = True, hungerScore = 8)
