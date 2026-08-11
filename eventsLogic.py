@@ -14,7 +14,7 @@ class Popup:
 class Event:
     all = []
 
-    def __init__(self, name, difficulty, minCooldown, screenPopup, cooldown = 60):
+    def __init__(self, name, difficulty, minCooldown, screenPopup, cooldown = 1000):
         self.name = name
         self.difficulty = difficulty
         self.minCooldown = minCooldown
@@ -23,12 +23,29 @@ class Event:
         Event.all.append(self)
 
     async def execute(self):
-        #Tasks are in self.screenPopup.optionTaks
-        #Text in self.screenPopup.text
-        #Duration is in self.screenPopup.duration
-        "Input Ezras Complicated Display Code Functions Here!"
-        stopEvent(self)
-        pass
+        events_column = imp.document.querySelector("#output-col")
+        
+        message_line = imp.createElement("p")
+        message_line.style.textAlign = "center"
+        message_line.textContent = self.screenPopup.text
+        events_column.appendChild(message_line)
+
+        for task in self.screenPopup.optionTasks:
+            task_id = task.name.lower().replace(" ", "-")
+            task_button = imp.document.createElement("button")
+            task_button.style.display = "block"
+            task_button.style.margin = "0 auto 20px"
+            task_button.id = f"{task_id}-button"
+            task_button.className = "event-button"
+            task_button.textContent = task.name
+            task_button.onclick = (
+                lambda event, selected_task=task, selected_button=task_button:
+                imp.asyncio.create_task(
+                    task.runTask(selected_task, selected_button)
+                )
+            )
+            events_column.appendChild(task_button)
+            
 
 
 def eventUpdate(dayNumber):
