@@ -14,7 +14,7 @@ class Popup:
 class Event:
     all = []
 
-    def __init__(self, name, difficulty, minCooldown, screenPopup, cooldown = 1000):
+    def __init__(self, name, difficulty, minCooldown, screenPopup, cooldown = 60):
         self.name = name
         self.difficulty = difficulty
         self.minCooldown = minCooldown
@@ -52,7 +52,21 @@ class Event:
             events_column.appendChild(task_button)
 
     async def eventTimer(self):
-        await imp.asyncio.sleep(self.screenPopup.duration)
+        events_column = imp.document.querySelector("#events-col")
+
+        timer_div = imp.document.createElement("div")
+        timer_div.className = "event-timer"
+        timer_div.style.textAlign = "center"
+        events_column.appendChild(timer_div)        
+
+        for remaining in range(self.screenPopup.duration, 0, -1):
+            timer_div.innerHTML = "" 
+            timer = imp.document.createElement("p")
+            timer.className = "timer"
+            timer.style.textAlign = "center"
+            timer.textContent = f"Time remaining: {remaining}"
+            timer_div.appendChild(timer)
+            await imp.asyncio.sleep(1)
 
         # Time ran out
         if imp.currentEvent is self:
@@ -108,13 +122,15 @@ def stopEvent(event):
     for event_message in events_column.querySelectorAll(".event-message"):
         event_message.remove()
 
+    for event_timer in events_column.querySelectorAll(".event-timer"):
+        event_timer.remove()
+
     event.cooldown = 0
     imp.currentEvent = None
 
     if not imp.boatUnlock and event.name == "Wood Floats By":
-        #Input FUnction Here for revealing boat
-        boatUnlock = True
-
+        imp.showSomething("#boat-col")
+        imp.boatUnlock = True
 
 #All events down here!
 declineTask = task.Task("Decline", {}, [], 0, {1: ({}, "Declined Event")})

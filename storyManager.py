@@ -18,7 +18,6 @@ inv.inventoryUpdate()
 task.taskButtonUpdate()
 
 
-imp.showSomething("#boat-col")
 
 async def hungerLoop():
     while True:
