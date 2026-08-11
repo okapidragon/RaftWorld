@@ -27,10 +27,7 @@ def displayBoatSize(boat):
     size_display = imp.document.querySelector("#boat-size")
     size_display.textContent = f"Boat size: {boat.size[0]} x {boat.size[1]}"
 
-def resizeBoat(event=None):
-    resize_button.classList.add("in-progress")
-    resize_button.disabled = True
-    
+async def resizeBoat(event=None):
     width_input = imp.document.querySelector("#boat-width")
     height_input = imp.document.querySelector("#boat-height")
 
@@ -55,23 +52,29 @@ def resizeBoat(event=None):
         imp.outputMessage.append("Not enough wood")
         return
 
+    
+
     boatSizeChange = task.Task(
         name = "Change Boat Size",
         cost = {},
         neededItems=[],
-        time = 5,
+        time = 3,
         reward = Boat.all[0].changeSize,
         inputs = newSize)
 
     task.Task.all.remove(boatSizeChange)
 
+    resize_button.classList.add("in-progress")
+    resize_button.disabled = True
+
+    try:
+        await boatSizeChange.execute(Player.all[0])
+    finally:
+        resize_button.classList.remove("in-progress")
+        resize_button.disabled = False
     
 
-    imp.asyncio.create_task(boatSizeChange.execute(Player.all[0]))
 
-
-    resize_button.classList.remove("in-progress")
-    resize_button.disabled = False
 
 
 
