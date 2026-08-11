@@ -27,6 +27,11 @@ def displayBoatSize(boat):
     size_display = imp.document.querySelector("#boat-size")
     size_display.textContent = f"Boat size: {boat.size[0]} x {boat.size[1]}"
 
+def displayTime(current_time):
+    timeText = f"{current_time.hours:02d}:{current_time.minutes:02d}, Day {current_time.days}"
+    time_line = imp.document.querySelector("#time-display")
+    time_line.textContent = f"Time: {timeText}"
+
 async def resizeBoat(event=None):
     width_input = imp.document.querySelector("#boat-width")
     height_input = imp.document.querySelector("#boat-height")
@@ -164,12 +169,6 @@ class Player:
 
         if self.hunger <= -100:
             imp.outputMessage.append(f"{self.name} has starved!")
-
-
-def displayTime(current_time):
-    timeText = f"{current_time.hours:02d}:{current_time.minutes:02d}, Day {current_time.days}"
-    time_line = imp.document.querySelector("#time-display")
-    time_line.textContent = f"Time: {timeText}"
 
 class gameTime:
     all = []
