@@ -141,9 +141,9 @@ button:disabled {
 }
 </style>
 <link rel="preload" href="https://pyscript.net/releases/2025.2.2/core.css" as="style">
-<link rel="preload" href="https://pyscript.net/releases/2025.2.2/core.js" as="script">
+<link rel="preload" href="https://pyscript.net/releases/2025.2.2/core.js" as="script" crossorigin="anonymous">
 <link rel="stylesheet" href="https://pyscript.net/releases/2025.2.2/core.css" />
-<script type="module" src="https://pyscript.net/releases/2025.2.2/core.js"></script>
+<script type="module" src="https://pyscript.net/releases/2025.2.2/core.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <div class="grid-container" style="height: 100vh;">
@@ -191,9 +191,7 @@ button:disabled {
   </div>
   <div class="column" id="inventory-col">
     <h3 style="text-align: center;">Inventory</h3>
-    <div id="crafts-col" class="crafts-bottom" style="display: none;">
-      <h3>Crafting</h3>
-    </div>
+    <div id="crafts-col" class="crafts-bottom" style="display: none;"></div>
   </div>
   <div class="column" id="tasks-col" style="height:100vh">
     <h3 style="text-align: center;">Tasks</h3>
