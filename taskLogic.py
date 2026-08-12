@@ -169,6 +169,7 @@ def craftButtonUpdate():
     imp.showSomething("#crafts-col")
     craft_col = imp.document.querySelector("#crafts-col")
 
+    craft_col.innerHTML = ""
 
     for craft in imp.displayedCrafts:
         craft_id = craft.name.lower().replace(" ", "-")
