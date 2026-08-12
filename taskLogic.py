@@ -56,7 +56,7 @@ class Task:
     def able(self):
         for resource, amount in self.cost.items():
             if resource.quantity < amount:
-                imp.outputMessage.append(f"Need {resource.quantity - amount} more {resource.name}")
+                imp.outputMessage.append(f"Need {amount - resource.quantity} more {resource.name}")
                 return False
 
         for neededItem in self.neededItems:

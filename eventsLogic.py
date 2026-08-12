@@ -77,14 +77,14 @@ class Event:
     async def eventTimer(self):
         events_column = imp.document.querySelector("#events-div")
 
-        if timer:
+        if self.timer:
             timer_div = imp.document.createElement("div")
             timer_div.className = "event-timer"
             timer_div.style.textAlign = "center"
             events_column.appendChild(timer_div)        
 
         for remaining in range(self.screenPopup.duration, 0, -1):
-            if timer:
+            if self.timer:
                 timer_div.innerHTML = "" 
                 timer = imp.document.createElement("p")
                 timer.className = "timer"
