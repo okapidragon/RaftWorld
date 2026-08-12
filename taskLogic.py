@@ -23,11 +23,15 @@ def cut(player, taskName):
     player.health -= 15
     imp.outputMessage.append(f"You cut yourself while {taskName}.", color = "Red")
 
+def swimTrouble(player, taskName):
+    player.health -= 12
+    imp.outputMessage.append(f"You spent too long in the water while {taskName}.", color = "Red")
+
 class Task:
     all = []
     allCraft = []
 
-    def __init__(self, name, cost, neededItems, time, reward, inputs = None, craft = False, cutChance = 0):
+    def __init__(self, name, cost, neededItems, time, reward, inputs = None, craft = False, cutChance = 0, swimTroubleChance = 0):
         self.name = name
         self.cost = cost #self.cost should be a dictionary of {Resource: amount}
         self.neededItems = neededItems #List of Resource objects
@@ -36,6 +40,7 @@ class Task:
         self.reward = reward #Dictionary of {Probability: ({Resource: amount}, dialogue)}} or Function
         self.inputs = inputs
         self.cutChance = cutChance
+        self.swimTroubleChance = swimTroubleChance
 
         if isinstance(reward, dict):
             self.rewardType = "dict"
@@ -78,6 +83,9 @@ class Task:
 
         if imp.random.random() < self.cutChance:
             cut(player, self.name)
+
+        if imp.random.random() < self.swimTroubleChance:
+            swimTrouble(player, self.name)
 
         for neededItem in self.neededItems:
             breaked = neededItem.tryBreak()
