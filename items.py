@@ -22,8 +22,8 @@ name="Fishing",
 cost={},
 neededItems=[inv.lookup("Fishing Rod")],
 time=7,
-reward= {0.8: ( {inv.lookup("Fish"): 0}, "You could not catch a fish!"),
-        0.95: ( {inv.lookup("Fish"): 1}, "You caught a sardine"),
+reward= {0.83: ( {inv.lookup("Fish"): 0}, "You could not catch a fish!"),
+        0.96: ( {inv.lookup("Fish"): 1}, "You caught a sardine"),
         0.99: ( {inv.lookup("Fish"): 2}, "You caught a salmon"),
         1.0: ( {inv.lookup("Fish"): 5}, "You caught a tuna")},
 cutChance = 0.075
@@ -91,7 +91,10 @@ def reelWeight():
 ev.Event("String Floats By", minCooldown=20, screenPopup=stringPopUp, weightFunc = reelWeight)
 
 #Boat Decay Initiation
+def startBoatDecay():
+    imp.boatDecay = True
 
+boatDecayPopup = ev.Popup('Your boat starts to decay, you must manage this by cleaning and reinforcing the boat.')
 
 
 
