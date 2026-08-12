@@ -152,7 +152,7 @@ def taskButtonUpdate():
         task_id = task.name.lower().replace(" ", "-")
         task_button = imp.document.createElement("button")
         task_button.style.display = "block"
-        task_button.style.margin = "0 auto 20px"
+        task_button.style.margin = "0 auto 8px"
         task_button.id = f"{task_id}-button"
         task_button.className = "task-button"
         task_button.textContent = task.name
@@ -163,11 +163,11 @@ def taskButtonUpdate():
             )
         )
         tasks_col.appendChild(task_button)
-        tasks_col.appendChild(imp.document.createElement("br"))
 
         if task.cost:
             cost_line = imp.document.createElement("p")
             cost_line.style.textAlign = "center"
+            cost_line.style.margin = "4px 0"
             cost_line.innerHTML = f"Resources needed: {', '.join([f'{amount} {resource.name}' for resource, amount in task.cost.items()])}"
             tasks_col.appendChild(cost_line)
 
