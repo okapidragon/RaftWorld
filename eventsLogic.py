@@ -35,7 +35,10 @@ class Event:
         imp.currentEvent = self
 
         if self.automaticFunc is not None:
-            self.automaticFunc()
+            if imp.inspect.iscoroutinefunction(self.automaticFunc):
+                await self.automaticFunc()
+            else:
+                self.automaticFunc()
         
         events_column = imp.document.querySelector("#events-div")
         
@@ -173,3 +176,10 @@ def stopEvent(event):
         if paddle_craft is not None:
             imp.displayedCrafts.append(paddle_craft)
         task.craftButtonUpdate()
+
+def lookup(name):
+    for eventItem in Event.all:
+        if eventItem.name == name:
+            return eventItem
+
+    imp.outputMessage.append(f"{name} not found as an event.")
