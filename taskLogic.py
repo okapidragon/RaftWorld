@@ -160,8 +160,7 @@ def taskButtonUpdate():
 def craftButtonUpdate():
     imp.showSomething("#crafts-col")
     craft_col = imp.document.querySelector("#crafts-col")
-    for craft_button in craft_col.querySelectorAll(".craft-button"):
-        craft_button.remove()
+
 
     for craft in imp.displayedCrafts:
         craft_id = craft.name.lower().replace(" ", "-")

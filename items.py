@@ -42,7 +42,7 @@ task.Task(name = "Gather Seaweed",
         )
 
 #Crafts Here!
-imp.displayedCrafts.append(
+(
 task.Task(name = "Craft Paddle",
     cost = {inv.lookup("Wood"): 5},
     neededItems=[],
