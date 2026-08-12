@@ -48,7 +48,7 @@ task.Task(name = "Clean Boat",
     cost = {},
         neededItems=[],
         time = 5,
-        reward = cleanBoatReward
+        reward = cleanBoatReward,
         cutChance = 0.025)
 
 #Crafts Here!
