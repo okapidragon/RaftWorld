@@ -45,8 +45,7 @@ class Event:
         message_line.textContent = self.screenPopup.text
         events_column.appendChild(message_line)
 
-        if self.timer:
-            self.timerTask = imp.asyncio.create_task(self.eventTimer())
+        self.timerTask = imp.asyncio.create_task(self.eventTimer())
 
         for taskItem in self.screenPopup.optionTasks:
             task_id = taskItem.name.lower().replace(" ", "-")
