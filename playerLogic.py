@@ -211,3 +211,8 @@ class gameTime:
         if self.hours >= 24:
             self.days += self.hours // 24
             self.hours = self.hours % 24
+
+def setDecayBarProgress(value):
+    value = min(100, max(0, value))
+    decay_bar = imp.document.querySelector("#decay-bar")
+    decay_bar.style.width = f"{value}%"
