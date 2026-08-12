@@ -152,7 +152,7 @@ def taskButtonUpdate():
         task_id = task.name.lower().replace(" ", "-")
         task_button = imp.document.createElement("button")
         task_button.style.display = "block"
-        task_button.style.margin = "0 auto 20px"
+        task_button.style.margin = "0 auto 8px"
         task_button.id = f"{task_id}-button"
         task_button.className = "task-button"
         task_button.textContent = task.name
@@ -163,11 +163,11 @@ def taskButtonUpdate():
             )
         )
         tasks_col.appendChild(task_button)
-        tasks_col.appendChild(imp.document.createElement("br"))
 
         if task.cost:
             cost_line = imp.document.createElement("p")
             cost_line.style.textAlign = "center"
+            cost_line.style.margin = "4px 0"
             cost_line.innerHTML = f"Resources needed: {', '.join([f'{amount} {resource.name}' for resource, amount in task.cost.items()])}"
             tasks_col.appendChild(cost_line)
 
@@ -194,12 +194,13 @@ async def craftButtonUpdate():
             craft_id = craft.name.lower().replace(" ", "-")
             craft_button = imp.document.createElement("button")
             craft_button.style.display = "block"
-            craft_button.style.margin = "0 auto 20px"
+            craft_button.style.margin = "0 auto 8px"
             craft_button.id = f"{craft_id}-button"
             craft_button.className = "craft-button"
             craft_button.textContent = craft.name
             craft_cost = imp.document.createElement("p")
             craft_cost.style.textAlign = "center"
+            craft_cost.style.margin = "4px 0"
             craft_cost.innerHTML = f"Resources needed: {', '.join([f'{amount} {resource.name}' for resource, amount in craft.cost.items()])}"
             craft_button.onclick = (
                 lambda event, selected_task=craft, selected_button=craft_button:
@@ -209,7 +210,6 @@ async def craftButtonUpdate():
             )
             craft_col.appendChild(craft_button)
             craft_col.appendChild(craft_cost)
-            craft_col.appendChild(imp.document.createElement("br"))
         else:
             imp.displayedCrafts = True
             await imp.asyncio.sleep(3)
