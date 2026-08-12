@@ -9,6 +9,10 @@
   grid-template-columns: repeat(5, 1fr);
   gap: 20px;
 }
+.boxed {
+  border: 2px solid black;
+  padding: 10px;
+}
 button {  
   border-radius: 100px;
   width: 65%;
@@ -92,7 +96,6 @@ button:disabled {
   background-color: rgb(0, 255, 0);
   color: rgb(0, 0, 0);
 }
-/* Absolute centering helper for sections within a fixed-height column */
 .center-abs {
   position: absolute;
   top: 50%;
@@ -105,7 +108,6 @@ button:disabled {
   width: 100%;
 }
 
-/* Use flex centering inside the stats column so the boat doesn't overlap the header */
 #needs-col {
   display: flex;
   flex-direction: column;
@@ -135,7 +137,7 @@ button:disabled {
     <div id="location" style="text-align: center;">
       <p id="location-text">Location: Freshwater Ocean</p>
     </div>
-    <p id="hunger-title" class="bar-title" style="text-align: center;">Hunger level</p>
+    <div class="boxed">
     <div class="bi-directional-container">
       <div class="center-line"></div>
       <div class="bi-bar-wrapper" id="balance-wrapper">
@@ -148,13 +150,27 @@ button:disabled {
         <span>100%</span>
     </div>
     <br>
-    <p id="health-title" class="bar-title" style="text-align: center;">Health level</p>
+    <p id="hunger-title" class="bar-title" style="text-align: center;">Hunger level</p>
+    </div>
+    <div class="boxed">
     <div id="health-bar-container" style="margin-top: 10px; width: 100%; height: 24px; background-color: #e0e0e0; border-radius: 12px;">
       <div id="health-bar" style="width: 100%; height: 100%; background-color: #9b2525; border-radius: 12px;"></div>
     </div>
     <div class="bar-labels" id="health-bar-labels">
       <span>0%</span>
       <span>100%</span>
+    </div>
+    <p id="health-title" class="bar-title" style="text-align: center;">Health level</p>
+    </div>
+    <div class="boxed">
+    <div id="decay-bar-container" style="margin-top: 10px; width: 100%; height: 24px; background-color: #e0e0e0; border-radius: 12px;">
+      <div id="decay-bar" style="width: 100%; height: 100%; background-color: #615d5d; border-radius: 12px;"></div>
+    </div>
+    <div class="bar-labels" id="decay-bar-labels">
+      <span>100%</span>
+      <span>0%</span>
+    </div>
+    <p id="decay-title" class="bar-title" style="text-align: center;">Boat decay level</p>
     </div>
   </div>
   <div class="column" id="inventory-col">
