@@ -65,6 +65,14 @@ class Event:
             )
             )
             events_column.appendChild(task_button)
+            if taskItem.cost:
+                for cost in taskItem.cost:
+                    cost_line = imp.document.createElement("p")
+                    cost_line.style.textAlign = "center"
+                    cost_line.textContent = f"Cost: {cost.quantity} {cost.name}"
+                    events_column.appendChild(cost_line)
+
+
 
     async def eventTimer(self):
         events_column = imp.document.querySelector("#events-div")
