@@ -21,7 +21,7 @@ def initializeSeaweed():
 #Fishing cut yourself
 def cut(player, taskName):
     player.health -= 15
-    imp.outputMessage(f"You cut your self while {taskName}.", color = "Red")
+    imp.outputMessage.append(f"You cut yourself while {taskName}.", color = "Red")
 
 class Task:
     all = []
@@ -76,7 +76,7 @@ class Task:
 
         await imp.asyncio.sleep(self.time)
 
-        if imp.random.random() < self.cutChance():
+        if imp.random.random() < self.cutChance:
             cut(player, self.name)
 
         for neededItem in self.neededItems:
@@ -158,6 +158,7 @@ def taskButtonUpdate():
         tasks_col.appendChild(imp.document.createElement("br"))
 
 def craftButtonUpdate():
+    imp.showSomething("#crafts-col")
     craft_col = imp.document.querySelector("#crafts-col")
     for craft_button in craft_col.querySelectorAll(".craft-button"):
         craft_button.remove()
