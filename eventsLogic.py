@@ -36,7 +36,7 @@ class Event:
 
         if self.automaticFunc is not None:
             if imp.inspect.iscoroutinefunction(self.automaticFunc):
-                await self.automaticFunc()
+                imp.asyncio.create_task(self.automaticFunc)
             else:
                 self.automaticFunc()
         
@@ -85,7 +85,7 @@ class Event:
 
         # Time ran out
         if imp.currentEvent is self:
-            imp.outputMessage.append("You could not reach it in time.", color = "Red")
+            imp.outputMessage.append("The event is now over!", color = "Red")
             stopEvent(self)
 
     async def chooseOption(self, selected_task, selected_button):
