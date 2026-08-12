@@ -1,7 +1,7 @@
 import imports as imp
 
 def inventoryUpdate():
-    inventory_col = imp.document.querySelector("#inventory-col")
+    inventory_col = imp.document.querySelector("#inventory-display")
     for resource_line in inventory_col.querySelectorAll(".inventory-resource"):
         resource_line.remove()
 

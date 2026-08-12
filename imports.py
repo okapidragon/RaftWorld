@@ -27,6 +27,10 @@ def showSomething(div_id):
     boat_column = document.querySelector(div_id)
     boat_column.style.display = "block"
 
+def hideSomething(div_id):
+    boat_column = document.querySelector(div_id)
+    boat_column.style.display = "none"
+
 outputMessage = OutputMessage()
 
 currentEvent = None

@@ -31,12 +31,13 @@ class Event:
 
     #Execute finishes but eventTimer conitnues and chooseOption runs on button click.
     async def execute(self):
+        imp.showSomething("#events-div")
         imp.currentEvent = self
 
         if self.automaticFunc is not None:
             self.automaticFunc()
         
-        events_column = imp.document.querySelector("#events-col")
+        events_column = imp.document.querySelector("#events-div")
         
         message_line = imp.document.createElement("p")
         message_line.className = "event-message"
@@ -64,7 +65,7 @@ class Event:
             events_column.appendChild(task_button)
 
     async def eventTimer(self):
-        events_column = imp.document.querySelector("#events-col")
+        events_column = imp.document.querySelector("#events-div")
 
         timer_div = imp.document.createElement("div")
         timer_div.className = "event-timer"
@@ -148,8 +149,10 @@ def eventUpdate(dayNumber):
 def stopEvent(event):
     if event is not imp.currentEvent:
         return False
+
+    imp.hideSomething("#events-div")
     
-    events_column = imp.document.querySelector("#events-col")
+    events_column = imp.document.querySelector("#events-div")
     for event_button in events_column.querySelectorAll(".event-button"):
         event_button.remove()
 
@@ -164,6 +167,7 @@ def stopEvent(event):
 
     if not imp.boatUnlock:
         imp.showSomething("#boat-col")
+        imp.showSomething("#boat-div")
         imp.outputMessage.append("While pondering a way to get a paddle. You notice that you can take apart your raft, your only life supply. Be Careful!", color = "#50C878")
         imp.boatUnlock = True
         paddle_craft = task.lookup("Craft Paddle")
