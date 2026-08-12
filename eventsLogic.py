@@ -17,14 +17,18 @@ def defaultCondition():
 class Event:
     all = []
 
-    def __init__(self, name, difficulty, minCooldown, screenPopup, weight, condition = defaultCondition, cooldown = 60, automaticFunc = None):
+    def __init__(self, name, difficulty, minCooldown, screenPopup, weightFunc, condition = defaultCondition, cooldown = 60, automaticFunc = None):
         self.name = name
         self.difficulty = difficulty
         self.minCooldown = minCooldown
         self.screenPopup = screenPopup
         self.cooldown = cooldown
         self.condition = condition
-        self.weight = weight
+        self.weightFunc = weightFunc
+
+        if not callable(weightFunc):
+            imp.outputMessage.append(f"{self.name} event weightFunc is not callable!")
+
         Event.all.append(self)
         self.automaticTask = automaticFunc #Cannot wait during!
     
@@ -115,10 +119,28 @@ def eventUpdate(dayNumber):
     probability = imp.random.random()
 
     if probability < imp.timeSinceEvent * 0.0015:
-        eligibleEventsWeighted = []
-        for event in eligibleEvents:
-            eligibleEventsWeighted.extend([event] * event.weight)
-        imp.currentEvent = imp.random.choice(eligibleEventsWeighted)
+        weightedEventDict = {}
+
+        for eventItem in eligibleEvents:
+            weightedEventDict[eventItem] = eventItem.weightFunc()
+
+        totalWeight = sum(weightedEventDict.values())
+
+        normEventDict = {}
+
+        for eventItem, weight in weightedEventDict.items():
+            lastValue = next(reversed(normEventDict.values()), 0)
+
+            normEventDict[eventItem] = lastValue + (weight / totalWeight)
+
+        randomChosen = imp.random.random()
+
+        for eventItem, probability in normEventDict.items():
+            if randomChosen < probability:
+                imp.currentEvent = eventItem
+                break
+            
+
 
         imp.timeSinceEvent = 0
 
