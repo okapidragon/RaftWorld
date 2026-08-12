@@ -69,7 +69,10 @@ woodPopUp = ev.Popup('You see wood floating by. You may paddle towards it to add
 optionTasks=[woodAcceptTask, declineTask])
 
 def woodWeight():
-    return 4
+    if not imp.boatUnlock:
+        return 1_000_000_000_000
+
+    return 2
 
 
 ev.Event("Wood Floats By", difficulty=0, minCooldown=20, screenPopup=woodPopUp, weightFunc = woodWeight)

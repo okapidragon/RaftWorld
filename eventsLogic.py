@@ -15,9 +15,8 @@ class Popup:
 class Event:
     all = []
 
-    def __init__(self, name, difficulty, minCooldown, screenPopup, weightFunc, cooldown = 60, automaticFunc = None):
+    def __init__(self, name, minCooldown, screenPopup, weightFunc, cooldown = 60, automaticFunc = None):
         self.name = name
-        self.difficulty = difficulty
         self.minCooldown = minCooldown
         self.screenPopup = screenPopup
         self.cooldown = cooldown
@@ -108,7 +107,7 @@ def eventUpdate(dayNumber):
     eligibleEvents = []
 
     for event in Event.all:
-        if event.difficulty <= dayNumber and event.cooldown >= event.minCooldown:
+        if  event.cooldown >= event.minCooldown:
             eligibleEvents.append(event)
 
     if len(eligibleEvents) == 0:
@@ -116,7 +115,7 @@ def eventUpdate(dayNumber):
 
     probability = imp.random.random()
 
-    if probability < imp.timeSinceEvent * 0.0015:
+    if probability < imp.timeSinceEvent * 0.001:
         weightedEventDict = {}
 
         for eventItem in eligibleEvents:
