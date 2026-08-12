@@ -132,6 +132,9 @@ class Boat:
             inv.lookup("Wood").add(-addArea)
             imp.outputMessage.append(f"Boat decreased to size {sizeText}. Salvaged {-addArea} wood.") 
 
+        if not (inv.lookup("Wood") in imp.displayedResources):
+            imp.displayedResources.append(inv.lookup("Wood"))
+
 class Player:
     all = []
 
