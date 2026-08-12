@@ -15,12 +15,13 @@ class Popup:
 class Event:
     all = []
 
-    def __init__(self, name, minCooldown, screenPopup, weightFunc, cooldown = 60, automaticFunc = None):
+    def __init__(self, name, minCooldown, screenPopup, weightFunc, cooldown = 60, automaticFunc = None, timer = True):
         self.name = name
         self.minCooldown = minCooldown
         self.screenPopup = screenPopup
         self.cooldown = cooldown
         self.weightFunc = weightFunc
+        self.timer = timer
 
         if not callable(weightFunc):
             imp.outputMessage.append(f"{self.name} event weightFunc is not callable!")
@@ -28,7 +29,7 @@ class Event:
         Event.all.append(self)
         self.automaticFunc = automaticFunc #Cannot wait during!
 
-    #Execute finishes but eventTimer cpnitnues and chooseOption runs on button click.
+    #Execute finishes but eventTimer conitnues and chooseOption runs on button click.
     async def execute(self):
         imp.currentEvent = self
 
@@ -43,7 +44,8 @@ class Event:
         message_line.textContent = self.screenPopup.text
         events_column.appendChild(message_line)
 
-        self.timerTask = imp.asyncio.create_task(self.eventTimer())
+        if self.timer:
+            self.timerTask = imp.asyncio.create_task(self.eventTimer())
 
         for taskItem in self.screenPopup.optionTasks:
             task_id = taskItem.name.lower().replace(" ", "-")
