@@ -176,10 +176,11 @@ def largeWaveWeight():
 
 def largeWaveFunc():
     pl.Boat.all[0].decaySpeed += 2
-    pl.setDecayBarProgress()
+    pl.setDecayBarProgress(pl.Boat.all[0].decay)
     imp.outputMessage.append("A large wave hits your raft. Your raft speeds up decays significantly.", color = "Red")
 
 
 
 ev.Event("Large Wave", 250, largeWavePopup, largeWaveWeight, automaticFunc=largeWaveFunc, timer = False)
+
 
