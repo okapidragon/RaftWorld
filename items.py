@@ -105,6 +105,9 @@ ev.Event("String Floats By", minCooldown=100, screenPopup=stringPopUp, weightFun
 
 #Boat Decay Initiation
 def startBoatDecay():
+    if not imp.boatDecayShown:
+        imp.showSomething("#decay-section")
+        imp.boatDecayShown = True
     imp.boatDecay = True
     imp.outputMessage.append("Your boat starts to decay, you must manage this by cleaning and reinforcing the boat.", color = "#50C878")
     imp.displayedTasks.append(task.lookup("Clean Boat"))

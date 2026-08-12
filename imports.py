@@ -43,6 +43,7 @@ timeSinceEvent = 0
 seaweedUnlock = False
 boatUnlock = False
 boatDecay = False
+boatDecayShown = False
 
 displayedResources = []
 displayedTasks = []
