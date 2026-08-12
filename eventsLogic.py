@@ -36,7 +36,7 @@ class Event:
 
         if self.automaticFunc is not None:
             if imp.inspect.iscoroutinefunction(self.automaticFunc):
-                imp.asyncio.create_task(self.automaticFunc)
+                imp.asyncio.create_task(self.automaticFunc())
             else:
                 self.automaticFunc()
         
