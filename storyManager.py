@@ -38,7 +38,7 @@ async def eventLoop():
 
 async def decayLoop():
     while True:
-        boat.decay()
+        boat.decayFrame()
 
         await imp.asyncio.sleep(1)
 

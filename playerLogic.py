@@ -142,7 +142,7 @@ class Boat:
         if not (inv.lookup("Wood") in imp.displayedResources):
             imp.displayedResources.append(inv.lookup("Wood"))
 
-    def decay(self):
+    def decayFrame(self):
         if imp.boatDecay:
             self.decay += 0.5
 
