@@ -40,7 +40,7 @@ task.Task(name = "Gather Seaweed",
         1: ({inv.lookup("Seaweed"): 6}, "You found piles of seaweed") },
     cutChance = 0.05
         )
-
+#Clean Boat!
 def cleanBoatReward():
     pl.Boat.all[0].decaySpeed -= 0.4
     pl.setDecayBarProgress(pl.Boat.all[0].decay)
@@ -52,6 +52,20 @@ task.Task(name = "Clean Boat",
         time = 5,
         reward = cleanBoatReward,
         cutChance = 0.025)
+
+#Reinforce Boat!
+def reinforceReward():
+    boat = pl.Boat.all[0]
+    boat.decay = 0
+    boat.decaySpeed -= 1.5
+    imp.outputMessage.append("Boat reinforcement complete. Reset boat decay and reduced decay speed.")
+
+task.Task(name = "Reinforce Boat",
+    cost = {inv.lookup("Wood"): 8, inv.lookup("Seaweed"): 14},
+    neededItems = [],
+    time = 10,
+    reward=reinforceReward, 
+    cutChance = 0.1)
 
 #Crafts Here!
 (
@@ -106,11 +120,12 @@ ev.Event("String Floats By", minCooldown=100, screenPopup=stringPopUp, weightFun
 #Boat Decay Initiation
 def startBoatDecay():
     if not imp.boatDecayShown:
+        imp.displayedTasks.append(task.lookup("Clean Boat"))
+        imp.displayedTasks.append(task.lookup("Reinforce Boat"))
         imp.showSomething("#decay-section")
         imp.boatDecayShown = True
     imp.boatDecay = True
     imp.outputMessage.append("Your boat starts to decay, you must manage this by cleaning and reinforcing the boat.", color = "#50C878")
-    imp.displayedTasks.append(task.lookup("Clean Boat"))
     task.taskButtonUpdate()
 
 
