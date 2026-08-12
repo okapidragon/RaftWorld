@@ -94,7 +94,7 @@ class Event:
         # Time ran out
         if imp.currentEvent is self:
             imp.outputMessage.append("The event is now over!")
-            stopEvent(self)
+            imp.asyncio.createTask.stopEvent(self)
 
     async def chooseOption(self, selected_task, selected_button):
     # Make sure the event hasn't already timed out
@@ -105,7 +105,7 @@ class Event:
 
         if happened:
             self.timerTask.cancel()
-            stopEvent(self)
+            imp.asyncio.createTask.stopEvent(self)
 
 
 def eventUpdate(dayNumber):
@@ -156,7 +156,7 @@ def eventUpdate(dayNumber):
 
         imp.asyncio.create_task(imp.currentEvent.execute())
 
-def stopEvent(event):
+async def stopEvent(event):
     if event is not imp.currentEvent:
         return False
 
@@ -176,13 +176,14 @@ def stopEvent(event):
     imp.currentEvent = None
 
     if not imp.boatUnlock:
+        await imp.asyncio.sleep(3)
         imp.showSomething("#boat-div")
         imp.outputMessage.append("While pondering a way to get a paddle. You notice that you can take apart your raft, your only life supply. Be Careful!", color = "#50C878")
         imp.boatUnlock = True
         paddle_craft = task.lookup("Craft Paddle")
         if paddle_craft is not None:
             imp.displayedCrafts.append(paddle_craft)
-        task.craftButtonUpdate()
+        task.imp.asyncio.create_Task.craftButtonUpdate()
 
 def lookup(name):
     for eventItem in Event.all:

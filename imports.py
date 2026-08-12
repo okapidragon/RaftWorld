@@ -44,6 +44,7 @@ seaweedUnlock = False
 boatUnlock = False
 boatDecay = False
 boatDecayShown = False
+craftingShown = False
 
 displayedResources = []
 displayedTasks = []
