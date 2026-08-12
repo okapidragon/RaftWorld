@@ -162,21 +162,34 @@ def taskButtonUpdate():
             )
         )
         tasks_col.appendChild(task_button)
-        tasks_col.appendChild(task_button)
         tasks_col.appendChild(imp.document.createElement("br"))
 
 def craftButtonUpdate():
-    imp.showSomething("#crafts-col")
     craft_col = imp.document.querySelector("#crafts-col")
+    craft_col.innerHTML = ""
+
+    if not imp.displayedCrafts:
+        craft_col.style.display = "none"
+        return
+
+    craft_col.style.display = "block"
+    craft_header = imp.document.createElement("h3")
+    craft_header.textContent = "Crafting"
+    craft_header.style.textAlign = "center"
+    craft_header.style.width = "100%"
+    craft_header.style.margin = "0 0 16px"
+    craft_col.appendChild(craft_header)
 
     for craft in imp.displayedCrafts:
+        if craft is None:
+            continue
         craft_id = craft.name.lower().replace(" ", "-")
         craft_button = imp.document.createElement("button")
         craft_button.style.display = "block"
         craft_button.style.margin = "0 auto 20px"
         craft_button.id = f"{craft_id}-button"
         craft_button.className = "craft-button"
-        craft_button.innerHTML = f"{craft.name}"
+        craft_button.textContent = craft.name
         craft_cost = imp.document.createElement("p")
         craft_cost.style.textAlign = "center"
         craft_cost.innerHTML = f"Resources needed: {', '.join([f'{amount} {resource.name}' for resource, amount in craft.cost.items()])}"

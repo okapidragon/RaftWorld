@@ -164,5 +164,7 @@ def stopEvent(event):
         imp.showSomething("#boat-col")
         imp.outputMessage.append("While pondering a way to get a paddle. You notice that you can take apart your raft, your only life supply. Be Careful!", color = "#50C878")
         imp.boatUnlock = True
-        imp.displayedCrafts.append(task.lookup("Paddle"))
+        paddle_craft = task.lookup("Craft Paddle")
+        if paddle_craft is not None:
+            imp.displayedCrafts.append(paddle_craft)
         task.craftButtonUpdate()
