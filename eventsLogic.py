@@ -93,7 +93,7 @@ class Event:
 
         # Time ran out
         if imp.currentEvent is self:
-            imp.outputMessage.append("The event is now over!", color = "Red")
+            imp.outputMessage.append("The event is now over!")
             stopEvent(self)
 
     async def chooseOption(self, selected_task, selected_button):
