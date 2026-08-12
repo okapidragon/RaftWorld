@@ -153,8 +153,10 @@ ev.Event("School of Fish", 180, schoolOfFishPopup, fishWeight, automaticFunc=fis
 largeWavePopup = ev.Popup("A large wave hits your raft. Your raft speeds up decay significantly.", [], duration = 8)
 
 def largeWaveWeight():
-    if pl.Boat.all[0].decay > 50:
+    if pl.Boat.all[0].decay > 5 and imp.boatDecay:
         return 0.4 + ev.lookup("Large Wave").cooldown * 0.01 - 2.5
+
+    return 0
 
 
 def largeWaveFunc():
