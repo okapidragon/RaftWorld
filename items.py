@@ -75,7 +75,7 @@ def woodWeight():
     return 2
 
 
-ev.Event("Wood Floats By", difficulty=0, minCooldown=20, screenPopup=woodPopUp, weightFunc = woodWeight)
+ev.Event("Wood Floats By", minCooldown=20, screenPopup=woodPopUp, weightFunc = woodWeight)
 
 #String Floats By
 stringAcceptTask = task.Task("Paddle to it", {}, [inv.lookup("Paddle")], 1, { 
@@ -88,7 +88,7 @@ optionTasks=[stringAcceptTask, declineTask])
 def reelWeight():
     return 2
 
-ev.Event("String Floats By", difficulty=1, minCooldown=20, screenPopup=stringPopUp, weightFunc = reelWeight)
+ev.Event("String Floats By", minCooldown=20, screenPopup=stringPopUp, weightFunc = reelWeight)
 
 
 
