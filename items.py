@@ -65,7 +65,7 @@ woodAcceptTask = task.Task("Paddle to it", {}, [inv.lookup("Paddle")], 1, {
     0.3: ({inv.lookup("Wood"): 0}, "The wood floated away"),
     1: ({inv.lookup("Wood"): 10}, "You managed to salvage ten wood")})
 
-woodPopUp = ev.Popup('You see wood floating by. You may paddle towards it to add it to your inventory.', 
+woodPopUp = ev.Popup('A log floats near the raft...', 
 optionTasks=[woodAcceptTask, declineTask])
 
 def woodWeight():
@@ -78,17 +78,20 @@ def woodWeight():
 ev.Event("Wood Floats By", minCooldown=20, screenPopup=woodPopUp, weightFunc = woodWeight)
 
 #String Floats By
-stringAcceptTask = task.Task("Paddle to it", {}, [inv.lookup("Paddle")], 1, { 
-    0.3: ({inv.lookup("Fishing Reel"): 0}, "The fishing reel floated away"),
+stringAcceptTask = task.Task("Swim towards it", {}, [inv.lookup("Paddle")], 1, { 
+    0.3: ({inv.lookup("Fishing Reel"): 0}, "The fishing reel sunk to far"),
     1: ({inv.lookup("Fishing Reel"): 1}, "You managed to salvage one fishing reel")})
 
-stringPopUp = ev.Popup('You see a fishing reel floating by. You may paddle towards it to add it to your inventory.',
+stringPopUp = ev.Popup('A fishing reel appears in the water...',
 optionTasks=[stringAcceptTask, declineTask])
 
 def reelWeight():
     return 2
 
 ev.Event("String Floats By", minCooldown=20, screenPopup=stringPopUp, weightFunc = reelWeight)
+
+#Boat Decay Initiation
+
 
 
 
