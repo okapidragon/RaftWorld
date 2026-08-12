@@ -148,8 +148,38 @@ button:disabled {
   flex-direction: column;
 }
 
-#boat-col {
-  margin-top: auto;
+/* Tasks column keeps normal flow */
+#tasks-col {
+  display: flex;
+  flex-direction: column;
+}
+
+#boat-div {
+  margin-top: auto; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 8px;
+  background: inherit;
+}
+
+#boat-div > #boat-col,
+#boat-col.center-flex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#boat-div h3 {
+  margin: 0 0 8px;
+  text-align: center;
+}
+
+#resize-boat-button {
+  margin-top: 8px;
+  display: block;
 }
 </style>
 <link rel="preload" href="https://pyscript.net/releases/2025.2.2/core.css" as="style">
@@ -210,7 +240,7 @@ button:disabled {
     <h3 style="text-align: center;">Tasks</h3>
     <div id="tasks-area"></div>
     <div id="boat-div" class="boxed" style="display:none">
-    <div id="boat-col" class="center-flex" style="display: none;">
+    <div id="boat-col" class="center-flex">
       <h3>Boat</h3>
       <p style="font-size: large; font-weight: 400;" id="boat-size"></p>
       <p>You can salvage or use wood to make the boat smaller or bigger. Input the size below.</p>
@@ -219,9 +249,6 @@ button:disabled {
         <span>x</span>
         <input type="number" id="boat-height" value="6" min="5" style="width:90px">
       </div>
-      <br>
-      <p id="wood-needed" style="text-align: center;"></p>
-      <br>
       <button id="resize-boat-button" style="display: block;margin-left: auto; margin-right: auto;">Change boat size</button>
     </div>
     </div>

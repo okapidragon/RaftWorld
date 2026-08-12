@@ -26,7 +26,8 @@ class OutputMessage:
 
 def showSomething(div_id):
     boat_column = document.querySelector(div_id)
-    boat_column.style.display = "block"
+    # Clear any inline display so CSS rules (e.g. flex) can take effect
+    boat_column.style.display = ""
 
 def hideSomething(div_id):
     boat_column = document.querySelector(div_id)
