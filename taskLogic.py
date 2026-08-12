@@ -56,10 +56,12 @@ class Task:
     def able(self):
         for resource, amount in self.cost.items():
             if resource.quantity < amount:
+                imp.outputMessage.append(f"Need {resource.quantity - amount} more {resource.name}")
                 return False
 
         for neededItem in self.neededItems:
             if neededItem.quantity <= 0:
+                imp.outputMessage.append(f"Need a {neededItem.name}")
                 return False
         
         return True
@@ -72,7 +74,6 @@ class Task:
         player.task = self
 
         if not self.able():
-            imp.outputMessage.append("Not enough resources to execute the task.")
             player.task = None
             return False
 

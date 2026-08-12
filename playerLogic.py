@@ -115,10 +115,11 @@ resize_button.onclick = resizeBoat
 class Boat:
     all = []
 
-    def __init__(self, durability, size, decay = 0):
+    def __init__(self, durability, size, decay = 0, decaySpeed = 0.1):
         self.durability = durability
         self.size = size  # Size is a tuple (width, height)
         self.decay = decay
+        self.decaySpeed = decaySpeed
         Boat.all.append(self)
 
     def changeSize(self, newSize):
@@ -145,7 +146,9 @@ class Boat:
 
     def decayFrame(self):
         if imp.boatDecay:
-            self.decay += 0.5
+            self.decaySpeed = max(0, self.decaySpeed)
+            self.decaySpeed += 0.035
+            self.decay += self.decaySpeed
 
         setDecayBarProgress(self.decay)
 

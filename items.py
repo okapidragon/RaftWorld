@@ -42,7 +42,7 @@ task.Task(name = "Gather Seaweed",
         )
 
 def cleanBoatReward():
-    pl.Boat.all[0].decay -= 6
+    pl.Boat.all[0].decaySpeed -= 0.4
     pl.setDecayBarProgress(pl.Boat.all[0].decay)
     imp.outputMessage.append("Succesfully cleaned boat to slow decay.")
 
@@ -147,19 +147,17 @@ ev.Event("School of Fish", 180, schoolOfFishPopup, fishWeight, automaticFunc=fis
 
 #Large Wave
 
-largeWavePopup = ev.Popup("A large wave hits your raft. Your raft decays significantly.", [], duration = 8)
+largeWavePopup = ev.Popup("A large wave hits your raft. Your raft speeds up decay significantly.", [], duration = 8)
 
 def largeWaveWeight():
     if pl.Boat.all[0].decay > 50:
         return 0.4 + ev.lookup("Large Wave").cooldown * 0.01 - 2.5
 
-    else:
-        return 0.2 + ev.lookup("Large Wave").cooldown * 0.01 - 2.5
 
 def largeWaveFunc():
-    pl.Boat.all[0].decay += 25
+    pl.Boat.all[0].decaySpeed += 2
     pl.setDecayBarProgress()
-    imp.outputMessage.append("A large wave hits your raft. Your raft decays significantly.", color = "Red")
+    imp.outputMessage.append("A large wave hits your raft. Your raft speeds up decays significantly.", color = "Red")
 
 
 
