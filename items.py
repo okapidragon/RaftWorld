@@ -144,3 +144,24 @@ async def fishSchool():
 
 
 ev.Event("School of Fish", 180, schoolOfFishPopup, fishWeight, automaticFunc=fishSchool)
+
+#Large Wave
+
+largeWavePopup = ev.Popup("A large wave hits your raft. Your raft decays significantly.", [], duration = 8)
+
+def largeWaveWeight():
+    if pl.Boat.all[0].decay > 50:
+        return 0.4 + ev.lookup("Large Wave").cooldown * 0.01 - 2.5
+
+    else:
+        return 0.2 + ev.lookup("Large Wave").cooldown * 0.01 - 2.5
+
+def largeWaveFunc():
+    pl.Boat.all[0].decay += 25
+    pl.setDecayBarProgress()
+    imp.outputMessage.append("A large wave hits your raft. Your raft decays significantly.", color = "Red")
+
+
+
+ev.Event("Large Wave", 250, largeWavePopup, largeWaveWeight, automaticFunc=largeWaveFunc, timer = False)
+
