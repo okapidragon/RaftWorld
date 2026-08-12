@@ -122,5 +122,3 @@ def decayWeight():
 ev.Event("Boat Starts Decay", minCooldown=140, screenPopup=boatDecayPopup ,weightFunc = decayWeight, automaticFunc=startBoatDecay, timer=False)
 
 
-startBoatDecay()
-
