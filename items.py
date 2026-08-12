@@ -79,7 +79,7 @@ ev.Event("Wood Floats By", minCooldown=20, screenPopup=woodPopUp, weightFunc = w
 
 #String Floats By
 stringAcceptTask = task.Task("Swim towards it", {}, [], 1, { 
-    0.3: ({inv.lookup("Fishing Reel"): 0}, "The fishing reel sunk to far"),
+    0.3: ({inv.lookup("Fishing Reel"): 0}, "The fishing reel sunk too far"),
     1: ({inv.lookup("Fishing Reel"): 1}, "You managed to salvage one fishing reel")})
 
 stringPopUp = ev.Popup('A fishing reel appears in the water...',

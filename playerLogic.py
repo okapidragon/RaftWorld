@@ -146,6 +146,8 @@ class Boat:
         if imp.boatDecay:
             self.decay += 0.5
 
+        setDecayBarProgress(self.decay)
+
 class Player:
     all = []
 
