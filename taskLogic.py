@@ -25,7 +25,7 @@ def cut(player, taskName):
 
 def swimTrouble(player, taskName):
     player.health -= 12
-    imp.outputMessage.append(f"You spent too long in the water while {taskName}.", color = "Red")
+    imp.outputMessage.append(f"You spent too long in the wat {taskName}.", color = "Red")
 
 class Task:
     all = []
@@ -134,7 +134,6 @@ async def runTask(selected_task, selected_button):
 
     selected_button.classList.add("in-progress")
     selected_button.disabled = True
-    
 
     try:
         happened = await selected_task.execute(pl.Player.all[0])
@@ -169,8 +168,6 @@ def taskButtonUpdate():
 def craftButtonUpdate():
     imp.showSomething("#crafts-col")
     craft_col = imp.document.querySelector("#crafts-col")
-
-    craft_col.innerHTML = ""
 
     for craft in imp.displayedCrafts:
         craft_id = craft.name.lower().replace(" ", "-")

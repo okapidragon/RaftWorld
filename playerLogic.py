@@ -39,6 +39,11 @@ def displayTime(current_time):
     time_line = imp.document.querySelector("#time-display")
     time_line.textContent = f"Time: {timeText}"
 
+def setDecayBarProgress(value):
+    value = min(100, max(0, value))
+    decay_bar = imp.document.querySelector("#decay-bar")
+    decay_bar.style.width = f"{value}%"
+
 async def resizeBoat(event=None):
     width_input = imp.document.querySelector("#boat-width")
     height_input = imp.document.querySelector("#boat-height")
@@ -191,7 +196,6 @@ class Player:
             self.health -= 2.5
             setHealthBarProgress(self.health)
 
-
 class gameTime:
     all = []
 
@@ -212,7 +216,4 @@ class gameTime:
             self.days += self.hours // 24
             self.hours = self.hours % 24
 
-def setDecayBarProgress(value):
-    value = min(100, max(0, value))
-    decay_bar = imp.document.querySelector("#decay-bar")
-    decay_bar.style.width = f"{value}%"
+
