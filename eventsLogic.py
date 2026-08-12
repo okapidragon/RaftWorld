@@ -35,7 +35,10 @@ class Event:
         imp.currentEvent = self
 
         if self.automaticFunc is not None:
-            self.automaticFunc()
+            if imp.inspect.iscoroutinefunction(self.automaticFunc):
+                imp.asyncio.create_task(self.automaticFunc)
+            else:
+                self.automaticFunc()
         
         events_column = imp.document.querySelector("#events-div")
         
@@ -82,7 +85,7 @@ class Event:
 
         # Time ran out
         if imp.currentEvent is self:
-            imp.outputMessage.append("You could not reach it in time.", color = "Red")
+            imp.outputMessage.append("The event is now over!", color = "Red")
             stopEvent(self)
 
     async def chooseOption(self, selected_task, selected_button):
@@ -172,3 +175,10 @@ def stopEvent(event):
         if paddle_craft is not None:
             imp.displayedCrafts.append(paddle_craft)
         task.craftButtonUpdate()
+
+def lookup(name):
+    for eventItem in Event.all:
+        if eventItem.name == name:
+            return eventItem
+
+    imp.outputMessage.append(f"{name} not found as an event.")

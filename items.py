@@ -22,8 +22,8 @@ name="Fishing",
 cost={},
 neededItems=[inv.lookup("Fishing Rod")],
 time=7,
-reward= {0.83: ( {inv.lookup("Fish"): 0}, "You could not catch a fish!"),
-        0.96: ( {inv.lookup("Fish"): 1}, "You caught a sardine"),
+reward= {0.80: ( {inv.lookup("Fish"): 0}, "You could not catch a fish!"),
+        0.95: ( {inv.lookup("Fish"): 1}, "You caught a sardine"),
         0.99: ( {inv.lookup("Fish"): 2}, "You caught a salmon"),
         1.0: ( {inv.lookup("Fish"): 5}, "You caught a tuna")},
 cutChance = 0.075
@@ -121,4 +121,26 @@ def decayWeight():
 
 ev.Event("Boat Starts Decay", minCooldown=140, screenPopup=boatDecayPopup ,weightFunc = decayWeight, automaticFunc=startBoatDecay, timer=False)
 
+#School of Fish
 
+schoolOfFishPopup = ev.Popup("A school of fish swims below your boat... (Fishing Odds Bettered)", [], duration = 18)
+
+def fishWeight():
+    return 0.005 * ev.lookup("School of Fish").cooldown
+
+async def fishSchool():
+    fishing = task.lookup("Fishing")
+
+    ogReward = fishing.reward
+
+    fishing.reward = {0.1: ( {inv.lookup("Fish"): 0}, "You could not catch a fish!"),
+        0.60: ( {inv.lookup("Fish"): 1}, "You caught a sardine"),
+        0.90: ( {inv.lookup("Fish"): 2}, "You caught a salmon"),
+        1.0: ( {inv.lookup("Fish"): 5}, "You caught a tuna")}
+
+    await imp.asyncio.sleep(18)
+
+    fishing.reward = ogReward
+
+
+ev.Event("School of Fish", 180, schoolOfFishPopup, fishWeight, automaticFunc=fishSchool)
