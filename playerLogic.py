@@ -141,6 +141,7 @@ class Boat:
 
         if not (inv.lookup("Wood") in imp.displayedResources):
             imp.displayedResources.append(inv.lookup("Wood"))
+            task.craftButtonUpdate()
 
     def decayFrame(self):
         if imp.boatDecay:
