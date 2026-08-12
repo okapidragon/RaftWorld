@@ -115,10 +115,10 @@ resize_button.onclick = resizeBoat
 class Boat:
     all = []
 
-    def __init__(self, durability, size, decay):
+    def __init__(self, durability, size, decay = 0):
         self.durability = durability
         self.size = size  # Size is a tuple (width, height)
-        self.decay = 0
+        self.decay = decay
         Boat.all.append(self)
 
     def changeSize(self, newSize):
