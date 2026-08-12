@@ -11,27 +11,30 @@ class Popup:
 
         self.duration = duration
 
-def defaultCondition():
-    return True
 
 class Event:
     all = []
 
-    def __init__(self, name, difficulty, minCooldown, screenPopup, weight, condition = defaultCondition, cooldown = 60, automaticFunc = None):
+    def __init__(self, name, minCooldown, screenPopup, weightFunc, cooldown = 60, automaticFunc = None):
         self.name = name
-        self.difficulty = difficulty
         self.minCooldown = minCooldown
         self.screenPopup = screenPopup
         self.cooldown = cooldown
-        self.condition = condition
-        self.weight = weight
+        self.weightFunc = weightFunc
+
+        if not callable(weightFunc):
+            imp.outputMessage.append(f"{self.name} event weightFunc is not callable!")
+
         Event.all.append(self)
-        self.automaticTask = automaticFunc #Cannot wait during!
-    
+        self.automaticFunc = automaticFunc #Cannot wait during!
+
+    #Execute finishes but eventTimer cpnitnues and chooseOption runs on button click.
     async def execute(self):
         imp.currentEvent = self
-        if self.automaticTask is not None:
-            self.automaticTask()
+
+        if self.automaticFunc is not None:
+            self.automaticFunc()
+        
         events_column = imp.document.querySelector("#events-col")
         
         message_line = imp.document.createElement("p")
@@ -91,8 +94,6 @@ class Event:
             self.timerTask.cancel()
             stopEvent(self)
 
-        
-
 
 def eventUpdate(dayNumber):
     for event in Event.all:
@@ -106,7 +107,7 @@ def eventUpdate(dayNumber):
     eligibleEvents = []
 
     for event in Event.all:
-        if event.difficulty <= dayNumber and event.cooldown >= event.minCooldown and event.condition():
+        if  event.cooldown >= event.minCooldown:
             eligibleEvents.append(event)
 
     if len(eligibleEvents) == 0:
@@ -114,11 +115,29 @@ def eventUpdate(dayNumber):
 
     probability = imp.random.random()
 
-    if probability < imp.timeSinceEvent * 0.0015:
-        eligibleEventsWeighted = []
-        for event in eligibleEvents:
-            eligibleEventsWeighted.extend([event] * event.weight)
-        imp.currentEvent = imp.random.choice(eligibleEventsWeighted)
+    if probability < imp.timeSinceEvent * 0.001:
+        weightedEventDict = {}
+
+        for eventItem in eligibleEvents:
+            weightedEventDict[eventItem] = eventItem.weightFunc()
+
+        totalWeight = sum(weightedEventDict.values())
+
+        normEventDict = {}
+
+        for eventItem, weight in weightedEventDict.items():
+            lastValue = next(reversed(normEventDict.values()), 0)
+
+            normEventDict[eventItem] = lastValue + (weight / totalWeight)
+
+        randomChosen = imp.random.random()
+
+        for eventItem, probability in normEventDict.items():
+            if randomChosen < probability:
+                imp.currentEvent = eventItem
+                break
+            
+
 
         imp.timeSinceEvent = 0
 
@@ -143,6 +162,6 @@ def stopEvent(event):
 
     if not imp.boatUnlock:
         imp.showSomething("#boat-col")
-        imp.showSomething("#crafts-col")
         imp.outputMessage.append("While pondering a way to get a paddle. You notice that you can take apart your raft, your only life supply. Be Careful!", color = "#50C878")
         imp.boatUnlock = True
+        task.craftButtonUpdate()
