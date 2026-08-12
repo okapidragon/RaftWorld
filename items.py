@@ -106,6 +106,7 @@ def startBoatDecay():
     imp.boatDecay = True
     imp.outputMessage.append("Your boat starts to decay, you must manage this by cleaning and reinforcing the boat.", color = "#50C878")
     imp.displayedTasks.append(task.lookup("Clean Boat"))
+    task.taskButtonUpdate()
 
 
 boatDecayPopup = ev.Popup('Your boat starts to decay, you must manage this by cleaning and reinforcing the boat.', [], duration = 15)
