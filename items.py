@@ -41,6 +41,16 @@ task.Task(name = "Gather Seaweed",
     cutChance = 0.05
         )
 
+def cleanBoatReward():
+    pl.boat.all[0].decay -= 6
+
+task.Task(name = "Clean Boat",
+    cost = {},
+        neededItems=[],
+        time = 5,
+        reward = cleanBoatReward
+        cutChance = 0.025)
+
 #Crafts Here!
 (
 task.Task(name = "Craft Paddle",
@@ -55,6 +65,7 @@ task.Task(name = "Craft Fishing Rod",
     time = 3,
     reward = {1: ({inv.lookup("Fishing Rod"): 1}, "Succesful fishing rod craft!")}, craft=True
 )
+
 
 #All events down here!
 declineTask = task.Task("Decline", {}, [], 0, {1: ({}, "Declined Event")})
@@ -94,8 +105,10 @@ ev.Event("String Floats By", minCooldown=100, screenPopup=stringPopUp, weightFun
 def startBoatDecay():
     imp.boatDecay = True
     imp.outputMessage.append("Your boat starts to decay, you must manage this by cleaning and reinforcing the boat.", color = "#50C878")
+    imp.displayedTasks.append(task.lookup("Clean Boat"))
 
-boatDecayPopup = ev.Popup('Your boat starts to decay, you must manage this by cleaning and reinforcing the boat.', [])
+
+boatDecayPopup = ev.Popup('Your boat starts to decay, you must manage this by cleaning and reinforcing the boat.', [], duration = 15)
 
 def decayWeight():
     if imp.boatDecay:
@@ -103,7 +116,7 @@ def decayWeight():
 
     return 10
 
-ev.Event("Boat Starts Decay", minCooldown=140, screenPopup=boatDecayPopup ,weightFunc = decayWeight, automaticFunc=startBoatDecay)
+ev.Event("Boat Starts Decay", minCooldown=140, screenPopup=boatDecayPopup, weightFunc = decayWeight, automaticFunc=startBoatDecay)
 
 
 
