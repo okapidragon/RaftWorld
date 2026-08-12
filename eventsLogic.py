@@ -178,14 +178,16 @@ async def stopEvent(event):
     imp.currentEvent = None
 
     if not imp.boatUnlock:
-        await imp.asyncio.sleep(3)
         imp.showSomething("#boat-div")
         imp.outputMessage.append("While pondering a way to get a paddle. You notice that you can take apart your raft, your only life supply. Be Careful!", color = "#50C878")
         imp.boatUnlock = True
         paddle_craft = task.lookup("Craft Paddle")
         if paddle_craft is not None:
             imp.displayedCrafts.append(paddle_craft)
-        task.imp.asyncio.create_task(task.craftButtonUpdate())
+
+        await imp.asyncio.sleep(3)
+        
+        task.craftButtonUpdate()
 
 def lookup(name):
     for eventItem in Event.all:

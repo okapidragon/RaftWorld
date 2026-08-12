@@ -14,7 +14,7 @@ def initializeSeaweed():
     imp.outputMessage.append("You may now craft a fishing rod", color = "#50C878")
     imp.displayedCrafts.append(lookup("Craft Fishing Rod"))
 
-    imp.asyncio.create_task(craftButtonUpdate())
+    craftButtonUpdate()
     taskButtonUpdate()
     inv.inventoryUpdate()
 
@@ -171,85 +171,44 @@ def taskButtonUpdate():
             cost_line.innerHTML = f"Resources needed: {', '.join([f'{amount} {resource.name}' for resource, amount in task.cost.items()])}"
             tasks_col.appendChild(cost_line)
 
-async def craftButtonUpdate():
-    if imp.craftingShown:
-        craft_col = imp.document.querySelector("#crafts-col")
-        craft_col.innerHTML = ""
+def craftButtonUpdate():
+    craft_col = imp.document.querySelector("#crafts-col")
+    craft_col.innerHTML = ""
 
-        if not imp.displayedCrafts:
-            craft_col.style.display = "none"
-            return
+    if not imp.displayedCrafts:
+        craft_col.style.display = "none"
+        return
 
-        craft_col.style.display = "block"
-        craft_header = imp.document.createElement("h3")
-        craft_header.textContent = "Crafting"
-        craft_header.style.textAlign = "center"
-        craft_header.style.width = "100%"
-        craft_header.style.margin = "0 0 16px"
-        craft_col.appendChild(craft_header)
+    craft_col.style.display = "block"
+    craft_header = imp.document.createElement("h3")
+    craft_header.textContent = "Crafting"
+    craft_header.style.textAlign = "center"
+    craft_header.style.width = "100%"
+    craft_header.style.margin = "0 0 16px"
+    craft_col.appendChild(craft_header)
 
-        for craft in imp.displayedCrafts:
-            if craft is None:
-                continue
-            craft_id = craft.name.lower().replace(" ", "-")
-            craft_button = imp.document.createElement("button")
-            craft_button.style.display = "block"
-            craft_button.style.margin = "0 auto 20px"
-            craft_button.id = f"{craft_id}-button"
-            craft_button.className = "craft-button"
-            craft_button.textContent = craft.name
-            craft_cost = imp.document.createElement("p")
-            craft_cost.style.textAlign = "center"
-            craft_cost.innerHTML = f"Resources needed: {', '.join([f'{amount} {resource.name}' for resource, amount in craft.cost.items()])}"
-            craft_button.onclick = (
-                lambda event, selected_task=craft, selected_button=craft_button:
-                imp.asyncio.create_task(
-                    runTask(selected_task, selected_button)
-                )
+    for craft in imp.displayedCrafts:
+        if craft is None:
+            continue
+        craft_id = craft.name.lower().replace(" ", "-")
+        craft_button = imp.document.createElement("button")
+        craft_button.style.display = "block"
+        craft_button.style.margin = "0 auto 20px"
+        craft_button.id = f"{craft_id}-button"
+        craft_button.className = "craft-button"
+        craft_button.textContent = craft.name
+        craft_cost = imp.document.createElement("p")
+        craft_cost.style.textAlign = "center"
+        craft_cost.innerHTML = f"Resources needed: {', '.join([f'{amount} {resource.name}' for resource, amount in craft.cost.items()])}"
+        craft_button.onclick = (
+            lambda event, selected_task=craft, selected_button=craft_button:
+            imp.asyncio.create_task(
+                runTask(selected_task, selected_button)
             )
-            craft_col.appendChild(craft_button)
-            craft_col.appendChild(craft_cost)
-            craft_col.appendChild(imp.document.createElement("br"))
-        else:
-            imp.displayedCrafts = True
-            await imp.asyncio.sleep(3)
-            craft_col = imp.document.querySelector("#crafts-col")
-            craft_col.innerHTML = ""
-    
-            if not imp.displayedCrafts:
-                craft_col.style.display = "none"
-                return
-    
-            craft_col.style.display = "block"
-            craft_header = imp.document.createElement("h3")
-            craft_header.textContent = "Crafting"
-            craft_header.style.textAlign = "center"
-            craft_header.style.width = "100%"
-            craft_header.style.margin = "0 0 16px"
-            craft_col.appendChild(craft_header)
-    
-            for craft in imp.displayedCrafts:
-                if craft is None:
-                    continue
-                craft_id = craft.name.lower().replace(" ", "-")
-                craft_button = imp.document.createElement("button")
-                craft_button.style.display = "block"
-                craft_button.style.margin = "0 auto 20px"
-                craft_button.id = f"{craft_id}-button"
-                craft_button.className = "craft-button"
-                craft_button.textContent = craft.name
-                craft_cost = imp.document.createElement("p")
-                craft_cost.style.textAlign = "center"
-                craft_cost.innerHTML = f"Resources needed: {', '.join([f'{amount} {resource.name}' for resource, amount in craft.cost.items()])}"
-                craft_button.onclick = (
-                    lambda event, selected_task=craft, selected_button=craft_button:
-                    imp.asyncio.create_task(
-                        runTask(selected_task, selected_button)
-                    )
-                )
-                craft_col.appendChild(craft_button)
-                craft_col.appendChild(craft_cost)
-                craft_col.appendChild(imp.document.createElement("br"))
+        )
+        craft_col.appendChild(craft_button)
+        craft_col.appendChild(craft_cost)
+        craft_col.appendChild(imp.document.createElement("br"))
 
 def locationUpdate(place):
     location_col = imp.document.querySelector("#location")
