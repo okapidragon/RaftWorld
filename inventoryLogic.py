@@ -12,7 +12,11 @@ def inventoryUpdate():
         resource_line.id = f"{item_id}-count"
         resource_line.className = "inventory-resource"
         resource_line.textContent = f"{item.name}: {item.quantity}"
-        inventory_col.appendChild(resource_line)
+        crafts_col = inventory_col.querySelector("#crafts-col")
+        if crafts_col is not None:
+            inventory_col.insertBefore(resource_line, crafts_col)
+        else:
+            inventory_col.appendChild(resource_line)
 
 
 class Resource:

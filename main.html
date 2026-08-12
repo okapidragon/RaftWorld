@@ -123,6 +123,21 @@ button:disabled {
   width: 100%;
   padding: 8px;
 }
+
+/* Inventory-specific layout: keep crafts pinned to the column bottom */
+#inventory-col {
+  display: flex;
+  flex-direction: column;
+}
+.crafts-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: auto;
+  text-align: center;
+  width: 100%;
+  padding: 8px;
+}
 </style>
 <link rel="preload" href="https://pyscript.net/releases/2025.2.2/core.css" as="style">
 <link rel="preload" href="https://pyscript.net/releases/2025.2.2/core.js" as="script">
@@ -175,7 +190,7 @@ button:disabled {
   </div>
   <div class="column" id="inventory-col">
     <h3 style="text-align: center;">Inventory</h3>
-    <div id="crafts-col" class="center-abs" style="display: none;">
+    <div id="crafts-col" class="crafts-bottom" style="display: none;">
       <h3>Crafting</h3>
     </div>
   </div>
