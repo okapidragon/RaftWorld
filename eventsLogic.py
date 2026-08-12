@@ -77,18 +77,20 @@ class Event:
     async def eventTimer(self):
         events_column = imp.document.querySelector("#events-div")
 
-        timer_div = imp.document.createElement("div")
-        timer_div.className = "event-timer"
-        timer_div.style.textAlign = "center"
-        events_column.appendChild(timer_div)        
+        if timer:
+            timer_div = imp.document.createElement("div")
+            timer_div.className = "event-timer"
+            timer_div.style.textAlign = "center"
+            events_column.appendChild(timer_div)        
 
         for remaining in range(self.screenPopup.duration, 0, -1):
-            timer_div.innerHTML = "" 
-            timer = imp.document.createElement("p")
-            timer.className = "timer"
-            timer.style.textAlign = "center"
-            timer.textContent = f"Time remaining: {remaining}"
-            timer_div.appendChild(timer)
+            if timer:
+                timer_div.innerHTML = "" 
+                timer = imp.document.createElement("p")
+                timer.className = "timer"
+                timer.style.textAlign = "center"
+                timer.textContent = f"Time remaining: {remaining}"
+                timer_div.appendChild(timer)
             await imp.asyncio.sleep(1)
 
         # Time ran out
