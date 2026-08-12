@@ -14,7 +14,7 @@ def initializeSeaweed():
     imp.outputMessage.append("You may now craft a fishing rod", color = "#50C878")
     imp.displayedCrafts.append(lookup("Craft Fishing Rod"))
 
-    imp.asyncio.create_Task.craftButtonUpdate()
+    imp.asyncio.create_task(craftButtonUpdate())
     taskButtonUpdate()
     inv.inventoryUpdate()
 
@@ -91,7 +91,7 @@ class Task:
         for neededItem in self.neededItems:
             breaked = neededItem.tryBreak()
             if breaked:
-                if neededItem.name == "Fishing Rod" and not imp.seaweedUnlock:
+                if neededItem.name == "Fishing Rod" and not (inv.lookup("Seaweed") in imp.displayedResources):
                     initializeSeaweed()
 
                 player.task = None

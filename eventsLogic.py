@@ -96,7 +96,7 @@ class Event:
         # Time ran out
         if imp.currentEvent is self:
             imp.outputMessage.append("The event is now over!")
-            imp.asyncio.createTask.stopEvent(self)
+            imp.asyncio.create_task(stopEvent(self))
 
     async def chooseOption(self, selected_task, selected_button):
     # Make sure the event hasn't already timed out
@@ -107,7 +107,7 @@ class Event:
 
         if happened:
             self.timerTask.cancel()
-            imp.asyncio.createTask.stopEvent(self)
+            imp.asyncio.create_task(stopEvent(self))
 
 
 def eventUpdate(dayNumber):
@@ -185,7 +185,7 @@ async def stopEvent(event):
         paddle_craft = task.lookup("Craft Paddle")
         if paddle_craft is not None:
             imp.displayedCrafts.append(paddle_craft)
-        task.imp.asyncio.create_Task.craftButtonUpdate()
+        task.imp.asyncio.create_task(task.craftButtonUpdate())
 
 def lookup(name):
     for eventItem in Event.all:
