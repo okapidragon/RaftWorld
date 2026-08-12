@@ -36,6 +36,7 @@ timeSinceEvent = 0
 #Progression Variables
 seaweedUnlock = False
 boatUnlock = False
+boatDecay = True
 
 displayedResources = []
 displayedTasks = []

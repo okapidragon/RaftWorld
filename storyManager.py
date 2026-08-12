@@ -36,8 +36,14 @@ async def eventLoop():
 
         await imp.asyncio.sleep(1)
 
+async def decayLoop():
+    while True:
+        boat.decay()
+
+        await imp.asyncio.sleep(1)
 
 #Main game loop
 imp.asyncio.create_task(hungerLoop())
 imp.asyncio.create_task(timeLoop())
 imp.asyncio.create_task(eventLoop())
+imp.asyncio.create_task(decayLoop())

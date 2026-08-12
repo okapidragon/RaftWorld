@@ -41,6 +41,7 @@ def displayTime(current_time):
 
 def setDecayBarProgress(value):
     value = min(100, max(0, value))
+    value = 100 - value
     decay_bar = imp.document.querySelector("#decay-bar")
     decay_bar.style.width = f"{value}%"
 
@@ -114,9 +115,10 @@ resize_button.onclick = resizeBoat
 class Boat:
     all = []
 
-    def __init__(self, durability, size):
+    def __init__(self, durability, size, decay):
         self.durability = durability
         self.size = size  # Size is a tuple (width, height)
+        self.decay = 0
         Boat.all.append(self)
 
     def changeSize(self, newSize):
@@ -139,6 +141,10 @@ class Boat:
 
         if not (inv.lookup("Wood") in imp.displayedResources):
             imp.displayedResources.append(inv.lookup("Wood"))
+
+    def decay(self):
+        if imp.boatDecay:
+            self.decay += 0.5
 
 class Player:
     all = []
