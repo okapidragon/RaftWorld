@@ -18,11 +18,16 @@ def initializeSeaweed():
     taskButtonUpdate()
     inv.inventoryUpdate()
 
+#Fishing cut yourself
+def cut(player, taskName):
+    player.health -= 15
+    imp.outputMessage(f"You cut your self while {taskName}.", color = "Red")
+
 class Task:
     all = []
     allCraft = []
 
-    def __init__(self, name, cost, neededItems, time, reward, inputs = None, craft = False):
+    def __init__(self, name, cost, neededItems, time, reward, inputs = None, craft = False, cutChance = 0):
         self.name = name
         self.cost = cost #self.cost should be a dictionary of {Resource: amount}
         self.neededItems = neededItems #List of Resource objects
@@ -30,6 +35,7 @@ class Task:
         self.time = time #time in seconds
         self.reward = reward #Dictionary of {Probability: ({Resource: amount}, dialogue)}} or Function
         self.inputs = inputs
+        self.cutChance = cutChance
 
         if isinstance(reward, dict):
             self.rewardType = "dict"
@@ -69,6 +75,9 @@ class Task:
             resource.remove(amount)
 
         await imp.asyncio.sleep(self.time)
+
+        if imp.random.random() < self.cutChance():
+            cut(player, self.name)
 
         for neededItem in self.neededItems:
             breaked = neededItem.tryBreak()

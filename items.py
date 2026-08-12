@@ -26,6 +26,7 @@ reward= {0.8: ( {inv.lookup("Fish"): 0}, "You could not catch a fish!"),
         0.95: ( {inv.lookup("Fish"): 1}, "You caught a sardine"),
         0.99: ( {inv.lookup("Fish"): 2}, "You caught a salmon"),
         1.0: ( {inv.lookup("Fish"): 5}, "You caught a tuna")}
+cutChance = 0.075
 ))  
 
 #Gather Seaweed
@@ -36,7 +37,9 @@ task.Task(name = "Gather Seaweed",
     reward = {0.4: ({inv.lookup("Seaweed"): 0}, "You failed to gather seaweed"),
         0.7: ({inv.lookup("Seaweed"): 1}, "You found one piece of seaweed"),
         0.95: ({inv.lookup("Seaweed"): 3}, "You found a large blob of seaweed"),
-        1: ({inv.lookup("Seaweed"): 6}, "You found piles of seaweed") })
+        1: ({inv.lookup("Seaweed"): 6}, "You found piles of seaweed") }
+    cutChance = 0.05
+        )
 
 #Crafts Here!
 imp.displayedCrafts.append(
@@ -77,17 +80,6 @@ optionTasks=[stringAcceptTask, declineTask])
 
 ev.Event("String Floats By", difficulty=1, minCooldown=20, screenPopup=stringPopUp, weight = 2)
 
-#Fishing cut yourself
-def cut():
-    pl.Player.all[0].health -= 25
-    imp.outputMessage.append("You cut yourself on the fishing rod and lost 25 health.", color = "Red")
-
-def cutCondition():
-    return (inv.lookup("Fishing Rod").quantity > 0)
-
-stringPopUp = ev.Popup('You cut yourself on the fishing rod and lost 25 health',[], duration = 15)
-
-ev.Event("Fishing Cut", difficulty = 1, minCooldown = 40, screenPopup=stringPopUp, condition=cutCondition, automaticFunc=cut, weight = 1)
 
 
 
