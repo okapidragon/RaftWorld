@@ -75,7 +75,7 @@ def woodWeight():
     return 2
 
 
-ev.Event("Wood Floats By", minCooldown=20, screenPopup=woodPopUp, weightFunc = woodWeight)
+ev.Event("Wood Floats By", minCooldown=100, screenPopup=woodPopUp, weightFunc = woodWeight)
 
 #String Floats By
 stringAcceptTask = task.Task("Swim towards it", {}, [], 1, { 
@@ -88,13 +88,22 @@ optionTasks=[stringAcceptTask, declineTask])
 def reelWeight():
     return 2
 
-ev.Event("String Floats By", minCooldown=20, screenPopup=stringPopUp, weightFunc = reelWeight)
+ev.Event("String Floats By", minCooldown=100, screenPopup=stringPopUp, weightFunc = reelWeight)
 
 #Boat Decay Initiation
 def startBoatDecay():
     imp.boatDecay = True
+    imp.outputMessage.append("Your boat starts to decay, you must manage this by cleaning and reinforcing the boat.", color = "#50C878")
 
-boatDecayPopup = ev.Popup('Your boat starts to decay, you must manage this by cleaning and reinforcing the boat.')
+boatDecayPopup = ev.Popup('Your boat starts to decay, you must manage this by cleaning and reinforcing the boat.', [])
+
+def decayWeight():
+    if imp.boatDecay:
+        return 0
+
+    return 10
+
+ev.Event("Boat Starts Decay", minCooldown=140, screenPopup=boatDecayPopup ,weightFunc = decayWeight, automaticFunc=startBoatDecay)
 
 
 
