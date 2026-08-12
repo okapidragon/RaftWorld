@@ -35,7 +35,7 @@ class Task:
         self.name = name
         self.cost = cost #self.cost should be a dictionary of {Resource: amount}
         self.neededItems = neededItems #List of Resource objects
-        
+
         self.time = time #time in seconds
         self.reward = reward #Dictionary of {Probability: ({Resource: amount}, dialogue)}} or Function
         self.inputs = inputs
@@ -163,6 +163,12 @@ def taskButtonUpdate():
         )
         tasks_col.appendChild(task_button)
         tasks_col.appendChild(imp.document.createElement("br"))
+
+        if task.cost:
+            cost_line = imp.document.createElement("p")
+            cost_line.style.textAlign = "center"
+            cost_line.innerHTML = f"Resources needed: {', '.join([f'{amount} {resource.name}' for resource, amount in task.cost.items()])}"
+            tasks_col.appendChild(cost_line)
 
 def craftButtonUpdate():
     craft_col = imp.document.querySelector("#crafts-col")
