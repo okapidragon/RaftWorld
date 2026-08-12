@@ -11,19 +11,16 @@ class Popup:
 
         self.duration = duration
 
-def defaultCondition():
-    return True
 
 class Event:
     all = []
 
-    def __init__(self, name, difficulty, minCooldown, screenPopup, weightFunc, condition = defaultCondition, cooldown = 60, automaticFunc = None):
+    def __init__(self, name, difficulty, minCooldown, screenPopup, weightFunc, cooldown = 60, automaticFunc = None):
         self.name = name
         self.difficulty = difficulty
         self.minCooldown = minCooldown
         self.screenPopup = screenPopup
         self.cooldown = cooldown
-        self.condition = condition
         self.weightFunc = weightFunc
 
         if not callable(weightFunc):
@@ -110,7 +107,7 @@ def eventUpdate(dayNumber):
     eligibleEvents = []
 
     for event in Event.all:
-        if event.difficulty <= dayNumber and event.cooldown >= event.minCooldown and event.condition():
+        if event.difficulty <= dayNumber and event.cooldown >= event.minCooldown:
             eligibleEvents.append(event)
 
     if len(eligibleEvents) == 0:
