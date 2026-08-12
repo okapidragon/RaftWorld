@@ -42,7 +42,9 @@ task.Task(name = "Gather Seaweed",
         )
 
 def cleanBoatReward():
-    pl.boat.all[0].decay -= 6
+    pl.Boat.all[0].decay -= 6
+    pl.setDecayBarProgress(pl.Boat.all[0].decay)
+    imp.outputMessage.append("Succesfully cleaned boat to slow decay.")
 
 task.Task(name = "Clean Boat",
     cost = {},
@@ -118,7 +120,5 @@ def decayWeight():
     return 10
 
 ev.Event("Boat Starts Decay", minCooldown=140, screenPopup=boatDecayPopup ,weightFunc = decayWeight, automaticFunc=startBoatDecay, timer=False)
-
-
 
 

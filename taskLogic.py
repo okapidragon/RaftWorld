@@ -114,7 +114,6 @@ class Task:
         elif self.rewardType == "function":
             if self.inputs is not None:
                 self.reward(self.inputs)
-
             elif imp.inspect.iscoroutinefunction(self.reward):
                 await self.reward()
             else:
