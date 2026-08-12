@@ -27,12 +27,15 @@ class Event:
             imp.outputMessage.append(f"{self.name} event weightFunc is not callable!")
 
         Event.all.append(self)
-        self.automaticTask = automaticFunc #Cannot wait during!
-    
+        self.automaticFunc = automaticFunc #Cannot wait during!
+
+    #Execute finishes but eventTimer cpnitnues and chooseOption runs on button click.
     async def execute(self):
         imp.currentEvent = self
-        if self.automaticTask is not None:
-            self.automaticTask()
+
+        if self.automaticFunc is not None:
+            self.automaticFunc()
+        
         events_column = imp.document.querySelector("#events-col")
         
         message_line = imp.document.createElement("p")
@@ -91,8 +94,6 @@ class Event:
         if happened:
             self.timerTask.cancel()
             stopEvent(self)
-
-        
 
 
 def eventUpdate(dayNumber):
