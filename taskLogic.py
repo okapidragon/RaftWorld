@@ -105,6 +105,7 @@ class Task:
                         rewardItem.add(amount) 
                         if not (rewardItem in imp.displayedResources):
                             imp.displayedResources.append(rewardItem)
+                            craftButtonUpdate()
 
                     imp.outputMessage.append(rewardItems[1])  # Display the dialogue associated with the reward
                     inv.inventoryUpdate()
