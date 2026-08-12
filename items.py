@@ -103,7 +103,7 @@ def decayWeight():
 
     return 10
 
-ev.Event("Boat Starts Decay", minCooldown=140, screenPopup=boatDecayPopup ,weightFunc = decayWeight, automaticFunc=startBoatDecay)
+ev.Event("Boat Starts Decay", minCooldown=140, screenPopup=boatDecayPopup ,weightFunc = decayWeight, automaticFunc=startBoatDecay, timer=False)
 
 
 
