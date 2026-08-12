@@ -210,7 +210,7 @@ class gameTime:
     def __init__(self):
         self.hours = 0
         self.minutes = 0
-        self.days = 0
+        self.days = 1
         gameTime.all.append(self)
 
     def advance(self, increment):
