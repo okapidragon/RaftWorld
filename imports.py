@@ -3,7 +3,7 @@ import asyncio
 import threading
 import inspect
 import time
-from pyscript import document, when  # pyright: ignore[reportMissingImports]
+from pyscript import document, window, when  # pyright: ignore[reportMissingImports]
 gamePaused = False
 
 
@@ -93,6 +93,8 @@ def toggle_pause(event):
         b.disabled = gamePaused
 
 def death(message):
+    window.onerror = lambda msg, url, ln, col, err: True
+    
     body = document.body
     body.innerHTML = ""
     body.style.margin = "0"
