@@ -6,7 +6,7 @@ import playerLogic as pl
 
 
 #Items
-imp.displayedResources.append(inv.Item("Fishing Rod", 1, breakable=True, breakChance=0.07))
+imp.displayedResources.append(inv.Item("Fishing Rod", 1, breakable=True, breakChance=0.1))
 inv.Item("Paddle", 0, breakable=True, breakChance=0.01)
 inv.Item("Hammer", 0, breakable = True, breakChance = 0.04)
 inv.Item("Spear", 0, breakable = True, breakChance = 0.05)
@@ -226,12 +226,9 @@ shipwreckPopup = ev.Popup("You see an old abondoned shipwreck off in the distanc
                           optionTasks=[paddleAndSwimDown, declineTask])
 
 def shipwreckWeight():
-    if not imp.merchantUnlock:
-        return 0.4
+    return 0.5 + (shipwreckEvent.cooldown - shipwreckEvent.minCooldown) * 0.004
 
-    return 0.6
-
-shipwreckEvent = ev.Event(name = "Shipwreck", minCooldown = 220, screenPopup=shipwreckPopup, weightFunc=shipwreckWeight)
+shipwreckEvent = ev.Event(name = "Shipwreck", minCooldown = 120, screenPopup=shipwreckPopup, weightFunc=shipwreckWeight, cooldown = -60)
 # Shipwreck 2
 goldSalvage = task.Task("Collect Treasure",
                         cost = {},
@@ -283,12 +280,12 @@ merchantPopup = ev.Popup("A merchant boat appears beside you. They do not want t
                          optionTasks = [fishTrade, metalTrade, hammerTrade])
 
 def merchantWeight():
-    return 1 + (merchantEvent.cooldown - merchantEvent.minCooldown) * 0.004
+    return 1.5 + (merchantEvent.cooldown - merchantEvent.minCooldown) * 0.004
 
 def merchantEnd():
     imp.metalUnlock = True
 
-merchantEvent = ev.Event("Merchant", minCooldown = 150, screenPopup=merchantPopup, weightFunc=merchantWeight, cooldown = 0, multipleTasks=True, stopFunc = merchantEnd)
+merchantEvent = ev.Event("Merchant", minCooldown = 150, screenPopup=merchantPopup, weightFunc=merchantWeight, cooldown = 30, multipleTasks=True, stopFunc = merchantEnd)
 
 #Shark Event
 
@@ -362,4 +359,4 @@ cratePopup = ev.Popup(text = "A lone crate floats by near the raft.", optionTask
 def crateWeight():
     return 0.65 + (crateEvent.cooldown - crateEvent.minCooldown) * 0.003 
 
-crateEvent = ev.Event(name = "Crate", minCooldown = 300, cooldown = 150, screenPopup = cratePopup, weightFunc=crateWeight)
+crateEvent = ev.Event(name = "Crate", minCooldown = 300, cooldown = 0, screenPopup = cratePopup, weightFunc=crateWeight)
