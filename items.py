@@ -160,7 +160,7 @@ ev.Event("Boat Starts Decay", minCooldown=140, screenPopup=boatDecayPopup ,weigh
 
 #School of Fish
 
-schoolOfFishPopup = ev.Popup("A school of fish swims below your boat... (Fishing Odds Bettered)", [], duration = 18)
+schoolOfFishPopup = ev.Popup("A school of fish swims below your boat... (Fishing Odds Bettered)", [], duration = 25)
 
 def fishWeight():
     return 0.005 * ev.lookup("School of Fish").cooldown
@@ -184,7 +184,10 @@ ev.Event("School of Fish", 180, schoolOfFishPopup, fishWeight, automaticFunc=fis
 
 #Large Wave
 
-largeWavePopup = ev.Popup("A large wave hits your raft. Your raft speeds up decay significantly.", [], duration = 8)
+dropAnchor = task.Task(name = "Drop Anchor", cost ={}, neededItems=[inv.lookup("Anchor")], time = 2, 
+                       reward = {1: ({}, "You dropped your anchor and avoided catastrophe.")})
+
+largeWavePopup = ev.Popup("A large wave hits your raft. Your raft speeds up decay significantly.", [dropAnchor], duration = 10)
 
 def largeWaveWeight():
     if pl.Boat.all[0].decay > 5 and imp.boatDecay:
@@ -199,7 +202,7 @@ def largeWaveFunc():
     imp.outputMessage.append("A large wave hits your raft. Your raft speeds up decays significantly.", color = "Red")
 
 
-ev.Event("Large Wave", 250, largeWavePopup, largeWaveWeight, automaticFunc=largeWaveFunc, timer = False)
+ev.Event("Large Wave", 250, largeWavePopup, largeWaveWeight, stopFunc=largeWaveFunc, timer = False)
 
 #Shipwreck 1
 
