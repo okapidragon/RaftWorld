@@ -156,7 +156,7 @@ async def fishSchool():
         0.90: ( {inv.lookup("Fish"): 2}, "You caught a salmon"),
         1.0: ( {inv.lookup("Fish"): 5}, "You caught a tuna")}
 
-    await imp.asyncio.sleep(18)
+    await imp.pause_aware_sleep(18)
 
     fishing.reward = ogReward
 

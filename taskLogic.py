@@ -80,7 +80,7 @@ class Task:
         for resource, amount in self.cost.items():
             resource.remove(amount)
 
-        await imp.sleep(self.time)
+        await imp.pause_aware_sleep(self.time)
 
         if imp.random.random() < self.cutChance:
             cut(player, self.name)
@@ -131,6 +131,7 @@ def lookup(name) -> Task:
     return None
 
 async def runTask(selected_task, selected_button):
+    if imp.gamePaused: imp.outputMessage.append("Game is paused"); return False
     import playerLogic as pl
 
     selected_button.classList.add("in-progress")

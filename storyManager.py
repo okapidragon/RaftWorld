@@ -21,26 +21,26 @@ task.taskButtonUpdate()
 async def hungerLoop():
     while True:
         player.hungerFrame()
-        await imp.asyncio.sleep(1)
+        await imp.pause_aware_sleep(1)
 
 async def timeLoop():
     while True:
         gameTime.advance(3)
 
         pl.displayTime(gameTime)
-        await imp.asyncio.sleep(0.5)
+        await imp.pause_aware_sleep(0.5)
 
 async def eventLoop():
     while True:
         ev.eventUpdate(gameTime.days)
 
-        await imp.asyncio.sleep(1)
+        await imp.pause_aware_sleep(1)
 
 async def decayLoop():
     while True:
         boat.decayFrame()
 
-        await imp.asyncio.sleep(1)
+        await imp.pause_aware_sleep(1)
 
 #Main game loop
 imp.asyncio.create_task(hungerLoop())

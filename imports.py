@@ -4,6 +4,8 @@ import threading
 import inspect
 import time
 from pyscript import document  # pyright: ignore[reportMissingImports]
+# Global pause flag (default not paused)
+gamePaused = False
 
 
 def displayOutput():
@@ -16,6 +18,18 @@ def displayOutput():
         message_line.style.textAlign = "center"
         message_line.innerHTML = message
         output_column.appendChild(message_line)
+
+async def pause_aware_sleep(seconds: float):
+    chunk = 0.2
+    remaining = float(seconds)
+    while remaining > 0:
+        if gamePaused:
+            await asyncio.sleep(0.1)
+            continue
+        wait = chunk if remaining >= chunk else remaining
+        await asyncio.sleep(wait)
+        remaining -= wait
+
 
 class OutputMessage:
     def __init__(self):
@@ -52,3 +66,19 @@ displayedTasks = []
 displayedCrafts = []
 
 
+def toggle_pause(event=None):
+    global gamePaused
+    gamePaused = not gamePaused
+    btn = document.querySelector("#pause-button")
+    if btn is not None:
+        btn.textContent = "Resume" if gamePaused else "Pause"
+    outputMessage.append("Game paused." if gamePaused else "Game resumed.")
+    buttons = document.querySelectorAll("button")
+    for b in buttons:
+        if b.get("id") == "pause-button":
+            continue
+        b.disabled = gamePaused
+
+pause_btn = document.querySelector("#pause-button")
+if pause_btn is not None:
+    pause_btn.onclick = toggle_pause

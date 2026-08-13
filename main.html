@@ -5,15 +5,59 @@
 <title>Raft World</title>
 <style>
 .grid-container {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 20px;
   align-items: start;
 }
+
+#pause-button {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  display: inline-block;
+  width: auto;
+  margin: 0;
+  padding: 4px 8px;
+  min-height: unset;
+  background-color: rgb(165, 164, 164);
+  border: 1px solid #000;
+  border-radius: 6px;
+  font-size: 12px;
+}
 .boxed {
   border: 2px solid black;
   padding: 10px;
 }
+#stats-pause {
+  display: flex;
+  align-items: center;
+  gap: 1%;
+}
+
+#stats-pause h3 {
+  margin: 0;
+}
+
+/* keep single #pause-button definition above; this duplicate block removed */
+
+/*display:block;
+  border-radius: 15px !important;
+  margin-left: 0;
+  margin-right: auto;
+  top: 10px;
+  right: 10px;
+  border-radius: 0px;
+
+  width: 23%;
+  height: 22px;         
+  padding: 0px 5px;
+  font-size: 11px;
+  min-height: unset;
+  */
+
+
 button {  
   border-radius: 100px;
   width: 65%;
@@ -33,10 +77,6 @@ button:focus {
 }
 button:active {
   transform: translateY(0);
-}
-button:disabled {
-  opacity: 0.7;
-  cursor: progress;
 }
 .in-progress {
   background-color: rgb(0, 255, 0);
@@ -189,8 +229,9 @@ button:disabled {
 </head>
 <body>
 <div class="grid-container" style="height: 100vh;">
-    <div class="column" id="needs-col" style="height:100vh">
-    <h3 style="text-align: center;">Stats</h3>
+  <button id="pause-button">Pause</button>
+  <div class="column" id="needs-col" style="height:100vh">
+  <h3 style="text-align: center;">Stats</h3>
     <p id="time-display" style="text-align: center;">Time: 00:00</p>
     <div id="location" style="text-align: center;">
       <p id="location-text">Location: Freshwater Ocean</p>
