@@ -62,10 +62,13 @@ craftingShown = False
 eventNumber = 0
 merchantUnlock = False
 
+metalUnlock = False
+
 displayedResources = []
 displayedTasks = []
 displayedCrafts = []
 
+countdown = 0
 
 @when("click", "#pause-button")
 def toggle_pause(event):

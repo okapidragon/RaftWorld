@@ -22,10 +22,12 @@ def initializeSeaweed():
 def cut(player, taskName):
     player.health -= 15
     imp.outputMessage.append(f"You cut yourself while {taskName}.", color = "Red")
+    player.setHealth()
 
 def swimTrouble(player, taskName):
     player.health -= 12
     imp.outputMessage.append(f"You spent too long in the water during {taskName}.", color = "Red")
+    player.setHealth()
 
 class Task:
     all = []

@@ -10,6 +10,7 @@ imp.displayedResources.append(inv.Item("Fishing Rod", 1, breakable=True, breakCh
 inv.Item("Paddle", 0, breakable=True, breakChance=0.01)
 inv.Item("Hammer", 0, breakable = True, breakChance = 0.04)
 inv.Item("Spear", 0, breakable = True, breakChance = 0.05)
+inv.Item("Anchor", 0)
 
 #Resources
 inv.Resource("Fish", 0, food = True, hungerScore=100)
@@ -92,6 +93,12 @@ task.Task(name = "Craft Spear",
     time = 3,
     reward = {1: ({inv.lookup("Spear"): 1}, "Succesful spear craft!")}, craft=True
 )
+task.Task(name = "Craft Anchor",
+    cost = {inv.lookup("Metal"): 15},
+    neededItems=[],
+    time = 3,
+    reward = {1: ({inv.lookup("Anchor"): 1}, "Succesful anchor craft!")}, craft=True
+)
 
 
 #All events down here!
@@ -153,7 +160,7 @@ ev.Event("Boat Starts Decay", minCooldown=140, screenPopup=boatDecayPopup ,weigh
 
 #School of Fish
 
-schoolOfFishPopup = ev.Popup("A school of fish swims below your boat... (Fishing Odds Bettered)", [], duration = 18)
+schoolOfFishPopup = ev.Popup("A school of fish swims below your boat... (Fishing Odds Bettered)", [], duration = 25)
 
 def fishWeight():
     return 0.005 * ev.lookup("School of Fish").cooldown
@@ -177,7 +184,10 @@ ev.Event("School of Fish", 180, schoolOfFishPopup, fishWeight, automaticFunc=fis
 
 #Large Wave
 
-largeWavePopup = ev.Popup("A large wave hits your raft. Your raft speeds up decay significantly.", [], duration = 8)
+dropAnchor = task.Task(name = "Drop Anchor", cost ={}, neededItems=[inv.lookup("Anchor")], time = 2, 
+                       reward = {1: ({}, "You dropped your anchor and avoided catastrophe.")})
+
+largeWavePopup = ev.Popup("A large wave hits your raft. Your raft speeds up decay significantly.", [dropAnchor], duration = 10)
 
 def largeWaveWeight():
     if pl.Boat.all[0].decay > 5 and imp.boatDecay:
@@ -192,7 +202,7 @@ def largeWaveFunc():
     imp.outputMessage.append("A large wave hits your raft. Your raft speeds up decays significantly.", color = "Red")
 
 
-ev.Event("Large Wave", 250, largeWavePopup, largeWaveWeight, automaticFunc=largeWaveFunc, timer = False)
+ev.Event("Large Wave", 250, largeWavePopup, largeWaveWeight, stopFunc=largeWaveFunc, timer = False)
 
 #Shipwreck 1
 
@@ -275,12 +285,15 @@ merchantPopup = ev.Popup("A merchant boat appears beside you. They do not want t
 def merchantWeight():
     return 1 + (merchantEvent.cooldown - merchantEvent.minCooldown) * 0.004
 
-merchantEvent = ev.Event("Merchant", minCooldown = 150, screenPopup=merchantPopup, weightFunc=merchantWeight, cooldown = 0, multipleTasks=True)
+def merchantEnd():
+    imp.metalUnlock = True
+
+merchantEvent = ev.Event("Merchant", minCooldown = 150, screenPopup=merchantPopup, weightFunc=merchantWeight, cooldown = 0, multipleTasks=True, stopFunc = merchantEnd)
 
 #Shark Event
 
 def sharkLoss():
-    imp.outputMessage("Lost the battle and got bitten by shark.")
+    imp.outputMessage.append("Lost the battle and got bitten by shark.")
     pl.Player.all[0].health -= 50
     pl.setHealthBarProgress(pl.Player.all[0].health)
 
@@ -298,14 +311,55 @@ spearTheShark = task.Task(name = "Spear the Shark", cost = {}, neededItems = [in
 
 paddleAway = task.Task(name = "Paddle Away", cost = {}, neededItems = [inv.lookup("Paddle")], time = 5, reward = {})
 
-sharkPopup = ev.Popup(text = "You notice a shark below you...", optionTasks = [spearTheShark, paddleAway])
+sharkPopup = ev.Popup(text = "You notice a shark below you...", optionTasks = [spearTheShark, paddleAway], duration = 20)
 
 def sharkWeight():
     return 0.65 + (sharkEvent.cooldown - sharkEvent.minCooldown) * 0.004
 
 sharkEvent = ev.Event(name = "Shark", minCooldown = 250, screenPopup=sharkPopup, weightFunc=sharkWeight, cooldown = 0, stopFunc = sharkLoss)
 
+#Raft Breaking
+hammerIt = task.Task(name = "Fix With Hammer", cost = {}, neededItems=[inv.lookup("Hammer")], time = 2, reward = {})
+
+def fall():
+    wood = inv.lookup("Wood")
+
+    ogWood = wood.quantity
+
+    wood.quantity = wood.quantity // 2
+
+    imp.outputMessage.append(f"You lost {ogWood - wood.quantity} wood.")
 
 
+    
+
+inventoryFallingPopup = ev.Popup(text = "Some of your raft breaks off, you can fix it but your items will fall...", optionTasks = [hammerIt], duration = 15)
+
+def raftBreakWeight():
+    return 0.65 + (inventoryFallingEvent.cooldown - inventoryFallingEvent.minCooldown) * 0.004 
 
 
+inventoryFallingEvent = ev.Event(name = "Raft Break", minCooldown = 300, screenPopup=inventoryFallingPopup, weightFunc= raftBreakWeight,cooldown = 150, stopFunc = fall)
+
+#Craft Event
+def rewardCrate():
+    metalAdd = imp.random.randint(1, 4)
+
+    inv.lookup("Metal").add(metalAdd)
+
+    imp.metalUnlock = True
+
+    woodAdd = imp.random.randint(2, 9)
+
+    inv.lookup("Wood").add(woodAdd)
+
+    imp.outputMessage.append(f"The crate had {woodAdd} wood and {metalAdd} metal.")
+
+openCrate = task.Task(name = "Hammer Open", cost = {}, neededItems=[inv.lookup("Hammer"), inv.lookup("Paddle")], time = 10, reward = rewardCrate)
+
+cratePopup = ev.Popup(text = "A lone crate floats by near the raft.", optionTasks = [openCrate, declineTask], duration = 15)
+
+def crateWeight():
+    return 0.65 + (crateEvent.cooldown - crateEvent.minCooldown) * 0.003 
+
+crateEvent = ev.Event(name = "Crate", minCooldown = 300, cooldown = 150, screenPopup = cratePopup, weightFunc=crateWeight)
