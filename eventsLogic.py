@@ -15,13 +15,14 @@ class Popup:
 class Event:
     all = []
 
-    def __init__(self, name, minCooldown, screenPopup, weightFunc, cooldown = 60, automaticFunc = None, timer = True):
+    def __init__(self, name, minCooldown, screenPopup, weightFunc, cooldown = 60, automaticFunc = None, timer = True, multipleTasks = False):
         self.name = name
         self.minCooldown = minCooldown
         self.screenPopup = screenPopup
         self.cooldown = cooldown
         self.weightFunc = weightFunc
         self.timer = timer
+        self.multipleTasks = multipleTasks
 
         if not callable(weightFunc):
             imp.outputMessage.append(f"{self.name} event weightFunc is not callable!")
@@ -106,7 +107,7 @@ class Event:
 
         happened = await task.runTask(selected_task, selected_button)
 
-        if happened:
+        if happened and not self.multipleTasks:
             self.timerTask.cancel()
             imp.asyncio.create_task(stopEvent(self))
 

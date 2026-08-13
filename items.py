@@ -8,6 +8,7 @@ import playerLogic as pl
 #Items
 imp.displayedResources.append(inv.Item("Fishing Rod", 1, breakable=True, breakChance=0.07))
 inv.Item("Paddle", 0, breakable=True, breakChance=0.01)
+inv.Item("Hammer", 0, breakable = True, breakChance = 0.04)
 
 #Resources
 inv.Resource("Fish", 0, food = True, hungerScore=100)
@@ -15,6 +16,8 @@ inv.Resource("Seaweed", 0, food = True, hungerScore = 8, eatQuantity = 5)
 inv.Resource("Fishing Reel", 0)
 inv.Resource("Wood", 0)
 inv.Resource("Gold", 0)
+inv.Resource("Metal", 0)
+
 
 
 #Fishing
@@ -238,6 +241,34 @@ shipwreckDecisionEvent = ev.Event(name = "Shipwreck Decision",
                                   minCooldown = 0,
                                   screenPopup=shipwreckDecisionPopup,
                                   weightFunc=nullWeight)
+
+#Traveling Merchant
+
+fishTrade = task.Task("Get 7 Gold",
+                      cost = {inv.lookup("Fish"): 1},
+                      neededItems=[],
+                      time = 0,
+                      reward = {1: ({inv.lookup("Gold"): 7}, "Traded for 7 Gold")})
+
+metalTrade = task.Task("Get 1 Metal",
+                      cost = {inv.lookup("Gold"): 15},
+                      neededItems=[],
+                      time = 0,
+                      reward = {1: ({inv.lookup("Metal"): 1}, "Traded for 1 Metal")})
+
+hammerTrade = task.Task("Get 1 Hammer",
+                      cost = {inv.lookup("Gold"): 150},
+                      neededItems=[],
+                      time = 0,
+                      reward = {1: ({inv.lookup("Hammer"): 1}, "Traded for 1 Hammer")})
+
+merchantPopup = ev.Popup("A merchant boat appears beside you. They do not want to stay but may trade with you...",
+                         optionTasks = [fishTrade, metalTrade, hammerTrade])
+
+def merchantWeight():
+    return 1
+
+merchantEvent = ev.Event("Merchant", minCooldown = 150, screenPopup=merchantPopup, weightFunc=merchantWeight, cooldown = 0, multipleTasks=True)
 
 
 
