@@ -71,6 +71,7 @@ class Event:
                 for item in taskItem.cost.keys():
                     cost_line = imp.document.createElement("p")
                     cost_line.style.textAlign = "center"
+                    cost_line.id = f"{item}-button"
                     cost_line.textContent = f"Cost: {taskItem.cost[item]} {item.name}"
                     events_column.appendChild(cost_line)
 
@@ -170,15 +171,7 @@ async def stopEvent(event):
     imp.hideSomething("#events-div")
     
     events_column = imp.document.querySelector("#events-div")
-    for event_button in events_column.querySelectorAll(".event-button"):
-        event_button.remove()
-
-    for event_message in events_column.querySelectorAll(".event-message"):
-        event_message.remove()
-
-    for event_timer in events_column.querySelectorAll(".event-timer"):
-        event_timer.remove()
-
+    events_column.innerHTML = ""
     event.cooldown = 0
     imp.currentEvent = None
 
