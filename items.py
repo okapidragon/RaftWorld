@@ -194,7 +194,7 @@ async def shipwreckExploreFunc():
 
     await ev.stopEvent(shipwreckEvent)
 
-    await imp.asyncio.sleep(1)
+    await imp.pause_aware_sleep(1)
 
     imp.asyncio.create_task(shipwreckDecisionEvent.execute())
 
