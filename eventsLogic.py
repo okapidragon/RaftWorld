@@ -15,7 +15,7 @@ class Popup:
 class Event:
     all = []
 
-    def __init__(self, name, minCooldown, screenPopup, weightFunc, cooldown = 60, automaticFunc = None, timer = True, multipleTasks = False):
+    def __init__(self, name, minCooldown, screenPopup, weightFunc, cooldown = 60, automaticFunc = None, timer = True, multipleTasks = False, stopFunc = None):
         self.name = name
         self.minCooldown = minCooldown
         self.screenPopup = screenPopup
@@ -23,6 +23,7 @@ class Event:
         self.weightFunc = weightFunc
         self.timer = timer
         self.multipleTasks = multipleTasks
+        self.stopFunc = stopFunc
 
         if not callable(weightFunc):
             imp.outputMessage.append(f"{self.name} event weightFunc is not callable!")
@@ -181,6 +182,9 @@ async def stopEvent(event):
 
     event.cooldown = 0
     imp.currentEvent = None
+
+    if event.stopFunc is not None:
+        event.stopFunc()
 
     if not imp.boatUnlock:
         await imp.pause_aware_sleep(3)

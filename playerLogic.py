@@ -179,13 +179,13 @@ class Player:
         inv.inventoryUpdate()
 
     def hungerFrame(self):
+        setHealthBarProgress(self.health)
+
         if not (inv.lookup("Fish") in imp.displayedResources):
             setHungerBarProgress(self.hunger)
             return
 
         self.hunger -= 1.3
-
-        setHealthBarProgress(self.health)
 
         if self.hunger <= 0:
             for food in inv.Resource.allFood:
