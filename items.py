@@ -99,7 +99,7 @@ def woodWeight():
     if not imp.boatUnlock:
         return 1_000_000_000_000
 
-    return 2
+    return 1.5
 
 
 ev.Event("Wood Floats By", minCooldown=100, screenPopup=woodPopUp, weightFunc = woodWeight)
@@ -113,7 +113,7 @@ stringPopUp = ev.Popup('A fishing reel appears in the water...',
 optionTasks=[stringAcceptTask, declineTask])
 
 def reelWeight():
-    return 2
+    return 1.5
 
 ev.Event("String Floats By", minCooldown=100, screenPopup=stringPopUp, weightFunc = reelWeight)
 
@@ -175,7 +175,7 @@ def largeWaveWeight():
 
 
 def largeWaveFunc():
-    pl.Boat.all[0].decaySpeed += 2
+    pl.Boat.all[0].decaySpeed += 1.25
     pl.setDecayBarProgress(pl.Boat.all[0].decay)
     imp.outputMessage.append("A large wave hits your raft. Your raft speeds up decays significantly.", color = "Red")
 
