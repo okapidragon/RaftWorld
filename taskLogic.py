@@ -110,6 +110,9 @@ class Task:
                             imp.displayedResources.append(rewardItem)
                             craftButtonUpdate()
 
+                        if rewardItem == inv.lookup("Metal"):
+                            imp.metalUnlock = True
+
                     imp.outputMessage.append(rewardItems[1])  # Display the dialogue associated with the reward
                     inv.inventoryUpdate()
                     return True
