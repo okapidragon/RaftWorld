@@ -8,12 +8,16 @@ import playerLogic as pl
 #Items
 imp.displayedResources.append(inv.Item("Fishing Rod", 1, breakable=True, breakChance=0.07))
 inv.Item("Paddle", 0, breakable=True, breakChance=0.01)
+inv.Item("Hammer", 0, breakable = True, breakChance = 0.04)
 
 #Resources
 inv.Resource("Fish", 0, food = True, hungerScore=100)
 inv.Resource("Seaweed", 0, food = True, hungerScore = 8, eatQuantity = 5)
 inv.Resource("Fishing Reel", 0)
 inv.Resource("Wood", 0)
+inv.Resource("Gold", 0)
+inv.Resource("Metal", 0)
+
 
 
 #Fishing
@@ -85,7 +89,8 @@ task.Task(name = "Craft Fishing Rod",
 
 #All events down here!
 declineTask = task.Task("Decline", {}, [], 0, {1: ({}, "Declined Event")})
-
+def nullWeight():
+    return 0
 
 #Wood floating by event!
 woodAcceptTask = task.Task("Paddle to it", {}, [inv.lookup("Paddle")], 1, {
@@ -99,7 +104,7 @@ def woodWeight():
     if not imp.boatUnlock:
         return 1_000_000_000_000
 
-    return 2
+    return 1.5
 
 
 ev.Event("Wood Floats By", minCooldown=100, screenPopup=woodPopUp, weightFunc = woodWeight)
@@ -113,7 +118,7 @@ stringPopUp = ev.Popup('A fishing reel appears in the water...',
 optionTasks=[stringAcceptTask, declineTask])
 
 def reelWeight():
-    return 2
+    return 1.5
 
 ev.Event("String Floats By", minCooldown=100, screenPopup=stringPopUp, weightFunc = reelWeight)
 
@@ -132,10 +137,10 @@ def startBoatDecay():
 boatDecayPopup = ev.Popup('Your boat starts to decay, you must manage this by cleaning and reinforcing the boat.', [], duration = 15)
 
 def decayWeight():
-    if imp.boatDecay:
+    if imp.boatDecay or imp.eventNumber <= 4:
         return 0
 
-    return 10
+    return 100_000
 
 ev.Event("Boat Starts Decay", minCooldown=140, screenPopup=boatDecayPopup ,weightFunc = decayWeight, automaticFunc=startBoatDecay, timer=False)
 
@@ -175,12 +180,95 @@ def largeWaveWeight():
 
 
 def largeWaveFunc():
-    pl.Boat.all[0].decaySpeed += 2
+    pl.Boat.all[0].decaySpeed += 1.25
     pl.setDecayBarProgress(pl.Boat.all[0].decay)
     imp.outputMessage.append("A large wave hits your raft. Your raft speeds up decays significantly.", color = "Red")
 
 
-
 ev.Event("Large Wave", 250, largeWavePopup, largeWaveWeight, automaticFunc=largeWaveFunc, timer = False)
+
+#Shipwreck 1
+
+async def shipwreckExploreFunc():
+    imp.outputMessage.append("You swim down to the shipwreck. What comes next must be done quickly!", color = "Red")
+
+    await ev.stopEvent(shipwreckEvent)
+
+    await imp.asyncio.sleep(1)
+
+    imp.asyncio.create_task(shipwreckDecisionEvent.execute())
+
+paddleAndSwimDown = task.Task(name = "Explore It",
+                              cost = {},
+                             neededItems=[inv.lookup("Paddle")],
+                             time  = 2,
+                             reward = shipwreckExploreFunc,
+                             swimTroubleChance=0.4)
+
+shipwreckPopup = ev.Popup("You see an old abondoned shipwreck off in the distance...", 
+                          optionTasks=[paddleAndSwimDown, declineTask])
+
+def shipwreckWeight():
+    if not imp.merchantUnlock:
+        return 0.4
+
+    return 0.6
+
+shipwreckEvent = ev.Event(name = "Shipwreck", minCooldown = 220, screenPopup=shipwreckPopup, weightFunc=shipwreckWeight)
+# Shipwreck 2
+goldSalvage = task.Task("Collect Treasure",
+                        cost = {},
+                        neededItems = [],
+                        time = 2,
+                        reward = {1: ({inv.lookup("Gold"): 100}, "You salvaged 100 gold from the chest.")},
+                        swimTroubleChance=0.2)
+
+
+shipwreckWoodSalvage = task.Task("Salvage Wood",
+                        cost = {},
+                        neededItems = [],
+                        time = 2,
+                        reward = {1: ({inv.lookup("Wood"): 18}, "You salvaged 18 wood from the chest.")},
+                        swimTroubleChance=0.2)
+
+
+
+shipwreckDecisionPopup = ev.Popup("You quickly swim down to the shipwreck. You see a treasure chest.", optionTasks=[goldSalvage, shipwreckWoodSalvage], duration = 7)
+
+
+
+shipwreckDecisionEvent = ev.Event(name = "Shipwreck Decision", 
+                                  minCooldown = 0,
+                                  screenPopup=shipwreckDecisionPopup,
+                                  weightFunc=nullWeight)
+
+#Traveling Merchant
+
+fishTrade = task.Task("Get 7 Gold",
+                      cost = {inv.lookup("Fish"): 1},
+                      neededItems=[],
+                      time = 0,
+                      reward = {1: ({inv.lookup("Gold"): 7}, "Traded for 7 Gold")})
+
+metalTrade = task.Task("Get 1 Metal",
+                      cost = {inv.lookup("Gold"): 15},
+                      neededItems=[],
+                      time = 0,
+                      reward = {1: ({inv.lookup("Metal"): 1}, "Traded for 1 Metal")})
+
+hammerTrade = task.Task("Get 1 Hammer",
+                      cost = {inv.lookup("Gold"): 150},
+                      neededItems=[],
+                      time = 0,
+                      reward = {1: ({inv.lookup("Hammer"): 1}, "Traded for 1 Hammer")})
+
+merchantPopup = ev.Popup("A merchant boat appears beside you. They do not want to stay but may trade with you...",
+                         optionTasks = [fishTrade, metalTrade, hammerTrade])
+
+def merchantWeight():
+    return 1
+
+merchantEvent = ev.Event("Merchant", minCooldown = 150, screenPopup=merchantPopup, weightFunc=merchantWeight, cooldown = 0, multipleTasks=True)
+
 
 

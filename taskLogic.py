@@ -25,7 +25,7 @@ def cut(player, taskName):
 
 def swimTrouble(player, taskName):
     player.health -= 12
-    imp.outputMessage.append(f"You spent too long in the wat {taskName}.", color = "Red")
+    imp.outputMessage.append(f"You spent too long in the water during {taskName}.", color = "Red")
 
 class Task:
     all = []

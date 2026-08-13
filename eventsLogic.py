@@ -15,13 +15,14 @@ class Popup:
 class Event:
     all = []
 
-    def __init__(self, name, minCooldown, screenPopup, weightFunc, cooldown = 60, automaticFunc = None, timer = True):
+    def __init__(self, name, minCooldown, screenPopup, weightFunc, cooldown = 60, automaticFunc = None, timer = True, multipleTasks = False):
         self.name = name
         self.minCooldown = minCooldown
         self.screenPopup = screenPopup
         self.cooldown = cooldown
         self.weightFunc = weightFunc
         self.timer = timer
+        self.multipleTasks = multipleTasks
 
         if not callable(weightFunc):
             imp.outputMessage.append(f"{self.name} event weightFunc is not callable!")
@@ -31,6 +32,7 @@ class Event:
 
     #Execute finishes but eventTimer conitnues and chooseOption runs on button click.
     async def execute(self):
+        imp.eventNumber += 1
         imp.showSomething("#events-div")
         imp.currentEvent = self
 
@@ -105,7 +107,7 @@ class Event:
 
         happened = await task.runTask(selected_task, selected_button)
 
-        if happened:
+        if happened and not self.multipleTasks:
             self.timerTask.cancel()
             imp.asyncio.create_task(stopEvent(self))
 
@@ -135,6 +137,9 @@ def eventUpdate(dayNumber):
 
         for eventItem in eligibleEvents:
             weightedEventDict[eventItem] = eventItem.weightFunc()
+
+        if sum(weightedEventDict.values()) <= 0:
+            return
 
         totalWeight = sum(weightedEventDict.values())
 

@@ -60,6 +60,8 @@ boatUnlock = False
 boatDecay = False
 boatDecayShown = False
 craftingShown = False
+eventNumber = 0
+merchantUnlock = False
 
 displayedResources = []
 displayedTasks = []
