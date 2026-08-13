@@ -106,7 +106,7 @@ class Task:
                         rewardItem.add(amount) 
                         if not (rewardItem in imp.displayedResources):
                             imp.displayedResources.append(rewardItem)
-                            imp.asyncio.create_Task.craftButtonUpdate()
+                            craftButtonUpdate()
 
                     imp.outputMessage.append(rewardItems[1])  # Display the dialogue associated with the reward
                     inv.inventoryUpdate()
