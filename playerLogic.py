@@ -179,7 +179,6 @@ class Player:
         inv.inventoryUpdate()
 
     def hungerFrame(self):
-        setHealthBarProgress(self.health)
 
         if not (inv.lookup("Fish") in imp.displayedResources) and imp.countdown <= 30:
             setHungerBarProgress(self.hunger)
@@ -212,6 +211,10 @@ class Player:
             self.health -= 2.5
             setHealthBarProgress(self.health)
 
+    def setHealth(self):
+        setHealthBarProgress(self.health)
+
+    
 class gameTime:
     all = []
 
