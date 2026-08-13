@@ -9,6 +9,7 @@ import playerLogic as pl
 imp.displayedResources.append(inv.Item("Fishing Rod", 1, breakable=True, breakChance=0.07))
 inv.Item("Paddle", 0, breakable=True, breakChance=0.01)
 inv.Item("Hammer", 0, breakable = True, breakChance = 0.04)
+inv.Item("Spear", 0, breakable = True, breakChance = 0.05)
 
 #Resources
 inv.Resource("Fish", 0, food = True, hungerScore=100)
@@ -84,6 +85,12 @@ task.Task(name = "Craft Fishing Rod",
     neededItems=[],
     time = 3,
     reward = {1: ({inv.lookup("Fishing Rod"): 1}, "Succesful fishing rod craft!")}, craft=True
+)
+task.Task(name = "Craft Spear",
+    cost = {inv.lookup("Wood"): 10, inv.lookup("Metal"): 4},
+    neededItems=[],
+    time = 3,
+    reward = {1: ({inv.lookup("Spear"): 1}, "Succesful spear craft!")}, craft=True
 )
 
 
@@ -220,7 +227,7 @@ goldSalvage = task.Task("Collect Treasure",
                         cost = {},
                         neededItems = [],
                         time = 2,
-                        reward = {1: ({inv.lookup("Gold"): 100}, "You salvaged 100 gold from the chest.")},
+                        reward = {1: ({inv.lookup("Gold"): 40}, "You salvaged 40 gold from the chest.")},
                         swimTroubleChance=0.2)
 
 
@@ -228,7 +235,7 @@ shipwreckWoodSalvage = task.Task("Salvage Wood",
                         cost = {},
                         neededItems = [],
                         time = 2,
-                        reward = {1: ({inv.lookup("Wood"): 18}, "You salvaged 18 wood from the chest.")},
+                        reward = {1: ({inv.lookup("Wood"): 15}, "You salvaged 15 wood from the chest.")},
                         swimTroubleChance=0.2)
 
 
@@ -269,6 +276,36 @@ def merchantWeight():
     return 1 + (merchantEvent.cooldown - merchantEvent.minCooldown) * 0.004
 
 merchantEvent = ev.Event("Merchant", minCooldown = 150, screenPopup=merchantPopup, weightFunc=merchantWeight, cooldown = 0, multipleTasks=True)
+
+#Shark Event
+
+def sharkLoss():
+    imp.outputMessage("Lost the battle and got bitten by shark.")
+    pl.Player.all[0].health -= 50
+    pl.setHealthBarProgress(pl.Player.all[0].health)
+
+def spearFunc():
+    success = imp.random.random()
+
+    if success < 0.75:
+        imp.outputMessage("Won the battle with the shark and gained 8 Fish")
+        inv.lookup("Fish").add(8)
+    else:
+        sharkLoss()
+
+
+spearTheShark = task.Task(name = "Spear the Shark", cost = {}, neededItems = [inv.lookup("Spear")], time = 5, reward = spearFunc, swimTroubleChance = 0.1)
+
+paddleAway = task.Task(name = "Paddle Away", cost = {}, neededItems = [inv.lookup("Paddle")], time = 5, reward = {})
+
+sharkPopup = ev.Popup(text = "You notice a shark below you...", optionTasks = [spearTheShark, paddleAway])
+
+def sharkWeight():
+    return 0.65 + (sharkEvent.cooldown - sharkEvent.minCooldown) * 0.004
+
+sharkEvent = ev.Event(name = "Shark", minCooldown = 250, screenPopup=sharkPopup, weightFunc=sharkWeight, cooldown = 0, stopFunc = sharkLoss)
+
+
 
 
 

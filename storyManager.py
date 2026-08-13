@@ -33,7 +33,7 @@ async def timeLoop():
             continue
         gameTime.advance(3)
         pl.displayTime(gameTime)
-        
+
         await imp.pause_aware_sleep(0.5)
 
 async def eventLoop():
