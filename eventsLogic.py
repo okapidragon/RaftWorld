@@ -69,10 +69,10 @@ class Event:
             )
             events_column.appendChild(task_button)
             if taskItem.cost:
-                for cost in taskItem.cost:
+                for item in taskItem.cost.keys():
                     cost_line = imp.document.createElement("p")
                     cost_line.style.textAlign = "center"
-                    cost_line.textContent = f"Cost: {cost.quantity} {cost.name}"
+                    cost_line.textContent = f"Cost: {taskItem.cost[item]} {item.name}"
                     events_column.appendChild(cost_line)
 
 
