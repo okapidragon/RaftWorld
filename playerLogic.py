@@ -185,6 +185,11 @@ class Player:
             imp.countdown += 1
             return
 
+        if not (inv.lookup("Spear") in imp.displayedCrafts) and imp.metalUnlock:
+            imp.displayedCrafts.append(task.lookup("Craft Spear"))
+            imp.displayedCrafts.append(task.lookup("Craft Anchor"))
+            task.craftButtonUpdate()
+
         imp.outputMessage("You're hunger will started to deplete", color = "Green")
         self.hunger -= 1.3
 

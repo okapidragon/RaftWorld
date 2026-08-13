@@ -10,6 +10,7 @@ imp.displayedResources.append(inv.Item("Fishing Rod", 1, breakable=True, breakCh
 inv.Item("Paddle", 0, breakable=True, breakChance=0.01)
 inv.Item("Hammer", 0, breakable = True, breakChance = 0.04)
 inv.Item("Spear", 0, breakable = True, breakChance = 0.05)
+inv.Item("Anchor", 0)
 
 #Resources
 inv.Resource("Fish", 0, food = True, hungerScore=100)
@@ -91,6 +92,12 @@ task.Task(name = "Craft Spear",
     neededItems=[],
     time = 3,
     reward = {1: ({inv.lookup("Spear"): 1}, "Succesful spear craft!")}, craft=True
+)
+task.Task(name = "Craft Anchor",
+    cost = {inv.lookup("Metal"): 15},
+    neededItems=[],
+    time = 3,
+    reward = {1: ({inv.lookup("Anchor"): 1}, "Succesful anchor craft!")}, craft=True
 )
 
 
@@ -275,7 +282,10 @@ merchantPopup = ev.Popup("A merchant boat appears beside you. They do not want t
 def merchantWeight():
     return 1 + (merchantEvent.cooldown - merchantEvent.minCooldown) * 0.004
 
-merchantEvent = ev.Event("Merchant", minCooldown = 150, screenPopup=merchantPopup, weightFunc=merchantWeight, cooldown = 0, multipleTasks=True)
+def merchantEnd():
+    imp.metalUnlock = True
+
+merchantEvent = ev.Event("Merchant", minCooldown = 150, screenPopup=merchantPopup, weightFunc=merchantWeight, cooldown = 0, multipleTasks=True, stopFunc = merchantEnd)
 
 #Shark Event
 
@@ -333,6 +343,8 @@ def rewardCrate():
     metalAdd = imp.random.randint(1, 4)
 
     inv.lookup("Metal").add(metalAdd)
+
+    imp.metalUnlock = True
 
     woodAdd = imp.random.randint(2, 9)
 

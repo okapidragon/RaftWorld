@@ -62,6 +62,8 @@ craftingShown = False
 eventNumber = 0
 merchantUnlock = False
 
+metalUnlock = False
+
 displayedResources = []
 displayedTasks = []
 displayedCrafts = []
