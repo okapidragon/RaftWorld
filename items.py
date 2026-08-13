@@ -234,7 +234,7 @@ goldSalvage = task.Task("Collect Treasure",
                         cost = {},
                         neededItems = [],
                         time = 2,
-                        reward = {1: ({inv.lookup("Gold"): 40}, "You salvaged 40 gold from the chest.")},
+                        reward = {1: ({inv.lookup("Gold"): 50}, "You salvaged 50 gold from the chest.")},
                         swimTroubleChance=0.2)
 
 

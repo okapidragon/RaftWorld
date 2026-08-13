@@ -100,7 +100,13 @@ class Event:
         # Time ran out
         if imp.currentEvent is self:
             imp.outputMessage.append("The event is now over!")
+
+            if self.stopFunc is not None:
+                self.stopFunc()
+
             imp.asyncio.create_task(stopEvent(self))
+
+            
 
     async def chooseOption(self, selected_task, selected_button):
     # Make sure the event hasn't already timed out
@@ -112,6 +118,8 @@ class Event:
         if happened and not self.multipleTasks:
             self.timerTask.cancel()
             imp.asyncio.create_task(stopEvent(self))
+
+            
 
 
 def eventUpdate(dayNumber):
@@ -175,9 +183,6 @@ async def stopEvent(event):
     events_column.innerHTML = ""
     event.cooldown = 0
     imp.currentEvent = None
-
-    if event.stopFunc is not None:
-        event.stopFunc()
 
     if not imp.boatUnlock:
         await imp.pause_aware_sleep(3)
