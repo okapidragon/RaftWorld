@@ -280,7 +280,7 @@ merchantEvent = ev.Event("Merchant", minCooldown = 150, screenPopup=merchantPopu
 #Shark Event
 
 def sharkLoss():
-    imp.outputMessage("Lost the battle and got bitten by shark.")
+    imp.outputMessage.append("Lost the battle and got bitten by shark.")
     pl.Player.all[0].health -= 50
     pl.setHealthBarProgress(pl.Player.all[0].health)
 
@@ -298,14 +298,34 @@ spearTheShark = task.Task(name = "Spear the Shark", cost = {}, neededItems = [in
 
 paddleAway = task.Task(name = "Paddle Away", cost = {}, neededItems = [inv.lookup("Paddle")], time = 5, reward = {})
 
-sharkPopup = ev.Popup(text = "You notice a shark below you...", optionTasks = [spearTheShark, paddleAway])
+sharkPopup = ev.Popup(text = "You notice a shark below you...", optionTasks = [spearTheShark, paddleAway], duration = 20)
 
 def sharkWeight():
     return 0.65 + (sharkEvent.cooldown - sharkEvent.minCooldown) * 0.004
 
 sharkEvent = ev.Event(name = "Shark", minCooldown = 250, screenPopup=sharkPopup, weightFunc=sharkWeight, cooldown = 0, stopFunc = sharkLoss)
 
+#Raft Breaking
+
+hammerIt = task.Task(name = "Fix With Hammer", cost = {}, neededItems=[inv.lookup("Hammer")], time = 2, reward = {})
+
+def fall():
+    wood = inv.lookup("Wood")
+
+    ogWood = wood.quantity
+
+    wood.quantity = wood.quantity // 2
+
+    imp.outputMessage.append(f"You lost {ogWood - wood.quantity} wood.")
 
 
+    
 
+inventoryFallingPopup = ev.Popup(text = "Some of your raft breaks off, you can fix it but your items will fall...", optionTasks = [hammerIt], duration = 15)
+
+def raftBreakWeight():
+    return 0.65 + (inventoryFallingEvent.cooldown - inventoryFallingEvent.minCooldown) * 0.004 
+
+
+inventoryFallingEvent = ev.Event(name = "Raft Break", minCooldown = 300, screenPopup=inventoryFallingPopup, weightFunc= raftBreakWeight,cooldown = 150, stopFunc = fall)
 
