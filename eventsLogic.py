@@ -92,7 +92,7 @@ class Event:
                 timer.style.textAlign = "center"
                 timer.textContent = f"Time remaining: {remaining}"
                 timer_div.appendChild(timer)
-            await imp.asyncio.sleep(1)
+            await imp.sleep(1)
 
         # Time ran out
         if imp.currentEvent is self:
@@ -188,7 +188,7 @@ async def stopEvent(event):
         if paddle_craft is not None:
             imp.displayedCrafts.append(paddle_craft)
 
-        await imp.asyncio.sleep(3)
+        await imp.sleep(3)
         
         task.craftButtonUpdate()
 

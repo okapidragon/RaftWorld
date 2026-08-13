@@ -80,7 +80,7 @@ class Task:
         for resource, amount in self.cost.items():
             resource.remove(amount)
 
-        await imp.asyncio.sleep(self.time)
+        await imp.sleep(self.time)
 
         if imp.random.random() < self.cutChance:
             cut(player, self.name)
