@@ -77,7 +77,7 @@ def toggle_pause(event=None):
     outputMessage.append("Game paused." if gamePaused else "Game resumed.")
     buttons = document.querySelectorAll("button")
     for b in buttons:
-        if b.get("id") == "pause-button":
+        if getattr(b, "id", None) == "pause-button":
             continue
         b.disabled = gamePaused
 
