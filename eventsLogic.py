@@ -31,6 +31,7 @@ class Event:
 
     #Execute finishes but eventTimer conitnues and chooseOption runs on button click.
     async def execute(self):
+        imp.eventNumber += 1
         imp.showSomething("#events-div")
         imp.currentEvent = self
 

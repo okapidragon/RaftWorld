@@ -132,10 +132,10 @@ def startBoatDecay():
 boatDecayPopup = ev.Popup('Your boat starts to decay, you must manage this by cleaning and reinforcing the boat.', [], duration = 15)
 
 def decayWeight():
-    if imp.boatDecay:
+    if imp.boatDecay or imp.eventNumber <= 4:
         return 0
 
-    return 10
+    return 100_000
 
 ev.Event("Boat Starts Decay", minCooldown=140, screenPopup=boatDecayPopup ,weightFunc = decayWeight, automaticFunc=startBoatDecay, timer=False)
 
