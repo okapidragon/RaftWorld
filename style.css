@@ -5,6 +5,12 @@
   gap: 20px;
   align-items: start;
 }
+body {
+  background-color: #e8f5fa;
+  background-size: cover;
+  background-position: center;
+}
+
 #pause-button {
   z-index: 9999;
   position: absolute;
