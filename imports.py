@@ -3,8 +3,7 @@ import asyncio
 import threading
 import inspect
 import time
-from pyscript import document  # pyright: ignore[reportMissingImports]
-# Global pause flag (default not paused)
+from pyscript import document, when  # pyright: ignore[reportMissingImports]
 gamePaused = False
 
 
@@ -68,19 +67,24 @@ displayedTasks = []
 displayedCrafts = []
 
 
-def toggle_pause(event=None):
+@when("click", "#pause-button")
+def toggle_pause(event):
     global gamePaused
+
     gamePaused = not gamePaused
+
     btn = document.querySelector("#pause-button")
-    if btn is not None:
-        btn.textContent = "Resume" if gamePaused else "Pause"
-    outputMessage.append("Game paused." if gamePaused else "Game resumed.")
+
+    if gamePaused:
+        btn.textContent = "Resume"
+        outputMessage.append("Game paused.")
+    else:
+        btn.textContent = "Pause"
+        outputMessage.append("Game resumed.")
+
     buttons = document.querySelectorAll("button")
+
     for b in buttons:
-        if b.get("id") == "pause-button":
+        if b.id == "pause-button":
             continue
         b.disabled = gamePaused
-
-pause_btn = document.querySelector("#pause-button")
-if pause_btn is not None:
-    pause_btn.onclick = toggle_pause
