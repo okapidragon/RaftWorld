@@ -185,6 +185,8 @@ class Player:
 
         self.hunger -= 1.3
 
+        setHealthBarProgress(self.health)
+
         if self.hunger <= 0:
             for food in inv.Resource.allFood:
                 if food.quantity > 0:

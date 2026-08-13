@@ -25,7 +25,7 @@ def cut(player, taskName):
 
 def swimTrouble(player, taskName):
     player.health -= 12
-    imp.outputMessage.append(f"You spent too long in the wat {taskName}.", color = "Red")
+    imp.outputMessage.append(f"You spent too long in the water during {taskName}.", color = "Red")
 
 class Task:
     all = []
@@ -80,7 +80,7 @@ class Task:
         for resource, amount in self.cost.items():
             resource.remove(amount)
 
-        await imp.sleep(self.time)
+        await imp.asyncio.sleep(self.time)
 
         if imp.random.random() < self.cutChance:
             cut(player, self.name)

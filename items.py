@@ -14,6 +14,7 @@ inv.Resource("Fish", 0, food = True, hungerScore=100)
 inv.Resource("Seaweed", 0, food = True, hungerScore = 8, eatQuantity = 5)
 inv.Resource("Fishing Reel", 0)
 inv.Resource("Wood", 0)
+inv.Resource("Gold", 0)
 
 
 #Fishing
@@ -85,7 +86,8 @@ task.Task(name = "Craft Fishing Rod",
 
 #All events down here!
 declineTask = task.Task("Decline", {}, [], 0, {1: ({}, "Declined Event")})
-
+def nullWeight():
+    return 0
 
 #Wood floating by event!
 woodAcceptTask = task.Task("Paddle to it", {}, [inv.lookup("Paddle")], 1, {
@@ -180,7 +182,62 @@ def largeWaveFunc():
     imp.outputMessage.append("A large wave hits your raft. Your raft speeds up decays significantly.", color = "Red")
 
 
-
 ev.Event("Large Wave", 250, largeWavePopup, largeWaveWeight, automaticFunc=largeWaveFunc, timer = False)
+
+#Shipwreck 1
+
+async def shipwreckExploreFunc():
+    imp.outputMessage.append("You swim down to the shipwreck. What comes next must be done quickly!", color = "Red")
+
+    await ev.stopEvent(shipwreckEvent)
+
+    await imp.asyncio.sleep(1)
+
+    imp.asyncio.create_task(shipwreckDecisionEvent.execute())
+
+paddleAndSwimDown = task.Task(name = "Explore It",
+                              cost = {},
+                             neededItems=[inv.lookup("Paddle")],
+                             time  = 2,
+                             reward = shipwreckExploreFunc,
+                             swimTroubleChance=0.4)
+
+shipwreckPopup = ev.Popup("You see an old abondoned shipwreck off in the distance...", 
+                          optionTasks=[paddleAndSwimDown, declineTask])
+
+def shipwreckWeight():
+    if not imp.merchantUnlock:
+        return 0.4
+
+    return 0.6
+
+shipwreckEvent = ev.Event(name = "Shipwreck", minCooldown = 220, screenPopup=shipwreckPopup, weightFunc=shipwreckWeight)
+# Shipwreck 2
+goldSalvage = task.Task("Collect Treasure",
+                        cost = {},
+                        neededItems = [],
+                        time = 2,
+                        reward = {1: ({inv.lookup("Gold"): 100}, "You salvaged 100 gold from the chest.")},
+                        swimTroubleChance=0.2)
+
+
+shipwreckWoodSalvage = task.Task("Salvage Wood",
+                        cost = {},
+                        neededItems = [],
+                        time = 2,
+                        reward = {1: ({inv.lookup("Wood"): 18}, "You salvaged 18 wood from the chest.")},
+                        swimTroubleChance=0.2)
+
+
+
+shipwreckDecisionPopup = ev.Popup("You quickly swim down to the shipwreck. You see a treasure chest.", optionTasks=[goldSalvage, shipwreckWoodSalvage], duration = 7)
+
+
+
+shipwreckDecisionEvent = ev.Event(name = "Shipwreck Decision", 
+                                  minCooldown = 0,
+                                  screenPopup=shipwreckDecisionPopup,
+                                  weightFunc=nullWeight)
+
 
 
