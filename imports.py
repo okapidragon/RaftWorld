@@ -8,7 +8,7 @@ gamePaused = False
 
 
 def displayOutput():
-    output_column = document.querySelector("#output-col")
+    output_column = document.querySelector("#output-fade")
 
     output_column.innerHTML = "<h3 style=\"text-align: center;\">Output</h3>"
 
@@ -88,3 +88,22 @@ def toggle_pause(event):
         if b.id == "pause-button":
             continue
         b.disabled = gamePaused
+
+def death(message):
+    body = document.body
+    body.innerHTML = ""
+    body.style.margin = "0"
+    body.style.height = "100vh"
+    body.style.display = "grid"
+    body.style.placeItems = "center"
+    body.style.padding = "30px"
+    message_shown = document.createElement("h1")
+    message_shown.innerHTML = message
+    body.appendChild(message_shown)
+
+def health_death():
+    
+    death("You ran out of health. You fall unconscious and die, staying on your raft until the end of time.")
+
+def boat_death():
+    death("Your boat fully decays, and falls apart. You fall into the water, and urgently swim around, trying to find something to save you. Your struggle eventually stops, and you sink to the bottom of the ocean and drown.")

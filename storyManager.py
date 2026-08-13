@@ -17,7 +17,6 @@ inv.inventoryUpdate()
 
 task.taskButtonUpdate()
 
-
 async def hungerLoop():
     while True:
         if imp.gamePaused:
@@ -53,6 +52,10 @@ async def decayLoop():
         boat.decayFrame()
 
         await imp.pause_aware_sleep(1)
+        if boat.decay >= 100:
+            imp.boat_death()
+        if player.health <= 0:
+            imp.health_death()
 
 #Main game loop
 imp.asyncio.create_task(hungerLoop())
