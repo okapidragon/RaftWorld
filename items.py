@@ -306,7 +306,6 @@ def sharkWeight():
 sharkEvent = ev.Event(name = "Shark", minCooldown = 250, screenPopup=sharkPopup, weightFunc=sharkWeight, cooldown = 0, stopFunc = sharkLoss)
 
 #Raft Breaking
-
 hammerIt = task.Task(name = "Fix With Hammer", cost = {}, neededItems=[inv.lookup("Hammer")], time = 2, reward = {})
 
 def fall():
