@@ -328,3 +328,23 @@ def raftBreakWeight():
 
 inventoryFallingEvent = ev.Event(name = "Raft Break", minCooldown = 300, screenPopup=inventoryFallingPopup, weightFunc= raftBreakWeight,cooldown = 150, stopFunc = fall)
 
+#Craft Event
+def rewardCrate():
+    metalAdd = imp.random.randint(1, 4)
+
+    inv.lookup("Metal").add(metalAdd)
+
+    woodAdd = imp.random.randint(2, 9)
+
+    inv.lookup("Wood").add(woodAdd)
+
+    imp.outputMessage.append(f"The crate had {woodAdd} wood and {metalAdd} metal.")
+
+openCrate = task.Task(name = "Hammer Open", cost = {}, neededItems=[inv.lookup("Paddle"), inv.lookup("Hammer")], time = 10, reward = rewardCrate)
+
+cratePopup = ev.Popup(text = "A lone crate floats by near the raft.", optionTasks = [openCrate, declineTask], duration = 15)
+
+def crateWeight():
+    return 0.65 + (crateEvent.cooldown - crateEvent.minCooldown) * 0.003 
+
+crateEvent = ev.Event(name = "Crate", minCooldown = 300, cooldown = 150, screenPopup = cratePopup, weightFunc=crateWeight)
