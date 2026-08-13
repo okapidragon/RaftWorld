@@ -360,5 +360,3 @@ def crateWeight():
     return 0.65 + (crateEvent.cooldown - crateEvent.minCooldown) * 0.003 
 
 crateEvent = ev.Event(name = "Crate", minCooldown = 300, cooldown = 150, screenPopup = cratePopup, weightFunc=crateWeight)
-
-imp.asyncio.create_task(crateEvent.execute())
