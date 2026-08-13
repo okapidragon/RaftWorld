@@ -181,10 +181,12 @@ class Player:
     def hungerFrame(self):
         setHealthBarProgress(self.health)
 
-        if not (inv.lookup("Fish") in imp.displayedResources):
+        if not (inv.lookup("Fish") in imp.displayedResources) and imp.countdown <= 30:
             setHungerBarProgress(self.hunger)
+            imp.countdown += 1
             return
 
+        imp.outputMessage("You're hunger will started to deplete", color = "Green")
         self.hunger -= 1.3
 
         if self.hunger <= 0:
