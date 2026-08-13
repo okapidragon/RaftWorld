@@ -174,7 +174,7 @@ largeWavePopup = ev.Popup("A large wave hits your raft. Your raft speeds up deca
 
 def largeWaveWeight():
     if pl.Boat.all[0].decay > 5 and imp.boatDecay:
-        return 0.4 + ev.lookup("Large Wave").cooldown * 0.01 - 2.5
+        return 0.4 + ev.lookup("Large Wave").cooldown * 0.004 - 2.5
 
     return 0
 
@@ -266,7 +266,7 @@ merchantPopup = ev.Popup("A merchant boat appears beside you. They do not want t
                          optionTasks = [fishTrade, metalTrade, hammerTrade])
 
 def merchantWeight():
-    return 1
+    return 1 + (merchantEvent.cooldown - merchantEvent.minCooldown) * 0.004
 
 merchantEvent = ev.Event("Merchant", minCooldown = 150, screenPopup=merchantPopup, weightFunc=merchantWeight, cooldown = 0, multipleTasks=True)
 
