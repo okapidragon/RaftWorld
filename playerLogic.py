@@ -180,18 +180,19 @@ class Player:
 
     def hungerFrame(self):
 
-        if not (inv.lookup("Fish") in imp.displayedResources) and imp.countdown <= 30:
+        if (not (inv.lookup("Fish") in imp.displayedResources) ) and imp.countdown <= 30:
             setHungerBarProgress(self.hunger)
             imp.countdown += 1
             return
 
-        if not (inv.lookup("Spear") in imp.displayedCrafts) and imp.metalUnlock:
+        if (not (inv.lookup("Spear") in imp.displayedCrafts) )and imp.metalUnlock:
             imp.displayedCrafts.append(task.lookup("Craft Spear"))
             imp.displayedCrafts.append(task.lookup("Craft Anchor"))
             task.craftButtonUpdate()
 
-        imp.outputMessage("You're hunger will started to deplete", color = "Green")
+
         self.hunger -= 1.3
+        setHungerBarProgress(self.hunger)
 
         if self.hunger <= 0:
             for food in inv.Resource.allFood:
@@ -207,7 +208,7 @@ class Player:
             
             setHungerBarProgress(self.hunger)
         else:
-            self.health += 0.25
+            self.health += 1
             setHealthBarProgress(self.health)
             setHungerBarProgress(self.hunger)
 
