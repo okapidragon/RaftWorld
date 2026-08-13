@@ -180,6 +180,8 @@ class Player:
 
     def hungerFrame(self):
 
+        self.setHealth()
+
         if (not (inv.lookup("Fish") in imp.displayedResources) ) and imp.countdown <= 30:
             setHungerBarProgress(self.hunger)
             imp.countdown += 1
