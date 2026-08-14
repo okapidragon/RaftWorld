@@ -44,7 +44,7 @@ def displayBoatSize(boat):
 
 def displayTime(current_time):
     try:
-        timeText = f"{current_time.hours:02d}:{current_time.minutes:02d}, Day {current_time.days}"
+        timeText = str(current_time)
         time_line = imp.document.querySelector("#time-display")
         time_line.textContent = f"Time: {timeText}"
     except:
@@ -252,5 +252,8 @@ class gameTime:
         if self.hours >= 24:
             self.days += self.hours // 24
             self.hours = self.hours % 24
+
+    def __str__(self):
+        return f"{self.hours:02d}:{self.minutes:02d}, Day {self.days}"
 
 

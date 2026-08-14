@@ -70,3 +70,6 @@ imp.asyncio.create_task(hungerLoop())
 imp.asyncio.create_task(timeLoop())
 imp.asyncio.create_task(eventLoop())
 imp.asyncio.create_task(decayLoop())
+
+
+items.finishGameFunc()
