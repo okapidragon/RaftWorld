@@ -77,6 +77,7 @@ metalUnlock = False
 displayedResources = []
 displayedTasks = []
 displayedCrafts = []
+displayedRelics = []
 
 countdown = 0
 

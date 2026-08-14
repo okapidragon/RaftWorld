@@ -72,3 +72,11 @@ def lookup(name) -> Resource:
         if resource.name == name:
             return resource
     return None
+
+
+
+def relicUpdate():
+    if imp.displayedRelics:
+        imp.Something("relics-div")
+        for relic in imp.displayedRelics:
+            pass
