@@ -202,11 +202,6 @@ class Player:
             imp.countdown += 1
             return
 
-        if (not (task.lookup("Craft Spear") in imp.displayedCrafts)) and imp.metalUnlock:
-            imp.displayedCrafts.append(task.lookup("Craft Spear"))
-            imp.displayedCrafts.append(task.lookup("Craft Anchor"))
-            task.craftButtonUpdate()
-
 
         self.hunger -= 1.3
         setHungerBarProgress(self.hunger)
