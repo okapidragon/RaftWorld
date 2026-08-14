@@ -532,6 +532,7 @@ finishGame = task.Task(name = "Trade Relics", cost = {}, neededItems = [
 
 def recipeFunc():
     imp.displayedCrafts.append(task.lookup("Craft Dynamite Rod"))
+    task.craftButtonUpdate()
 
 dynamiteRodRecipe = task.Task(name = "Get Recipe", cost = {}, neededItems = {}, time = 2, reward = recipeFunc)
 
