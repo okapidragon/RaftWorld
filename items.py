@@ -6,7 +6,7 @@ import playerLogic as pl
 
 
 #Items
-imp.displayedResources.append(inv.Item("Fishing Rod", 1, breakable=True, breakChance=0.1))
+imp.displayedResources.append(inv.Item("Fishing Rod", 1, breakable=True, breakChance=0.075))
 inv.Item("Paddle", 0, breakable=True, breakChance=0.01)
 inv.Item("Hammer", 0, breakable = True, breakChance = 0.04)
 inv.Item("Spear", 0, breakable = True, breakChance = 0.05)
