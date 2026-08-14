@@ -8,15 +8,18 @@ gamePaused = False
 
 
 def displayOutput():
-    output_column = document.querySelector("#output-fade")
+    try:
+        output_column = document.querySelector("#output-fade")
 
-    output_column.innerHTML = "<h3 style=\"text-align: center;\">Output</h3>"
+        output_column.innerHTML = "<h3 style=\"text-align: center;\">Output</h3>"
 
-    for message in reversed(outputMessage.messages[-15:]):
-        message_line = document.createElement("p")
-        message_line.style.textAlign = "center"
-        message_line.innerHTML = message
-        output_column.appendChild(message_line)
+        for message in reversed(outputMessage.messages[-15:]):
+            message_line = document.createElement("p")
+            message_line.style.textAlign = "center"
+            message_line.innerHTML = message
+            output_column.appendChild(message_line)
+    except:
+        pass
 
 async def pause_aware_sleep(seconds: float):
     chunk = 0.2
@@ -35,18 +38,25 @@ class OutputMessage:
         self.messages = []
 
     def append(self, message, color = "black"):
-        self.messages.append(f"<span style=\"color: {color};\">{message}</span>")
-        displayOutput()
+        try:
+            self.messages.append(f"<span style=\"color: {color};\">{message}</span>")
+            displayOutput()
+        except:
+            pass
 
 def showSomething(div_id):
-    boat_column = document.querySelector(div_id)
-    # Clear any inline display so CSS rules (e.g. flex) can take effect
-    boat_column.style.display = ""
+    try:
+        boat_column = document.querySelector(div_id)
+        boat_column.style.display = ""
+    except:
+        pass
 
 def hideSomething(div_id):
-    boat_column = document.querySelector(div_id)
-    boat_column.style.display = "none"
-
+    try:
+        boat_column = document.querySelector(div_id)
+        boat_column.style.display = "none"
+    except:
+        pass
 outputMessage = OutputMessage()
 
 currentEvent = None
@@ -70,42 +80,34 @@ displayedCrafts = []
 
 countdown = 0
 
-@when("click", "#pause-button")
 def toggle_pause(event):
-    global gamePaused
+    try:
+        global gamePaused
 
-    gamePaused = not gamePaused
+        gamePaused = not gamePaused
 
-    btn = document.querySelector("#pause-button")
+        btn = document.querySelector("#pause-button")
 
-    if gamePaused:
-        btn.textContent = "Resume"
-        outputMessage.append("Game paused.")
-    else:
-        btn.textContent = "Pause"
-        outputMessage.append("Game resumed.")
+        if gamePaused:
+            btn.textContent = "Resume"
+            outputMessage.append("Game paused.")
+        else:
+            btn.textContent = "Pause"
+            outputMessage.append("Game resumed.")
 
-    buttons = document.querySelectorAll("button")
+        buttons = document.querySelectorAll("button")
 
-    for b in buttons:
-        if b.id == "pause-button":
-            continue
-        b.disabled = gamePaused
+        for b in buttons:
+            if b.id == "pause-button":
+                continue
+            b.disabled = gamePaused
+    except:
+        pass
 
 def death(message):
-    window.onerror = lambda msg, url, ln, col, err: True
 
     body = document.body
     body.innerHTML = ""
-
-    cover = document.createElement("div")
-    cover.style.position = "fixed"
-    cover.style.top = "0"
-    cover.style.left = "0"
-    cover.style.width = "100vw"
-    cover.style.height = "100vh"
-    cover.style.backgroundColor = "#e8f5fa"
-    cover.style.zIndex = "99999"
 
     body.style.margin = "0"
     body.style.height = "100vh"

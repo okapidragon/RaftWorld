@@ -4,106 +4,121 @@ import taskLogic as task
 import items as item
 
 def setHungerBarProgress(value):
-    value = max(-100, min(100, value))
-    wrapper = imp.document.querySelector("#balance-wrapper")
-    bar = imp.document.querySelector("#balance-bar")
-    width_percentage = abs(value) / 2
-    bar.classList.remove("fill-negative", "fill-positive")
-    if value < 0:
-        # Move start anchor backward, then expand width forward to the center
-        wrapper.style.left = f"{50 - width_percentage}%"
-        wrapper.style.width = f"{width_percentage}%"
-        bar.classList.add("fill-negative")
-    elif value > 0:
-        # Lock anchor at the center and expand width rightward
-        wrapper.style.left = "50%"
-        wrapper.style.width = f"{width_percentage}%"
-        bar.classList.add("fill-positive")
-    else:
-        # Neutral zero point state
-        wrapper.style.left = "50%"
-        wrapper.style.width = "0%"
+    try:
+        value = max(-100, min(100, value))
+        wrapper = imp.document.querySelector("#balance-wrapper")
+        bar = imp.document.querySelector("#balance-bar")
+        width_percentage = abs(value) / 2
+        bar.classList.remove("fill-negative", "fill-positive")
+        if value < 0:
+            # Move start anchor backward, then expand width forward to the center
+            wrapper.style.left = f"{50 - width_percentage}%"
+            wrapper.style.width = f"{width_percentage}%"
+            bar.classList.add("fill-negative")
+        elif value > 0:
+            # Lock anchor at the center and expand width rightward
+            wrapper.style.left = "50%"
+            wrapper.style.width = f"{width_percentage}%"
+            bar.classList.add("fill-positive")
+        else:
+            # Neutral zero point state
+            wrapper.style.left = "50%"
+            wrapper.style.width = "0%"
+    except:
+        pass
 
 def setHealthBarProgress(value):
-    value = min(100, max(0, value))
-    health_bar = imp.document.querySelector("#health-bar")
-    health_bar.style.width = f"{value}%"
-    
+    try:
+        value = min(100, max(0, value))
+        health_bar = imp.document.querySelector("#health-bar")
+        health_bar.style.width = f"{value}%"
+    except:
+        pass
 
 def displayBoatSize(boat):
-    size_display = imp.document.querySelector("#boat-size")
-    size_display.textContent = f"Boat size: {boat.size[0]} x {boat.size[1]}"
+    try:
+        size_display = imp.document.querySelector("#boat-size")
+        size_display.textContent = f"Boat size: {boat.size[0]} x {boat.size[1]}"
+    except:
+        pass
 
 def displayTime(current_time):
-    timeText = f"{current_time.hours:02d}:{current_time.minutes:02d}, Day {current_time.days}"
-    time_line = imp.document.querySelector("#time-display")
-    time_line.textContent = f"Time: {timeText}"
-
+    try:
+        timeText = f"{current_time.hours:02d}:{current_time.minutes:02d}, Day {current_time.days}"
+        time_line = imp.document.querySelector("#time-display")
+        time_line.textContent = f"Time: {timeText}"
+    except:
+        pass
 def setDecayBarProgress(value):
-    value = min(100, max(0, value))
-    value = 100 - value
-    decay_bar = imp.document.querySelector("#decay-bar")
-    decay_bar.style.width = f"{value}%"
+    try:
+        value = min(100, max(0, value))
+        value = 100 - value
+        decay_bar = imp.document.querySelector("#decay-bar")
+        decay_bar.style.width = f"{value}%"
+    except:
+        pass
 
 async def resizeBoat(event=None):
-    width_input = imp.document.querySelector("#boat-width")
-    height_input = imp.document.querySelector("#boat-height")
-
-    width = (width_input.value)
-    height = (height_input.value)
-
     try:
-        width = int(width)
-        height = int(height)
-    except ValueError:
-        imp.outputMessage.append("The side lengths must be integers")
-        return
-    
+        width_input = imp.document.querySelector("#boat-width")
+        height_input = imp.document.querySelector("#boat-height")
 
-    newSize = (width, height)
+        width = (width_input.value)
+        height = (height_input.value)
 
-    if Player.all[0].task is not None:
-        imp.outputMessage.append(f"Player is already doing {Player.all[0].task.name}.")
-        return
+        try:
+            width = int(width)
+            height = int(height)
+        except ValueError:
+            imp.outputMessage.append("The side lengths must be integers")
+            return
+        
 
-    ogWidth = Boat.all[0].size[0]
-    ogHeight = Boat.all[0].size[1]
+        newSize = (width, height)
 
-    if width == ogWidth and height == ogHeight:
-        imp.outputMessage.append("Boat is already that size")
-        return
+        if Player.all[0].task is not None:
+            imp.outputMessage.append(f"Player is already doing {Player.all[0].task.name}.")
+            return
 
-    addedArea = width * height - ogHeight * ogWidth
+        ogWidth = Boat.all[0].size[0]
+        ogHeight = Boat.all[0].size[1]
 
-    if addedArea > inv.lookup("Wood").quantity:
-        imp.outputMessage.append("Not enough wood")
-        return
+        if width == ogWidth and height == ogHeight:
+            imp.outputMessage.append("Boat is already that size")
+            return
 
-    if width < 5 or height < 5:
-        imp.outputMessage.append("Minimum side of 5 wood")
-        return
+        addedArea = width * height - ogHeight * ogWidth
 
-    
+        if addedArea > inv.lookup("Wood").quantity:
+            imp.outputMessage.append("Not enough wood")
+            return
 
-    boatSizeChange = task.Task(
-        name = "Change Boat Size",
-        cost = {},
-        neededItems=[],
-        time = 3,
-        reward = Boat.all[0].changeSize,
-        inputs = newSize)
+        if width < 5 or height < 5:
+            imp.outputMessage.append("Minimum side of 5 wood")
+            return
 
-    task.Task.all.remove(boatSizeChange)
+        
 
-    resize_button.classList.add("in-progress")
-    resize_button.disabled = True
+        boatSizeChange = task.Task(
+            name = "Change Boat Size",
+            cost = {},
+            neededItems=[],
+            time = 3,
+            reward = Boat.all[0].changeSize,
+            inputs = newSize)
 
-    try:
-        await boatSizeChange.execute(Player.all[0])
-    finally:
-        resize_button.classList.remove("in-progress")
-        resize_button.disabled = False
-    
+        task.Task.all.remove(boatSizeChange)
+
+        resize_button.classList.add("in-progress")
+        resize_button.disabled = True
+
+        try:
+            await boatSizeChange.execute(Player.all[0])
+        finally:
+            resize_button.classList.remove("in-progress")
+            resize_button.disabled = False
+    except:
+        pass
 
 
 

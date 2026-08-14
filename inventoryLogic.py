@@ -1,22 +1,25 @@
 import imports as imp
 
 def inventoryUpdate():
-    inventory_col = imp.document.querySelector("#inventory-display")
-    for resource_line in inventory_col.querySelectorAll(".inventory-resource"):
-        resource_line.remove()
+    try:
+        inventory_col = imp.document.querySelector("#inventory-display")
+        for resource_line in inventory_col.querySelectorAll(".inventory-resource"):
+            resource_line.remove()
 
-    for item in imp.displayedResources:
-        item_id = item.name.lower().replace(" ", "-")
-        resource_line = imp.document.createElement("p")
-        resource_line.style.textAlign = "center"
-        resource_line.id = f"{item_id}-count"
-        resource_line.className = "inventory-resource"
-        resource_line.textContent = f"{item.name}: {item.quantity}"
-        crafts_col = inventory_col.querySelector("#crafts-col")
-        if crafts_col is not None:
-            inventory_col.insertBefore(resource_line, crafts_col)
-        else:
-            inventory_col.appendChild(resource_line)
+        for item in imp.displayedResources:
+            item_id = item.name.lower().replace(" ", "-")
+            resource_line = imp.document.createElement("p")
+            resource_line.style.textAlign = "center"
+            resource_line.id = f"{item_id}-count"
+            resource_line.className = "inventory-resource"
+            resource_line.textContent = f"{item.name}: {item.quantity}"
+            crafts_col = inventory_col.querySelector("#crafts-col")
+            if crafts_col is not None:
+                inventory_col.insertBefore(resource_line, crafts_col)
+            else:
+                inventory_col.appendChild(resource_line)
+    except:
+        pass
 
 
 class Resource:

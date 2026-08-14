@@ -79,45 +79,50 @@ class Event:
 
 
     async def eventTimer(self):
-        events_column = imp.document.querySelector("#events-div")
+        try:
+            events_column = imp.document.querySelector("#events-div")
 
-        if self.timer:
-            timer_div = imp.document.createElement("div")
-            timer_div.className = "event-timer"
-            timer_div.style.textAlign = "center"
-            events_column.appendChild(timer_div)        
-
-        for remaining in range(self.screenPopup.duration, 0, -1):
             if self.timer:
-                timer_div.innerHTML = "" 
-                timer = imp.document.createElement("p")
-                timer.className = "timer"
-                timer.style.textAlign = "center"
-                timer.textContent = f"Time remaining: {remaining}"
-                timer_div.appendChild(timer)
-            await imp.pause_aware_sleep(1)
+                timer_div = imp.document.createElement("div")
+                timer_div.className = "event-timer"
+                timer_div.style.textAlign = "center"
+                events_column.appendChild(timer_div)        
 
-        # Time ran out
-        if imp.currentEvent is self:
-            imp.outputMessage.append("The event is now over!")
+            for remaining in range(self.screenPopup.duration, 0, -1):
+                if self.timer:
+                    timer_div.innerHTML = "" 
+                    timer = imp.document.createElement("p")
+                    timer.className = "timer"
+                    timer.style.textAlign = "center"
+                    timer.textContent = f"Time remaining: {remaining}"
+                    timer_div.appendChild(timer)
+                await imp.pause_aware_sleep(1)
 
-            if self.stopFunc is not None:
-                self.stopFunc()
+            # Time ran out
+            if imp.currentEvent is self:
+                imp.outputMessage.append("The event is now over!")
 
-            imp.asyncio.create_task(stopEvent(self))
+                if self.stopFunc is not None:
+                    self.stopFunc()
 
-            
+                imp.asyncio.create_task(stopEvent(self))
+        except:
+            pass
+
+                
 
     async def chooseOption(self, selected_task, selected_button):
-    # Make sure the event hasn't already timed out
-        if imp.currentEvent is not self:
-            return
+        try:
+            if imp.currentEvent is not self:
+                return
 
-        happened = await task.runTask(selected_task, selected_button)
+            happened = await task.runTask(selected_task, selected_button)
 
-        if happened and not self.multipleTasks:
-            self.timerTask.cancel()
-            imp.asyncio.create_task(stopEvent(self))
+            if happened and not self.multipleTasks:
+                self.timerTask.cancel()
+                imp.asyncio.create_task(stopEvent(self))
+        except:
+            pass
 
             
 
@@ -174,29 +179,32 @@ def eventUpdate(dayNumber):
         imp.asyncio.create_task(imp.currentEvent.execute())
 
 async def stopEvent(event):
-    if event is not imp.currentEvent:
-        return False
+    try:
+        if event is not imp.currentEvent:
+            return False
 
-    imp.hideSomething("#events-div")
-    
-    events_column = imp.document.querySelector("#events-div")
-    events_column.innerHTML = ""
-    event.cooldown = 0
-    imp.currentEvent = None
-
-    if not imp.boatUnlock:
-        await imp.pause_aware_sleep(3)
-
-        imp.showSomething("#boat-div")
-        imp.outputMessage.append("While pondering a way to get a paddle. You notice that you can take apart your raft, your only life supply. Be Careful!", color = "#50C878")
-        imp.boatUnlock = True
-        paddle_craft = task.lookup("Craft Paddle")
-        if paddle_craft is not None:
-            imp.displayedCrafts.append(paddle_craft)
-
-        await imp.pause_aware_sleep(3)
+        imp.hideSomething("#events-div")
         
-        task.craftButtonUpdate()
+        events_column = imp.document.querySelector("#events-div")
+        events_column.innerHTML = ""
+        event.cooldown = 0
+        imp.currentEvent = None
+
+        if not imp.boatUnlock:
+            await imp.pause_aware_sleep(3)
+
+            imp.showSomething("#boat-div")
+            imp.outputMessage.append("While pondering a way to get a paddle. You notice that you can take apart your raft, your only life supply. Be Careful!", color = "#50C878")
+            imp.boatUnlock = True
+            paddle_craft = task.lookup("Craft Paddle")
+            if paddle_craft is not None:
+                imp.displayedCrafts.append(paddle_craft)
+
+            await imp.pause_aware_sleep(3)
+            
+            task.craftButtonUpdate()
+    except:
+        pass
 
 def lookup(name):
     for eventItem in Event.all:
