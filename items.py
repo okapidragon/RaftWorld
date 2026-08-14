@@ -226,10 +226,12 @@ async def fishSchool():
     ogReward = fishing.reward
 
     fishing.reward = newFishReward
+    fishing.rewardType = 'function'
 
     await imp.pause_aware_sleep(18)
 
     fishing.reward = ogReward
+    fishing.rewardTyp = 'dict'
 
 
 ev.Event("School of Fish", 180, schoolOfFishPopup, fishWeight, automaticFunc=fishSchool)
