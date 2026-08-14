@@ -157,7 +157,9 @@ class Boat:
 
         if not (inv.lookup("Wood") in imp.displayedResources):
             imp.displayedResources.append(inv.lookup("Wood"))
+            inv.inventoryUpdate()
             imp.asyncio.create_task(task.craftButtonUpdate())
+
 
     def decayFrame(self):
         if imp.boatDecay:
