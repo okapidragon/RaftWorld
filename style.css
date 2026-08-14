@@ -224,10 +224,12 @@ button:active {
   
 }
 .crafts-bottom p {
-  margin-top: 0.4;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 .crafts-bottom button {
-  margin-bottom: 0.4;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 #tasks-col {
