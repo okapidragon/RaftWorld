@@ -73,7 +73,7 @@ def lookup(name) -> Resource:
     for resource in Resource.all:
         if resource.name == name:
             return resource
-    return None
+    raise Exception(f"{name} could not be found!")
 
 
 

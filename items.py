@@ -16,7 +16,7 @@ inv.Item("Anchor", 0)
 inv.Item("Merchant's Coin", 0, relic = True, color = "Gold")
 inv.Item("Captain's Hat", 0, relic = True, color = "Brown") 
 inv.Item("Shark's Head", 0, relic = True, color = "Blue")
-inv.Item("Golden Rod", 0, relic = True, color = "Goldenrod")
+inv.Item("Dynamite Rod", 0, relic = True, color = "Red")
 inv.Item("Glowing Bass", 0, relic = True, color = "Purple")
 
 #Resources
@@ -109,13 +109,13 @@ task.Task(name = "Craft Anchor",
 )
 
 def relicCraft():
-    imp.outputMessage.append("Succesfully obtained Golden Rod relic!")
-    inv.lookup("Golden Rod").add(1)
-    imp.displayedRelics.append(inv.lookup("Golden Rod"))
+    imp.outputMessage.append("Succesfully obtained Dynamite Rod relic!")
+    inv.lookup("Dynamite Rod").add(1)
+    imp.displayedRelics.append(inv.lookup("Dynamite Rod"))
     inv.relicUpdate()
 
-task.Task(name = "Craft Golden Rod",
-    cost = {inv.lookup("Metal"): 10, inv.lookup("Wood"): 25, inv.lookup("Fishing Reel"): 2},
+task.Task(name = "Craft Dynamite Rod",
+    cost = {inv.lookup("Explosive"): 3, inv.lookup("Metal"): 10, inv.lookup("Fishing Reel"): 1},
     neededItems=[],
     time = 3,
     reward = relicCraft, craft=True
@@ -503,3 +503,28 @@ navalMinePopup2 = ev.Popup(text = "You swim down near the naval mine... (Explosi
 navalMineEvent2 = ev.Event(name = "Naval Mine2", minCooldown = 0, screenPopup = navalMinePopup2, weightFunc = nullWeight)
 
 #Cartographer
+def finishGameFunc():
+    imp.death("You traded all the relics to the cartographer, in exchange he gave you the map to the shore. Reuniting with your people, you joyously emerge victorious by collecting the" \
+    "\nMerchant's Coin\nCaptain's Hat\nShark's Head\nDynamite Rod\nGlowing Bass")
+
+finishGame = task.Task(name = "Trade Relics", cost = {}, neededItems = [
+    inv.lookup("Merchant's Coin"),
+    inv.lookup("Captain's Hat"),
+    inv.lookup("Shark's Head"),
+    inv.lookup("Dynamite Rod"), 
+    inv.lookup("Glowing Bass")], time = 2, reward = finishGameFunc)
+
+def recipeFunc():
+    imp.displayedCrafts.append(task.lookup("Craft Dynamite Rod"))
+
+dynamiteRodRecipe = task.Task(name = "Get Recipe", cost = {}, neededItems = {}, time = 2, reward = recipeFunc)
+
+cartographerPopup = ev.Popup(text = "A cartographer appears... offering to show you to the shore in exchange for the five relics of the sea. He says he may help with a recipe.", optionTasks = [finishGame, dynamiteRodRecipe], duration = 25)
+
+def cartographerWeight():
+    if len(imp.displayedRelics) == 5:
+        return 100_000_000
+
+    return 0.7 + (cartographerEvent.cooldown - cartographerEvent.minCooldown) * 0.003
+
+cartographerEvent = ev.Event(name = "Cartographer", minCooldown = 250, screenPopup=cartographerPopup, weightFunc = cartographerWeight)
