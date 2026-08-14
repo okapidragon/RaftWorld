@@ -52,7 +52,7 @@ task.Task(name = "Gather Seaweed",
         0.7: ({inv.lookup("Seaweed"): 1}, "You found one piece of seaweed"),
         0.95: ({inv.lookup("Seaweed"): 3}, "You found a large blob of seaweed"),
         1: ({inv.lookup("Seaweed"): 6}, "You found piles of seaweed") },
-    cutChance = 0.05
+    cutChance = 0.03
         )
 #Clean Boat!
 def cleanBoatReward():
@@ -139,21 +139,21 @@ def woodWeight():
     if not imp.boatUnlock:
         return 1_000_000_000_000
 
-    return 1.5
+    return 1
 
 
 ev.Event("Wood Floats By", minCooldown=100, screenPopup=woodPopUp, weightFunc = woodWeight)
 
 #String Floats By
 stringAcceptTask = task.Task("Swim towards it", {}, [], 1, { 
-    0.3: ({inv.lookup("Fishing Reel"): 0}, "The fishing reel sunk too far"),
+    0.2: ({inv.lookup("Fishing Reel"): 0}, "The fishing reel sunk too far"),
     1: ({inv.lookup("Fishing Reel"): 1}, "You managed to salvage one fishing reel")})
 
 stringPopUp = ev.Popup('A fishing reel appears in the water...',
 optionTasks=[stringAcceptTask, declineTask])
 
 def reelWeight():
-    return 1.5
+    return 0.8
 
 ev.Event("String Floats By", minCooldown=100, screenPopup=stringPopUp, weightFunc = reelWeight)
 
@@ -412,6 +412,8 @@ def fall():
     wood.quantity = wood.quantity // 2
 
     imp.outputMessage.append(f"You lost {ogWood - wood.quantity} wood.")
+
+    inv.inventoryUpdate()
 
 
     
