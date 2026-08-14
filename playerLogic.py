@@ -162,7 +162,7 @@ class Boat:
     def decayFrame(self):
         if imp.boatDecay:
             self.decaySpeed = max(0, self.decaySpeed)
-            self.decaySpeed += 0.015
+            self.decaySpeed += 0.012
             self.decay += self.decaySpeed
 
         setDecayBarProgress(self.decay)
