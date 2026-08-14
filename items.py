@@ -206,15 +206,18 @@ def newFishReward():
     elif prob < 0.6:
         imp.outputMessage.append("You caught a sardine")
         fish.add(1)
+        inv.inventoryUpdate()
 
 
     elif prob < 0.9:
         imp.outputMessage.append("You caught a salmon")
         fish.add(2)
+        inv.inventoryUpdate()
 
     else:
         imp.outputMessage.append("You caught a tuna")
         fish.add(5)
+        inv.inventoryUpdate()
 
 
 async def fishSchool():
