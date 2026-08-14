@@ -19,6 +19,7 @@ inv.Resource("Fishing Reel", 0)
 inv.Resource("Wood", 0)
 inv.Resource("Gold", 0)
 inv.Resource("Metal", 0)
+inv.Resource("Explosive", 0)
 
 
 
@@ -228,7 +229,7 @@ shipwreckPopup = ev.Popup("You see an old abondoned shipwreck off in the distanc
 def shipwreckWeight():
     return 0.5 + (shipwreckEvent.cooldown - shipwreckEvent.minCooldown) * 0.004
 
-shipwreckEvent = ev.Event(name = "Shipwreck", minCooldown = 120, screenPopup=shipwreckPopup, weightFunc=shipwreckWeight, cooldown = -60)
+shipwreckEvent = ev.Event(name = "Shipwreck", minCooldown = 180, screenPopup=shipwreckPopup, weightFunc=shipwreckWeight, cooldown = 0)
 # Shipwreck 2
 goldSalvage = task.Task("Collect Treasure",
                         cost = {},
@@ -360,3 +361,58 @@ def crateWeight():
     return 0.65 + (crateEvent.cooldown - crateEvent.minCooldown) * 0.003 
 
 crateEvent = ev.Event(name = "Crate", minCooldown = 300, cooldown = 0, screenPopup = cratePopup, weightFunc=crateWeight)
+
+#Naval Mine 1
+async def navalMineExploreFunc():
+    imp.outputMessage.append("You swim down to the naval mine and will need to make a split second decision!", color = "Red")
+
+    await ev.stopEvent(navalMineEvent1)
+
+    await imp.pause_aware_sleep(2)
+
+    imp.asyncio.create_task(navalMineEvent2.execute())
+
+navalMineExplore = task.Task(name = "Swim & Explore", cost = {}, neededItems=[], time = 4, reward = navalMineExploreFunc, swimTroubleChance = 0.25)
+
+navalMinePopup = ev.Popup(text = "You spot a Naval mine (land mine in water) far down in the ocean", optionTasks= [navalMineExplore, declineTask], duration = 20)
+
+def navalMineWeight():
+    return 0.5 + (navalMineEvent1.cooldown - navalMineEvent1.minCooldown) * 0.004
+
+navalMineEvent1 = ev.Event(name = "Naval Mine1", minCooldown = 300, cooldown = 150, screenPopup = navalMinePopup, weightFunc = navalMineWeight)
+
+#Naval Mine 2
+def salvageExplosivesFunc():
+    prob = imp.random.random()
+
+    if inv.lookup("Explosive") not in imp.displayedResources:
+        imp.displayedResources.append(inv.lookup("Explosive"))
+
+    if prob < 0.25:
+        imp.outputMessage.append("The naval mine exploded on you and you took 40 damage.", color = "Red")
+
+        pl.Player.all[0].health -= 40
+        pl.setHealthBarProgress(pl.Player.all[0].health)
+    else:
+        explosiveCount = imp.random.randint(2, 4)
+
+        imp.outputMessage.append(f"You succesfully salvaged {explosiveCount} naval mine explosives.")
+
+        inv.lookup("Explosive").add(explosiveCount)
+
+
+
+salvageExplosives = task.Task(
+    name = "Collect Explosives",
+    cost = {},
+    neededItems = [],
+    time = 1.5,
+    reward = salvageExplosivesFunc,
+    swimTroubleChance = 0.4
+)
+
+navalMinePopup2 = ev.Popup(text = "You swim down near the naval mine... (Explosives are RISKY)", optionTasks = [salvageExplosives, declineTask], duration = 7)
+
+navalMineEvent2 = ev.Event(name = "Naval Mine2", minCooldown = 0, screenPopup = navalMinePopup2, weightFunc = nullWeight)
+
+imp.asyncio.create_task(navalMineEvent1.execute())
