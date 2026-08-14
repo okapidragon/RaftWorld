@@ -59,6 +59,7 @@ class Item(Resource):
         self.breakable = breakable
         self.breakChance = breakChance
         self.relic = relic
+        self.color = color
 
     def tryBreak(self):
         if (self.breakable) and (imp.random.random() < self.breakChance):

@@ -502,3 +502,4 @@ navalMinePopup2 = ev.Popup(text = "You swim down near the naval mine... (Explosi
 
 navalMineEvent2 = ev.Event(name = "Naval Mine2", minCooldown = 0, screenPopup = navalMinePopup2, weightFunc = nullWeight)
 
+#Cartographer
