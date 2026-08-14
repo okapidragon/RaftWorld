@@ -374,7 +374,9 @@ async def navalMineExploreFunc():
 
 navalMineExplore = task.Task(name = "Swim & Explore", cost = {}, neededItems=[], time = 4, reward = navalMineExploreFunc, swimTroubleChance = 0.25)
 
-navalMinePopup = ev.Popup(text = "You spot a Naval mine (land mine in water) far down in the ocean", optionTasks= [navalMineExplore, declineTask], duration = 20)
+steerAround = task.Task("Steer Around", {}, [], 0, {})
+
+navalMinePopup = ev.Popup(text = "You spot a Naval mine (land mine in water) far down in the ocean", optionTasks= [navalMineExplore, steerAround], duration = 20)
 
 def navalMineWeight():
     return 0.5 + (navalMineEvent1.cooldown - navalMineEvent1.minCooldown) * 0.004
