@@ -86,6 +86,6 @@ def relicUpdate():
                 this_relic = imp.document.createElement("p")
                 this_relic.style.textAlign = "center"
                 this_relic.style.color = relic.color
-                this_relic.textContent = relic
+                this_relic.textContent = relic.name
     except:
         pass
