@@ -16,7 +16,7 @@ inv.Item("Anchor", 0)
 inv.Item("Merchant's Coin", 0, relic = True, color = "Gold")
 inv.Item("Captain's Hat", 0, relic = True, color = "Brown") 
 inv.Item("Shark's Head", 0, relic = True, color = "Blue")
-inv.Item("Dynamite Rod", 0, relic = True, color = "Goldenrod")
+inv.Item("Dynamite Rod", 0, relic = True, color = "Red")
 inv.Item("Glowing Bass", 0, relic = True, color = "Purple")
 
 #Resources
@@ -503,3 +503,4 @@ navalMinePopup2 = ev.Popup(text = "You swim down near the naval mine... (Explosi
 navalMineEvent2 = ev.Event(name = "Naval Mine2", minCooldown = 0, screenPopup = navalMinePopup2, weightFunc = nullWeight)
 
 #Cartographer
+
