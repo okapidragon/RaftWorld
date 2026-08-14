@@ -26,7 +26,6 @@ async def hungerLoop():
 
         if (not (task.lookup("Craft Spear") in imp.displayedCrafts)) and imp.metalUnlock:
             imp.displayedCrafts.append(task.lookup("Craft Spear"))
-            imp.displayedCrafts.append(task.lookup("Craft Anchor"))
             task.craftButtonUpdate()
             imp.displayedResources.append(inv.lookup("Metal"))
             inv.inventoryUpdate()

@@ -10,7 +10,6 @@ imp.displayedResources.append(inv.Item("Fishing Rod", 1, breakable=True, breakCh
 inv.Item("Paddle", 0, breakable=True, breakChance=0.01)
 inv.Item("Hammer", 0, breakable = True, breakChance = 0.04)
 inv.Item("Spear", 0, breakable = True, breakChance = 0.05)
-inv.Item("Anchor", 0)
 
 #Relics
 inv.Item("Merchant's Coin", 0, relic = True, color = "Gold")
@@ -100,12 +99,6 @@ task.Task(name = "Craft Spear",
     neededItems=[],
     time = 3,
     reward = {1: ({inv.lookup("Spear"): 1}, "Succesful spear craft!")}, craft=True
-)
-task.Task(name = "Craft Anchor",
-    cost = {inv.lookup("Metal"): 15},
-    neededItems=[],
-    time = 3,
-    reward = {1: ({inv.lookup("Anchor"): 1}, "Succesful anchor craft!")}, craft=True
 )
 
 def relicCraft():
@@ -238,10 +231,7 @@ ev.Event("School of Fish", 180, schoolOfFishPopup, fishWeight, automaticFunc=fis
 
 #Large Wave
 
-dropAnchor = task.Task(name = "Drop Anchor", cost ={}, neededItems=[inv.lookup("Anchor")], time = 2, 
-                       reward = {1: ({}, "You dropped your anchor and avoided catastrophe.")})
-
-largeWavePopup = ev.Popup("A large wave hits your raft. Your raft speeds up decay significantly.", [dropAnchor], duration = 10)
+largeWavePopup = ev.Popup("A large wave hits your raft. Your raft speeds up decay significantly.", [], duration = 10)
 
 def largeWaveWeight():
     if pl.Boat.all[0].decay > 5 and imp.boatDecay:

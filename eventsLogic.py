@@ -155,7 +155,7 @@ def eventUpdate(dayNumber):
 
     probability = imp.random.random()
 
-    if probability < imp.timeSinceEvent * 0.001:
+    if probability < imp.timeSinceEvent * 0.0011:
         weightedEventDict = {}
 
         for eventItem in eligibleEvents:
