@@ -16,7 +16,7 @@ inv.Item("Anchor", 0)
 inv.Item("Merchant's Coin", 0, relic = True, color = "Gold")
 inv.Item("Captain's Hat", 0, relic = True, color = "Brown") 
 inv.Item("Shark's Head", 0, relic = True, color = "Blue")
-inv.Item("Golden Rod", 0, relic = True, color = "Goldenrod")
+inv.Item("Dynamite Rod", 0, relic = True, color = "Goldenrod")
 inv.Item("Glowing Bass", 0, relic = True, color = "Purple")
 
 #Resources
@@ -109,13 +109,13 @@ task.Task(name = "Craft Anchor",
 )
 
 def relicCraft():
-    imp.outputMessage.append("Succesfully obtained Golden Rod relic!")
-    inv.lookup("Golden Rod").add(1)
-    imp.displayedRelics.append(inv.lookup("Golden Rod"))
+    imp.outputMessage.append("Succesfully obtained Dynamite Rod relic!")
+    inv.lookup("Dynamite Rod").add(1)
+    imp.displayedRelics.append(inv.lookup("Dynamite Rod"))
     inv.relicUpdate()
 
-task.Task(name = "Craft Golden Rod",
-    cost = {inv.lookup("Metal"): 10, inv.lookup("Wood"): 25, inv.lookup("Fishing Reel"): 2},
+task.Task(name = "Craft Dynamite Rod",
+    cost = {inv.lookup("Explosive"): 3, inv.lookup("Metal"): 10, inv.lookup("Fishing Reel"): 1},
     neededItems=[],
     time = 3,
     reward = relicCraft, craft=True
