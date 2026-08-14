@@ -107,11 +107,18 @@ task.Task(name = "Craft Anchor",
     time = 3,
     reward = {1: ({inv.lookup("Anchor"): 1}, "Succesful anchor craft!")}, craft=True
 )
+
+def relicCraft():
+    imp.outputMessage.append("Succesfully obtained Golden Rod relic!")
+    inv.lookup("Golden Rod").add(1)
+    imp.displayedRelics.append(inv.lookup("Golden Rod"))
+    inv.relicUpdate()
+
 task.Task(name = "Craft Golden Rod",
     cost = {inv.lookup("Metal"): 10, inv.lookup("Wood"): 25, inv.lookup("Fishing Reel"): 2},
     neededItems=[],
     time = 3,
-    reward = {1: ({inv.lookup("Golden Rod"): 1}, "Succesfully obtained Golden Rod relic!")}, craft=True
+    reward = relicCraft, craft=True
 )
 
 
@@ -179,15 +186,43 @@ schoolOfFishPopup = ev.Popup("A school of fish swims below your boat... (Fishing
 def fishWeight():
     return 0.005 * ev.lookup("School of Fish").cooldown
 
+def newFishReward():
+    prob = imp.random.random()
+
+    bassRelic = inv.lookup("Glowing Bass")
+
+    fish = inv.lookup("Fish")
+
+    if prob < 0.2:
+        if bassRelic in imp.displayedRelics:
+            imp.outputMessage.append("You could not catch a fish")
+            return
+
+        imp.outputMessage.append("Caught Glowing bass relic!")
+        bassRelic.add(1)
+        imp.displayedRelics.append(bassRelic)
+        inv.relicUpdate()
+
+    elif prob < 0.6:
+        imp.outputMessage.append("You caught a sardine")
+        fish.add(1)
+
+
+    elif prob < 0.9:
+        imp.outputMessage.append("You caught a salmon")
+        fish.add(2)
+
+    else:
+        imp.outputMessage.append("You caught a tuna")
+        fish.add(5)
+
+
 async def fishSchool():
     fishing = task.lookup("Fishing")
 
     ogReward = fishing.reward
 
-    fishing.reward = {0.2: ( {inv.lookup("Glowing Bass"): 1}, "You caught the mythical Glowing Bass relic."),
-        0.60: ( {inv.lookup("Fish"): 1}, "You caught a sardine"),
-        0.90: ( {inv.lookup("Fish"): 2}, "You caught a salmon"),
-        1.0: ( {inv.lookup("Fish"): 5}, "You caught a tuna")}
+    fishing.reward = newFishReward
 
     await imp.pause_aware_sleep(18)
 
@@ -259,11 +294,18 @@ shipwreckWoodSalvage = task.Task("Salvage Wood",
                         reward = {1: ({inv.lookup("Wood"): 15}, "You salvaged 15 wood from the chest.")},
                         swimTroubleChance=0.2)
 
+def captainHatReward():
+    imp.outputMessage.append("You see the dead captain and take his legendary hat! You obtained the Captain's Hat relic!", color = "Green")
+    inv.lookup("Captain's Hat").add(1)
+    imp.displayedRelics.append(inv.lookup("Captain's Hat"))
+    inv.relicUpdate()
+
+
 secretDoorShipwreck = task.Task("Open Door",
                         cost = {},
                         neededItems = [inv.lookup("Hammer")],
                         time = 2,
-                        reward = {1: ({inv.lookup("Captain's Hat"): 1}, "You see the dead captain and take his legendary hat! You obtained the Captain's Hat relic!")},
+                        reward = captainHatReward,
                         swimTroubleChance=0.2)
 
 shipwreckDecisionPopup = ev.Popup("You quickly swim down to the shipwreck. You see a treasure chest and a secret door.", optionTasks=[goldSalvage, shipwreckWoodSalvage, secretDoorShipwreck], duration = 7)
@@ -301,11 +343,17 @@ hammerTrade = task.Task("Get 1 Hammer",
                       time = 0,
                       reward = {1: ({inv.lookup("Hammer"): 1}, "Traded for 1 Hammer")})
 
+def merchantCoinReward():
+    imp.outputMessage.append("Traded for the Merchant's Coin!", color = "Green")
+    inv.lookup("Merchant's Coin").add(1)
+    imp.displayedRelics.append(inv.lookup("Merchant's Coin"))
+    inv.relicUpdate()
+
 merchantsCoinTrade = task.Task("Merchant's Coin",
                       cost = {inv.lookup("Gold"): 250},
                       neededItems=[],
                       time = 0,
-                      reward = {1: ({inv.lookup("Merchant's Coin"): 1}, "Traded for the Merchant's Coin")})
+                      reward = merchantCoinReward)
 
 merchantPopup = ev.Popup("A merchant boat appears beside you. They do not want to stay but may trade with you...",
                          optionTasks = [fishTrade, explosiveTrade, metalTrade, hammerTrade])
@@ -332,9 +380,12 @@ def spearFunc():
         imp.outputMessage("Won the battle with the shark and gained 8 Fish.")
         inv.lookup("Fish").add(8)
 
-        imp.outputMessage("You managed to get the Shark's Head!")
-        inv.lookup("Shark's Head").add(1)
-        imp.displayedResources.append(inv.lookup("Shark's Head"))
+        if inv.lookup("Shark's Head") not in imp.displayedRelics:
+            imp.outputMessage("You managed to get the Shark's Head!")
+            inv.lookup("Shark's Head").add(1)
+            imp.displayedResources.append(inv.lookup("Shark's Head"))
+            inv.relicUpdate()
+        
     else:
         sharkLoss()
 
@@ -450,3 +501,4 @@ salvageExplosives = task.Task(
 navalMinePopup2 = ev.Popup(text = "You swim down near the naval mine... (Explosives are RISKY)", optionTasks = [salvageExplosives, declineTask], duration = 7)
 
 navalMineEvent2 = ev.Event(name = "Naval Mine2", minCooldown = 0, screenPopup = navalMinePopup2, weightFunc = nullWeight)
+

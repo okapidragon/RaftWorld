@@ -70,3 +70,10 @@ imp.asyncio.create_task(hungerLoop())
 imp.asyncio.create_task(timeLoop())
 imp.asyncio.create_task(eventLoop())
 imp.asyncio.create_task(decayLoop())
+
+#TESTING START
+imp.displayedRelics.append(inv.lookup("Golden Rod"))
+inv.lookup("Golden Rod").add(1)
+
+inv.relicUpdate()
+#TESTING END

@@ -79,9 +79,9 @@ def lookup(name) -> Resource:
 def relicUpdate():
     try:
         if imp.displayedRelics:
-            imp.showSomething("relics")
+            imp.showSomething("#relics")
             for relic in imp.displayedRelics:
-                relics_section = imp.document.querySelector("relics")
+                relics_section = imp.document.querySelector("#relics")
                 this_relic = imp.document.createElement("p")
                 this_relic.style.textAlign = "center"
                 this_relic.style.color = relic.color
