@@ -265,6 +265,12 @@ fishTrade = task.Task("Get 7 Gold",
                       time = 0,
                       reward = {1: ({inv.lookup("Gold"): 7}, "Traded for 7 Gold")})
 
+explosiveTrade = task.Task("Get 20 Gold",
+                      cost = {inv.lookup("Explosive"): 1},
+                      neededItems=[],
+                      time = 0,
+                      reward = {1: ({inv.lookup("Gold"): 20}, "Traded for 20 Gold")})
+
 metalTrade = task.Task("Get 1 Metal",
                       cost = {inv.lookup("Gold"): 15},
                       neededItems=[],
@@ -278,7 +284,7 @@ hammerTrade = task.Task("Get 1 Hammer",
                       reward = {1: ({inv.lookup("Hammer"): 1}, "Traded for 1 Hammer")})
 
 merchantPopup = ev.Popup("A merchant boat appears beside you. They do not want to stay but may trade with you...",
-                         optionTasks = [fishTrade, metalTrade, hammerTrade])
+                         optionTasks = [fishTrade, explosiveTrade, metalTrade, hammerTrade])
 
 def merchantWeight():
     return 1.5 + (merchantEvent.cooldown - merchantEvent.minCooldown) * 0.004
@@ -286,7 +292,7 @@ def merchantWeight():
 def merchantEnd():
     imp.metalUnlock = True
 
-merchantEvent = ev.Event("Merchant", minCooldown = 150, screenPopup=merchantPopup, weightFunc=merchantWeight, cooldown = 30, multipleTasks=True, stopFunc = merchantEnd)
+merchantEvent = ev.Event("Merchant", minCooldown = 150, screenPopup=merchantPopup, weightFunc=merchantWeight, cooldown = 30, multipleTasks=True, stopFunc = merchantEnd, randomItems = 3)
 
 #Shark Event
 
