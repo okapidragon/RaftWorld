@@ -80,6 +80,7 @@ displayedCrafts = []
 
 countdown = 0
 
+@when("click", "#pause-button")
 def toggle_pause(event):
     try:
         global gamePaused
