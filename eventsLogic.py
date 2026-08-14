@@ -15,7 +15,7 @@ class Popup:
 class Event:
     all = []
 
-    def __init__(self, name, minCooldown, screenPopup, weightFunc, cooldown = 60, automaticFunc = None, timer = True, multipleTasks = False, stopFunc = None):
+    def __init__(self, name, minCooldown, screenPopup, weightFunc, cooldown = 60, automaticFunc = None, timer = True, multipleTasks = False, stopFunc = None, randomItems = False):
         self.name = name
         self.minCooldown = minCooldown
         self.screenPopup = screenPopup
@@ -24,6 +24,7 @@ class Event:
         self.timer = timer
         self.multipleTasks = multipleTasks
         self.stopFunc = stopFunc
+        self.randomItems = randomItems
 
         if not callable(weightFunc):
             imp.outputMessage.append(f"{self.name} event weightFunc is not callable!")
@@ -53,7 +54,14 @@ class Event:
 
         self.timerTask = imp.asyncio.create_task(self.eventTimer())
 
-        for taskItem in self.screenPopup.optionTasks:
+        newOptions = self.screenPopup.optionTasks.copy()
+
+        if self.randomItems is not False:
+            indices = imp.random.sample(range(len(newOptions)), self.randomItems)
+            indices.sort()
+            newOptions = [self.screenPopup.optionTasks[i] for i in indices]
+
+        for taskItem in newOptions:
             task_id = taskItem.name.lower().replace(" ", "-")
             task_button = imp.document.createElement("button")
             task_button.style.display = "block"
