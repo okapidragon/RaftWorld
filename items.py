@@ -509,7 +509,7 @@ def finishGameFunc():
 
 finishGame = task.Task(name = "Trade Relics", cost = {}, neededItems = [
     inv.lookup("Merchant's Coin"),
-    inv.lookup("Captains's Hat"),
+    inv.lookup("Captain's Hat"),
     inv.lookup("Shark's Head"),
     inv.lookup("Dynamite Rod"), 
     inv.lookup("Glowing Bass")], time = 2, reward = finishGameFunc)
