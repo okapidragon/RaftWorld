@@ -407,7 +407,7 @@ def sharkWeight():
 sharkEvent = ev.Event(name = "Shark", minCooldown = 250, screenPopup=sharkPopup, weightFunc=sharkWeight, cooldown = 0, stopFunc = sharkLoss)
 
 #Raft Breaking
-hammerIt = task.Task(name = "Fix With Hammer", cost = {}, neededItems=[inv.lookup("Hammer")], time = 2, reward = {})
+hammerIt = task.Task(name = "Fix With Hammer", cost = {}, neededItems=[inv.lookup("Hammer")], time = 2, reward = {1: ({}, "Succesful Fix!")})
 
 def fall():
     wood = inv.lookup("Wood")
@@ -445,7 +445,7 @@ def rewardCrate():
 
     imp.outputMessage.append(f"The crate had {woodAdd} wood and {metalAdd} metal.")
 
-openCrate = task.Task(name = "Hammer Open", cost = {}, neededItems=[inv.lookup("Hammer"), inv.lookup("Paddle")], time = 10, reward = rewardCrate)
+openCrate = task.Task(name = "Hammer Open", cost = {}, neededItems=[inv.lookup("Hammer"), inv.lookup("Paddle")], time = 1, reward = rewardCrate)
 
 cratePopup = ev.Popup(text = "A lone crate floats by near the raft.", optionTasks = [openCrate, declineTask], duration = 15)
 
@@ -537,6 +537,6 @@ def cartographerWeight():
     if len(imp.displayedRelics) == 5:
         return 100_000_000
 
-    return 0.7 + (cartographerEvent.cooldown - cartographerEvent.minCooldown) * 0.003
+    return 0.7
 
 cartographerEvent = ev.Event(name = "Cartographer", minCooldown = 250, screenPopup=cartographerPopup, weightFunc = cartographerWeight)

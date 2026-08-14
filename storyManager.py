@@ -28,6 +28,8 @@ async def hungerLoop():
             imp.displayedCrafts.append(task.lookup("Craft Spear"))
             imp.displayedCrafts.append(task.lookup("Craft Anchor"))
             task.craftButtonUpdate()
+            imp.displayedResources.append(inv.lookup("Metal"))
+            inv.inventoryUpdate()
             items.merchantEvent.screenPopup.optionTasks.append(items.merchantsCoinTrade)
 
         await imp.pause_aware_sleep(1)
