@@ -3,6 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Raft World</title>
+<script type="text/javascript">
+  addEventListener("py:ready", () => {
+    document.getElementById("loading-screen").style.display = "none";
+    document.getElementById("everything").style.display = "grid"; // or "flex" depending on your layout
+  });
+</script>
 <link rel="icon" type="image/x-icon" href="/favicon.ico">
 <link rel="stylesheet" href="style.css">
 <link rel="preload" href="https://pyscript.net/releases/2025.2.2/core.css" as="style">
@@ -16,9 +22,10 @@
 </head>
 <body>
 <div id="loading-screen">
-  
+  <img src="https://raw.githubusercontent.com/okapidragon/RaftWorld/main/raft.png" alt="Raft logo" style="max-width: 200px; height: auto;">
+  <h1>Welcome to Raft World!</h1>
 </div>
-<div class="grid-container" id="everything" style="height: 100vh;">
+<div class="grid-container" id="everything" style="height: 100vh; display: none">
   <button id="pause-button">Pause</button>
   <div class="column" id="needs-col" style="height:100vh">
   <h3 style="text-align: center;">Stats</h3>
@@ -61,8 +68,10 @@
     </div>
     <p id="decay-title" class="bar-title" style="text-align: center;">Boat decay level</p>
     </div>
-  <div id="relics" style="display:none;">
-    <h4 style="color:lightcoral">Relics</h4>
+  <div id="relics-section" style="display:none; line-height: 0.5 !important;">
+    <h4 style="text-align:center;">Relics</h4>
+    <div id="relics">
+    </div>
   </div>
   </div>
   <div class="column" id="inventory-col">

@@ -78,14 +78,14 @@ def lookup(name) -> Resource:
 
 
 def relicUpdate():
-    try:
-        if imp.displayedRelics:
-            imp.showSomething("#relics")
-            for relic in imp.displayedRelics:
-                relics_section = imp.document.querySelector("#relics")
-                this_relic = imp.document.createElement("p")
-                this_relic.style.textAlign = "center"
-                this_relic.style.color = relic.color
-                this_relic.textContent = relic
-    except:
-        pass
+    if imp.displayedRelics:
+        imp.showSomething("#relics-section")
+        relics_section = imp.document.querySelector("#relics")
+        relics_section.innerHTML = ""
+        for relic in imp.displayedRelics:
+            this_relic = imp.document.createElement("p")
+            this_relic.style.textAlign = "center"
+            this_relic.style.color = relic.color
+            this_relic.textContent = relic.name
+            relics_section.appendChild(this_relic)
+    

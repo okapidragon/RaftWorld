@@ -11,6 +11,15 @@ body {
   background-position: center;
 }
 
+#loading-screen {
+  margin: 0;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 30px;
+  
+}
+
 .fade-block {
   height: 90vh;
   overflow: hidden;
