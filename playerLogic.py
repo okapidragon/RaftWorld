@@ -220,7 +220,7 @@ class Player:
             
             setHungerBarProgress(self.hunger)
         else:
-            self.health += 1
+            self.health = min(100, self.health + 1)
             setHealthBarProgress(self.health)
             setHungerBarProgress(self.hunger)
 
