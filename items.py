@@ -414,5 +414,3 @@ salvageExplosives = task.Task(
 navalMinePopup2 = ev.Popup(text = "You swim down near the naval mine... (Explosives are RISKY)", optionTasks = [salvageExplosives, declineTask], duration = 7)
 
 navalMineEvent2 = ev.Event(name = "Naval Mine2", minCooldown = 0, screenPopup = navalMinePopup2, weightFunc = nullWeight)
-
-imp.asyncio.create_task(navalMineEvent1.execute())
