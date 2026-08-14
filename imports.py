@@ -94,9 +94,19 @@ def toggle_pause(event):
 
 def death(message):
     window.onerror = lambda msg, url, ln, col, err: True
-    
+
     body = document.body
     body.innerHTML = ""
+
+    cover = document.createElement("div")
+    cover.style.position = "fixed"
+    cover.style.top = "0"
+    cover.style.left = "0"
+    cover.style.width = "100vw"
+    cover.style.height = "100vh"
+    cover.style.backgroundColor = "#e8f5fa"
+    cover.style.zIndex = "99999"
+
     body.style.margin = "0"
     body.style.height = "100vh"
     body.style.display = "grid"
@@ -105,6 +115,7 @@ def death(message):
     message_shown = document.createElement("h1")
     message_shown.innerHTML = message
     body.appendChild(message_shown)
+
 
 def health_death():
     
