@@ -106,17 +106,22 @@ def toggle_pause(event):
         pass
 
 def death(message):
-
     body = document.body
     body.innerHTML = ""
 
+    document.documentElement.style.height = "100%"
     body.style.margin = "0"
-    body.style.height = "100vh"
+    body.style.minHeight = "100vh"
+    body.style.boxSizing = "border-box"
+    
     body.style.display = "grid"
     body.style.placeItems = "center"
     body.style.padding = "30px"
+    
     message_shown = document.createElement("h1")
+    message_shown.style.textAlign = "center"
     message_shown.innerHTML = message
+    
     body.appendChild(message_shown)
 
 

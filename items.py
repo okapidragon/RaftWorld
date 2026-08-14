@@ -506,13 +506,13 @@ navalMineEvent2 = ev.Event(name = "Naval Mine2", minCooldown = 0, screenPopup = 
 
 #Cartographer
 def finishGameFunc():
-    imp.death(f"""You traded all the relics to the cartographer, in exchange he gave you the map to the shore. Reuniting with your people, you joyously emerge victorious by collecting the <br>
-    Merchant's Coin <br>
-    Captain's Hat <br>
-    Shark's Head <br>
-    Dynamite Rod <br>
-    Glowing Bass <br>
-    {str(pl.gameTime.all[0])}.""")
+    imp.death(f"""You traded all the relics to the cartographer, in exchange he gave you the map to the shore. Reuniting with your people, you joyously emerge victorious by collecting all five relics: <br> <br>
+    The Merchant's Coin <br>
+    The Captain's Hat <br>
+    The Shark's Head <br>
+    The Dynamite Rod <br>
+    The Glowing Bass <br> <br>
+    Finshed at: {str(pl.gameTime.all[0])}.""")
 
 finishGame = task.Task(name = "Trade Relics", cost = {}, neededItems = [
     inv.lookup("Merchant's Coin"),
