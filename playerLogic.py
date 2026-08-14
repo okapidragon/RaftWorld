@@ -187,7 +187,7 @@ class Player:
             imp.countdown += 1
             return
 
-        if (not (inv.lookup("Spear") in imp.displayedCrafts) )and imp.metalUnlock:
+        if (not (task.lookup("Craft Spear") in imp.displayedCrafts)) and imp.metalUnlock:
             imp.displayedCrafts.append(task.lookup("Craft Spear"))
             imp.displayedCrafts.append(task.lookup("Craft Anchor"))
             task.craftButtonUpdate()
