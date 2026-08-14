@@ -75,7 +75,7 @@ def reinforceReward():
     imp.outputMessage.append("Boat reinforcement complete. Reset boat decay and reduced decay speed.")
 
 task.Task(name = "Reinforce Boat",
-    cost = {inv.lookup("Wood"): 8, inv.lookup("Seaweed"): 14},
+    cost = {inv.lookup("Wood"): 6, inv.lookup("Seaweed"): 10},
     neededItems = [],
     time = 10,
     reward=reinforceReward, 
@@ -115,7 +115,7 @@ def relicCraft():
     inv.relicUpdate()
 
 task.Task(name = "Craft Dynamite Rod",
-    cost = {inv.lookup("Explosive"): 3, inv.lookup("Metal"): 10, inv.lookup("Fishing Reel"): 1},
+    cost = {inv.lookup("Explosive"): 3, inv.lookup("Metal"): 5, inv.lookup("Fishing Reel"): 1},
     neededItems=[],
     time = 3,
     reward = relicCraft, craft=True
@@ -181,7 +181,7 @@ ev.Event("Boat Starts Decay", minCooldown=140, screenPopup=boatDecayPopup ,weigh
 
 #School of Fish
 
-schoolOfFishPopup = ev.Popup("A school of fish swims below your boat... (Fishing Odds Bettered)", [], duration = 25)
+schoolOfFishPopup = ev.Popup("A school of fish swims below your boat... (fishing odds bettered)", [], duration = 25)
 
 def fishWeight():
     return 0.005 * ev.lookup("School of Fish").cooldown
@@ -296,7 +296,7 @@ shipwreckWoodSalvage = task.Task("Salvage Wood",
                         cost = {},
                         neededItems = [],
                         time = 2,
-                        reward = {1: ({inv.lookup("Wood"): 15}, "You salvaged 15 wood from the chest.")},
+                        reward = {1: ({inv.lookup("Wood"): 15}, "You salvaged 15 wood from the boat.")},
                         swimTroubleChance=0.2)
 
 def captainHatReward():
@@ -304,6 +304,7 @@ def captainHatReward():
     inv.lookup("Captain's Hat").add(1)
     imp.displayedRelics.append(inv.lookup("Captain's Hat"))
     inv.relicUpdate()
+    shipwreckDecisionPopup.optionTasks.remove(secretDoorShipwreck)
 
 
 secretDoorShipwreck = task.Task("Open Door",
@@ -382,7 +383,7 @@ def spearFunc():
     success = imp.random.random()
 
     if success < 0.75:
-        imp.outputMessage("Won the battle with the shark and gained 8 Fish.")
+        imp.outputMessage.append("Won the battle with the shark and gained 8 Fish.")
         inv.lookup("Fish").add(8)
 
         if inv.lookup("Shark's Head") not in imp.displayedRelics:
@@ -427,7 +428,7 @@ def startRaftBreak():
 
     
 
-inventoryFallingPopup = ev.Popup(text = "Some of your raft breaks off, you can fix it but your items will fall...", optionTasks = [hammerIt], duration = 15)
+inventoryFallingPopup = ev.Popup(text = "Some of your raft breaks off, you can fix it but without a hammer, your items will fall...", optionTasks = [hammerIt], duration = 15)
 
 def raftBreakWeight():
     return 0.65 + (inventoryFallingEvent.cooldown - inventoryFallingEvent.minCooldown) * 0.004 
@@ -533,6 +534,7 @@ finishGame = task.Task(name = "Trade Relics", cost = {}, neededItems = [
 def recipeFunc():
     imp.displayedCrafts.append(task.lookup("Craft Dynamite Rod"))
     task.craftButtonUpdate()
+    cartographerPopup.optionTasks.remove(dynamiteRodRecipe)
 
 dynamiteRodRecipe = task.Task(name = "Get Recipe", cost = {}, neededItems = {}, time = 2, reward = recipeFunc)
 
