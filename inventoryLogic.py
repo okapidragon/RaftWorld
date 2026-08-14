@@ -54,10 +54,11 @@ class Resource:
 
 
 class Item(Resource):
-    def __init__(self, name, quantity, breakable=False, breakChance=0.0):
+    def __init__(self, name, quantity, breakable=False, breakChance=0.0, relic = False, color = None):
         super().__init__(name, quantity)
         self.breakable = breakable
         self.breakChance = breakChance
+        self.relic = relic
 
     def tryBreak(self):
         if (self.breakable) and (imp.random.random() < self.breakChance):

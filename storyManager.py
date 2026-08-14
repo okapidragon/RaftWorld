@@ -23,6 +23,13 @@ async def hungerLoop():
             await imp.pause_aware_sleep(0.2)
             continue
         player.hungerFrame()
+
+        if (not (task.lookup("Craft Spear") in imp.displayedCrafts)) and imp.metalUnlock:
+            imp.displayedCrafts.append(task.lookup("Craft Spear"))
+            imp.displayedCrafts.append(task.lookup("Craft Anchor"))
+            task.craftButtonUpdate()
+            items.merchantEvent.screenPopup.optionTasks.append(items.merchantsCoinTrade)
+
         await imp.pause_aware_sleep(1)
 
 async def timeLoop():
@@ -52,6 +59,7 @@ async def decayLoop():
         boat.decayFrame()
 
         await imp.pause_aware_sleep(1)
+
         if boat.decay >= 100:
             imp.boat_death()
         if player.health <= 0:

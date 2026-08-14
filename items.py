@@ -12,6 +12,13 @@ inv.Item("Hammer", 0, breakable = True, breakChance = 0.04)
 inv.Item("Spear", 0, breakable = True, breakChance = 0.05)
 inv.Item("Anchor", 0)
 
+#Relics
+inv.Item("Merchant's Coin", 0, relic = True, color = "Gold")
+inv.Item("Captain's Hat", 0, relic = True, color = "Brown") 
+inv.Item("Shark's Head", 0, relic = True, color = "Blue")
+inv.Item("Golden Rod", 0, relic = True, color = "Goldenrod")
+inv.Item("Glowing Bass", 0, relic = True, color = "Purple")
+
 #Resources
 inv.Resource("Fish", 0, food = True, hungerScore=100)
 inv.Resource("Seaweed", 0, food = True, hungerScore = 8, eatQuantity = 5)
@@ -100,6 +107,12 @@ task.Task(name = "Craft Anchor",
     time = 3,
     reward = {1: ({inv.lookup("Anchor"): 1}, "Succesful anchor craft!")}, craft=True
 )
+task.Task(name = "Craft Golden Rod",
+    cost = {inv.lookup("Metal"): 10, inv.lookup("Wood"): 25, inv.lookup("Fishing Reel"): 2},
+    neededItems=[],
+    time = 3,
+    reward = {1: ({inv.lookup("Golden Rod"): 1}, "Succesfully obtained Golden Rod relic!")}, craft=True
+)
 
 
 #All events down here!
@@ -171,7 +184,7 @@ async def fishSchool():
 
     ogReward = fishing.reward
 
-    fishing.reward = {0.1: ( {inv.lookup("Fish"): 0}, "You could not catch a fish!"),
+    fishing.reward = {0.2: ( {inv.lookup("Glowing Bass"): 1}, "You caught the mythical Glowing Bass relic."),
         0.60: ( {inv.lookup("Fish"): 1}, "You caught a sardine"),
         0.90: ( {inv.lookup("Fish"): 2}, "You caught a salmon"),
         1.0: ( {inv.lookup("Fish"): 5}, "You caught a tuna")}
@@ -246,9 +259,14 @@ shipwreckWoodSalvage = task.Task("Salvage Wood",
                         reward = {1: ({inv.lookup("Wood"): 15}, "You salvaged 15 wood from the chest.")},
                         swimTroubleChance=0.2)
 
+secretDoorShipwreck = task.Task("Open Door",
+                        cost = {},
+                        neededItems = [inv.lookup("Hammer")],
+                        time = 2,
+                        reward = {1: ({inv.lookup("Captain's Hat"): 1}, "You see the dead captain and take his legendary hat! You obtained the Captain's Hat relic!")},
+                        swimTroubleChance=0.2)
 
-
-shipwreckDecisionPopup = ev.Popup("You quickly swim down to the shipwreck. You see a treasure chest.", optionTasks=[goldSalvage, shipwreckWoodSalvage], duration = 7)
+shipwreckDecisionPopup = ev.Popup("You quickly swim down to the shipwreck. You see a treasure chest and a secret door.", optionTasks=[goldSalvage, shipwreckWoodSalvage, secretDoorShipwreck], duration = 7)
 
 
 
@@ -283,6 +301,12 @@ hammerTrade = task.Task("Get 1 Hammer",
                       time = 0,
                       reward = {1: ({inv.lookup("Hammer"): 1}, "Traded for 1 Hammer")})
 
+merchantsCoinTrade = task.Task("Merchant's Coin",
+                      cost = {inv.lookup("Gold"): 250},
+                      neededItems=[],
+                      time = 0,
+                      reward = {1: ({inv.lookup("Merchant's Coin"): 1}, "Traded for the Merchant's Coin")})
+
 merchantPopup = ev.Popup("A merchant boat appears beside you. They do not want to stay but may trade with you...",
                          optionTasks = [fishTrade, explosiveTrade, metalTrade, hammerTrade])
 
@@ -305,8 +329,12 @@ def spearFunc():
     success = imp.random.random()
 
     if success < 0.75:
-        imp.outputMessage("Won the battle with the shark and gained 8 Fish")
+        imp.outputMessage("Won the battle with the shark and gained 8 Fish.")
         inv.lookup("Fish").add(8)
+
+        imp.outputMessage("You managed to get the Shark's Head!")
+        inv.lookup("Shark's Head").add(1)
+        imp.displayedResources.append(inv.lookup("Shark's Head"))
     else:
         sharkLoss()
 
