@@ -192,6 +192,7 @@ async def stopEvent(event):
             return False
 
         imp.hideSomething("#events-div")
+
         
         events_column = imp.document.querySelector("#events-div")
         events_column.innerHTML = ""
@@ -211,6 +212,9 @@ async def stopEvent(event):
             await imp.pause_aware_sleep(3)
             
             task.craftButtonUpdate()
+
+        boat_button = imp.document.querySelector("#resize-boat-button")
+        boat_button.disabled = False
     except:
         pass
 

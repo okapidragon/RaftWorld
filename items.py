@@ -420,6 +420,10 @@ def fall():
 
     inv.inventoryUpdate()
 
+def startRaftBreak():
+    boat_button = imp.document.querySelector("#resize-boat-button")
+    boat_button.disabled = True
+
 
     
 
@@ -429,7 +433,7 @@ def raftBreakWeight():
     return 0.65 + (inventoryFallingEvent.cooldown - inventoryFallingEvent.minCooldown) * 0.004 
 
 
-inventoryFallingEvent = ev.Event(name = "Raft Break", minCooldown = 300, screenPopup=inventoryFallingPopup, weightFunc= raftBreakWeight,cooldown = 150, stopFunc = fall)
+inventoryFallingEvent = ev.Event(name = "Raft Break", minCooldown = 300, screenPopup=inventoryFallingPopup, weightFunc= raftBreakWeight,cooldown = 150, stopFunc = fall, automaticFunc=startRaftBreak)
 
 #Craft Event
 def rewardCrate():
