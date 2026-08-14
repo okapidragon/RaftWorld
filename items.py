@@ -341,7 +341,7 @@ metalTrade = task.Task("Get 1 Metal",
                       reward = {1: ({inv.lookup("Metal"): 1}, "Traded for 1 Metal")})
 
 hammerTrade = task.Task("Get 1 Hammer",
-                      cost = {inv.lookup("Gold"): 150},
+                      cost = {inv.lookup("Gold"): 80},
                       neededItems=[],
                       time = 0,
                       reward = {1: ({inv.lookup("Hammer"): 1}, "Traded for 1 Hammer")})
@@ -353,7 +353,7 @@ def merchantCoinReward():
     inv.relicUpdate()
 
 merchantsCoinTrade = task.Task("Merchant's Coin",
-                      cost = {inv.lookup("Gold"): 250},
+                      cost = {inv.lookup("Gold"): 130},
                       neededItems=[],
                       time = 0,
                       reward = merchantCoinReward)
