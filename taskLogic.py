@@ -155,9 +155,9 @@ async def runTask(selected_task, selected_button):
 def taskButtonUpdate():
     try:
         tasks_col = imp.document.querySelector("#tasks-area")
-        for task_button in tasks_col.querySelectorAll(".task-button"):
-            task_button.remove()
-
+        tasks_col.innerHTML = ""
+        
+        
         for task in imp.displayedTasks:
             task_id = task.name.lower().replace(" ", "-")
             task_button = imp.document.createElement("button")
