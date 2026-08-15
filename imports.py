@@ -3,7 +3,7 @@ import asyncio
 import threading
 import inspect
 import time
-from pyscript import document, window, when  # pyright: ignore[reportMissingImports]
+from pyscript import document, when  # pyright: ignore[reportMissingImports]
 gamePaused = False
 
 
