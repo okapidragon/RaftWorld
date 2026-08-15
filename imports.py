@@ -11,7 +11,7 @@ def displayOutput():
     try:
         output_column = document.querySelector("#output-fade")
 
-        output_column.innerHTML = "<h3 style=\"text-align: center;\">Output</h3>"
+        output_column.innerHTML = "<h3 style=\"text-align: center;\">Messages</h3>"
 
         for message in reversed(outputMessage.messages[-15:]):
             message_line = document.createElement("p")
